@@ -104,6 +104,7 @@ def markdown_entry(path: Path) -> dict[str, object]:
     text = path.read_text(encoding="utf-8", errors="replace")
     rel = relpath(path)
     lines = text.count("\n") + (1 if text else 0)
+    stable_bytes = len(text.encode("utf-8"))
     return {
         "type": "markdown",
         "group": group_for(rel),
@@ -111,7 +112,7 @@ def markdown_entry(path: Path) -> dict[str, object]:
         "relPath": rel,
         "href": href_for(path),
         "lines": lines,
-        "bytes": path.stat().st_size,
+        "bytes": stable_bytes,
         "outline": heading_outline(text),
         "excerpt": excerpt_from_markdown(text),
     }
@@ -119,7 +120,8 @@ def markdown_entry(path: Path) -> dict[str, object]:
 
 def notebook_entry(path: Path) -> dict[str, object]:
     rel = relpath(path)
-    data = json.loads(path.read_text(encoding="utf-8", errors="replace"))
+    raw_text = path.read_text(encoding="utf-8", errors="replace")
+    data = json.loads(raw_text)
     markdown_cells = 0
     code_cells = 0
     merged_markdown: list[str] = []
@@ -140,7 +142,7 @@ def notebook_entry(path: Path) -> dict[str, object]:
         "href": href_for(path),
         "markdownCells": markdown_cells,
         "codeCells": code_cells,
-        "bytes": path.stat().st_size,
+        "bytes": len(raw_text.encode("utf-8")),
         "outline": heading_outline(text),
         "excerpt": excerpt_from_markdown(text),
     }

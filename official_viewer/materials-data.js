@@ -26,7 +26,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/applications_scene/README.md",
       "href": "../code/PhysX-Omni/applications_scene/README.md",
       "lines": 68,
-      "bytes": 1702,
+      "bytes": 1635,
       "outline": [
         {
           "level": 3,
@@ -46,7 +46,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/benchmark/code/render/material_batch/water/document.md",
       "href": "../code/PhysX-Omni/benchmark/code/render/material_batch/water/document.md",
       "lines": 42,
-      "bytes": 1022,
+      "bytes": 981,
       "outline": [
         {
           "level": 1,
@@ -62,7 +62,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/benchmark/code/render/views/README.md",
       "href": "../code/PhysX-Omni/benchmark/code/render/views/README.md",
       "lines": 68,
-      "bytes": 1499,
+      "bytes": 1432,
       "outline": [
         {
           "level": 1,
@@ -98,7 +98,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/benchmark/code/render/views/USAGE.md",
       "href": "../code/PhysX-Omni/benchmark/code/render/views/USAGE.md",
       "lines": 38,
-      "bytes": 1030,
+      "bytes": 993,
       "outline": [
         {
           "level": 1,
@@ -114,7 +114,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/benchmark/INSTALL.md",
       "href": "../code/PhysX-Omni/benchmark/INSTALL.md",
       "lines": 118,
-      "bytes": 2614,
+      "bytes": 2497,
       "outline": [
         {
           "level": 1,
@@ -146,7 +146,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/benchmark/README.md",
       "href": "../code/PhysX-Omni/benchmark/README.md",
       "lines": 673,
-      "bytes": 21392,
+      "bytes": 20720,
       "outline": [
         {
           "level": 1,
@@ -206,7 +206,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/benchmark/tiny_example/README.md",
       "href": "../code/PhysX-Omni/benchmark/tiny_example/README.md",
       "lines": 16,
-      "bytes": 492,
+      "bytes": 477,
       "outline": [
         {
           "level": 1,
@@ -238,7 +238,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/qwen-vl-finetune/README.md",
       "href": "../code/PhysX-Omni/qwen-vl-finetune/README.md",
       "lines": 312,
-      "bytes": 11415,
+      "bytes": 11104,
       "outline": [
         {
           "level": 1,
@@ -298,7 +298,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/qwen-vl-utils/README.md",
       "href": "../code/PhysX-Omni/qwen-vl-utils/README.md",
       "lines": 94,
-      "bytes": 5466,
+      "bytes": 5373,
       "outline": [
         {
           "level": 1,
@@ -350,7 +350,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/README.md",
       "href": "../code/PhysX-Omni/README.md",
       "lines": 153,
-      "bytes": 5870,
+      "bytes": 5718,
       "outline": [
         {
           "level": 2,
@@ -402,7 +402,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "code/PhysX-Omni/trellis/representations/mesh/flexicubes/README.md",
       "href": "../code/PhysX-Omni/trellis/representations/mesh/flexicubes/README.md",
       "lines": 111,
-      "bytes": 7902,
+      "bytes": 7792,
       "outline": [
         {
           "level": 2,
@@ -558,7 +558,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "learning_materials/paper_reading/physx_omni_paper_author_deep_reading_step2.md",
       "href": "../learning_materials/paper_reading/physx_omni_paper_author_deep_reading_step2.md",
       "lines": 249,
-      "bytes": 16239,
+      "bytes": 15991,
       "outline": [
         {
           "level": 1,
@@ -722,7 +722,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "learning_materials/paper_reading/physx_omni_paper_code_assets_deep_reading_step1.md",
       "href": "../learning_materials/paper_reading/physx_omni_paper_code_assets_deep_reading_step1.md",
       "lines": 334,
-      "bytes": 17779,
+      "bytes": 17446,
       "outline": [
         {
           "level": 1,
@@ -842,7 +842,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "learning_materials/paper_reading/physx_omni_paper_core_innovations_step3.md",
       "href": "../learning_materials/paper_reading/physx_omni_paper_core_innovations_step3.md",
       "lines": 501,
-      "bytes": 21466,
+      "bytes": 20966,
       "outline": [
         {
           "level": 1,
@@ -2722,7 +2722,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "learning_materials/supporting_notes/physx_omni_step3_innovation_1_template_rle_deepdive.md",
       "href": "../learning_materials/supporting_notes/physx_omni_step3_innovation_1_template_rle_deepdive.md",
       "lines": 154,
-      "bytes": 5013,
+      "bytes": 4860,
       "outline": [
         {
           "level": 1,
@@ -2766,7 +2766,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "learning_materials/supporting_notes/physx_omni_step3_innovation_2_physxverse_physxbench_deepdive.md",
       "href": "../learning_materials/supporting_notes/physx_omni_step3_innovation_2_physxverse_physxbench_deepdive.md",
       "lines": 132,
-      "bytes": 4541,
+      "bytes": 4410,
       "outline": [
         {
           "level": 1,
@@ -2826,7 +2826,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "learning_materials/supporting_notes/physx_omni_step3_innovation_3_pipeline_code_repro_mapping.md",
       "href": "../learning_materials/supporting_notes/physx_omni_step3_innovation_3_pipeline_code_repro_mapping.md",
       "lines": 117,
-      "bytes": 4347,
+      "bytes": 4231,
       "outline": [
         {
           "level": 1,
@@ -3467,7 +3467,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/paper_reading/physx_omni_paper_author_deep_reading_step2.ipynb",
       "markdownCells": 15,
       "codeCells": 1,
-      "bytes": 22114,
+      "bytes": 21732,
       "outline": [
         {
           "level": 1,
@@ -3528,7 +3528,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/paper_reading/physx_omni_paper_baselines_experiments_step4.ipynb",
       "markdownCells": 5,
       "codeCells": 6,
-      "bytes": 73052,
+      "bytes": 71317,
       "outline": [
         {
           "level": 1,
@@ -3589,7 +3589,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/paper_reading/physx_omni_paper_bench_step5.ipynb",
       "markdownCells": 3,
       "codeCells": 7,
-      "bytes": 59669,
+      "bytes": 58106,
       "outline": [
         {
           "level": 1,
@@ -3650,7 +3650,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/paper_reading/physx_omni_paper_code_assets_deep_reading_step1.ipynb",
       "markdownCells": 14,
       "codeCells": 3,
-      "bytes": 26118,
+      "bytes": 25582,
       "outline": [
         {
           "level": 1,
@@ -3711,7 +3711,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/paper_reading/physx_omni_paper_competitor_landscape_step7.ipynb",
       "markdownCells": 13,
       "codeCells": 5,
-      "bytes": 47616,
+      "bytes": 46731,
       "outline": [
         {
           "level": 1,
@@ -3772,7 +3772,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/paper_reading/physx_omni_paper_core_innovations_step3.ipynb",
       "markdownCells": 4,
       "codeCells": 1,
-      "bytes": 6361,
+      "bytes": 6173,
       "outline": [
         {
           "level": 1,
@@ -3801,7 +3801,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/paper_reading/physx_omni_paper_datasets_step6.ipynb",
       "markdownCells": 13,
       "codeCells": 7,
-      "bytes": 58972,
+      "bytes": 57668,
       "outline": [
         {
           "level": 1,
@@ -3862,7 +3862,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/physx_omni_step10_technical_experiments/02_technical_experiment_notebook.ipynb",
       "markdownCells": 8,
       "codeCells": 8,
-      "bytes": 20480,
+      "bytes": 19877,
       "outline": [
         {
           "level": 1,
@@ -3907,7 +3907,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "href": "../learning_materials/physx_omni_step9_reviewer/03_reviewer_audit_notebook.ipynb",
       "markdownCells": 7,
       "codeCells": 8,
-      "bytes": 31175,
+      "bytes": 30467,
       "outline": [
         {
           "level": 1,
