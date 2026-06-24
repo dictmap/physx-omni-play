@@ -27,6 +27,7 @@ https://github.com/dictmap/physx-omni-play
 | 跑发布前审计 | `python scripts/audit_publish_ready.py` |
 | 查看发布检查清单 | `RELEASE_CHECKLIST.md` |
 | 查看引用信息 | `CITATION.cff` |
+| 查看第三方授权边界 | `THIRD_PARTY_NOTICES.md` |
 | 查看证据边界 | `REMOTE_EVIDENCE_MANIFEST.md` |
 | 查看来源清单 | `SOURCE_MANIFEST.json` |
 
@@ -34,7 +35,7 @@ https://github.com/dictmap/physx-omni-play
 
 - 论文精读材料已经组织为 Step 1-10。
 - 官方参考 demo 已跑通 VLM/RLE、几何解码、URDF/MuJoCo XML 生成。
-- 教学前端已经索引 91 个 Markdown/Notebook 文档。
+- 教学前端已经索引 92 个 Markdown/Notebook 文档。
 - 官方 7 部件 demo 和 M&M's body-focus mesh 输出都可以在 Three.js viewer 中查看。
 - M&M's 高罐结果被明确标注为真实图片压力测试，不等价于官方 benchmark 成功。
 - 项目级验证脚本会检查结构、manifest、材料索引、viewer 资产和关键证据文件。
@@ -60,9 +61,11 @@ physx-omni-assets/
   REMOTE_EVIDENCE_MANIFEST.md
   RELEASE_CHECKLIST.md
   CITATION.cff
+  THIRD_PARTY_NOTICES.md
   scripts/
     validate_physx_omni_quality.py
     audit_publish_ready.py
+    audit_public_links.py
   official_viewer/
     index.html
     teaching.js
@@ -84,11 +87,7 @@ physx-omni-assets/
 
 ## 复现输出
 
-大体积运行输出保留在项目外：
-
-```text
-C:\Users\robot\physx_outputs
-```
+大体积运行输出保留在项目外；公开仓库只保存轻量预览、索引和证据清单。
 
 关键同步结果和可信边界见：
 
@@ -101,8 +100,9 @@ REMOTE_EVIDENCE_MANIFEST.md
 运行：
 
 ```powershell
-python C:\Users\robot\Documents\成长学习库\physx-omni-assets\scripts\validate_physx_omni_quality.py
-python C:\Users\robot\Documents\成长学习库\physx-omni-assets\scripts\audit_publish_ready.py
+python scripts/validate_physx_omni_quality.py
+python scripts/audit_publish_ready.py
+python scripts/audit_public_links.py
 ```
 
 预期输出：
@@ -110,6 +110,7 @@ python C:\Users\robot\Documents\成长学习库\physx-omni-assets\scripts\audit_
 ```text
 QUALITY CHECK PASSED
 PUBLISH AUDIT PASSED
+PUBLIC LINK AUDIT PASSED
 ```
 
 检查内容包括：
@@ -123,15 +124,16 @@ PUBLISH AUDIT PASSED
 - `file://` fallback 和 HTTP 3D viewer 的脚本结构是否正确；
 - 项目树内是否混入 `__pycache__`；
 - 发布仓库是否误跟踪 `hf/`、`logs/`、generated 输出或疑似凭证。
+- 公开入口文件是否误写个人机器绝对路径或断开的本地链接。
 
 ## 更新教学前端
 
 新增 Markdown 或 Notebook 后运行：
 
 ```powershell
-python C:\Users\robot\Documents\成长学习库\physx-omni-assets\official_viewer\build_materials_data.py
-python C:\Users\robot\Documents\成长学习库\physx-omni-assets\scripts\validate_physx_omni_quality.py
-python C:\Users\robot\Documents\成长学习库\physx-omni-assets\scripts\audit_publish_ready.py
+python official_viewer/build_materials_data.py
+python scripts/validate_physx_omni_quality.py
+python scripts/audit_publish_ready.py
 ```
 
 `file://.../official_viewer/index.html` 可用于便携阅读和搜索；完整 3D GLB 交互请使用 `http://127.0.0.1:8017/index.html`。

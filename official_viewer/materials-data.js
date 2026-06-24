@@ -2,14 +2,14 @@ window.PHYSX_OMNI_LIBRARY = {
   "generatedAt": "2026-06-25",
   "assetRoot": ".",
   "counts": {
-    "documents": 91,
-    "markdown": 82,
+    "documents": 92,
+    "markdown": 83,
     "notebooks": 9
   },
   "groups": {
     "官方代码文档": 6,
     "官方代码 Bench": 6,
-    "项目入口与交付说明": 9,
+    "项目入口与交付说明": 10,
     "主线精读 Step 1-7": 15,
     "Step 10 技术实验回答": 4,
     "Step 8 概念逐项精讲": 30,
@@ -3242,7 +3242,7 @@ window.PHYSX_OMNI_LIBRARY = {
       "relPath": "official_viewer/README.md",
       "href": "README.md",
       "lines": 39,
-      "bytes": 1607,
+      "bytes": 1489,
       "outline": [
         {
           "level": 1,
@@ -3369,8 +3369,8 @@ window.PHYSX_OMNI_LIBRARY = {
       "title": "PhysX-Omni 2605.21572v1 精读与复现包",
       "relPath": "README.md",
       "href": "../README.md",
-      "lines": 138,
-      "bytes": 4806,
+      "lines": 140,
+      "bytes": 4785,
       "outline": [
         {
           "level": 1,
@@ -3405,7 +3405,7 @@ window.PHYSX_OMNI_LIBRARY = {
           "text": "更新教学前端"
         }
       ],
-      "excerpt": "这是 PhysX-Omni 的本地精读、代码导读、复现证据和交互查看包。 这次整理参考了 `dictmap/roboplay` 的轻量复现仓库风格：主入口清楚、证据边界清楚、来源清单清楚、脚本入口清楚、验证结果可复跑；大体积运行输出不塞进项目树，而是通过 manifest 和报告说明位置与可信边界。 GitHub 仓库： - 论文精读材料已经组织为 Step 1-10。 - 官方参考 demo 已跑通 VLM/RLE、几何解码、URDF/MuJoCo XML 生成。 - 教学前端已经索引 91 个 Markdown/Notebook 文档。 - 官方 7 部件 demo 和 M&M's body-focus mesh 输出都可以在 Three.js viewer 中查看。 - M&M's 高罐结果被明确标注为真实图片压力测试，不等价于官方 benchmark 成功。 - 项目级验证脚本会检查结构、manifest、材料索引、vi"
+      "excerpt": "这是 PhysX-Omni 的本地精读、代码导读、复现证据和交互查看包。 这次整理参考了 `dictmap/roboplay` 的轻量复现仓库风格：主入口清楚、证据边界清楚、来源清单清楚、脚本入口清楚、验证结果可复跑；大体积运行输出不塞进项目树，而是通过 manifest 和报告说明位置与可信边界。 GitHub 仓库： - 论文精读材料已经组织为 Step 1-10。 - 官方参考 demo 已跑通 VLM/RLE、几何解码、URDF/MuJoCo XML 生成。 - 教学前端已经索引 92 个 Markdown/Notebook 文档。 - 官方 7 部件 demo 和 M&M's body-focus mesh 输出都可以在 Three.js viewer 中查看。 - M&M's 高罐结果被明确标注为真实图片压力测试，不等价于官方 benchmark 成功。 - 项目级验证脚本会检查结构、manifest、材料索引、vi"
     },
     {
       "type": "markdown",
@@ -3413,8 +3413,8 @@ window.PHYSX_OMNI_LIBRARY = {
       "title": "发布检查清单",
       "relPath": "RELEASE_CHECKLIST.md",
       "href": "../RELEASE_CHECKLIST.md",
-      "lines": 32,
-      "bytes": 1456,
+      "lines": 37,
+      "bytes": 1931,
       "outline": [
         {
           "level": 1,
@@ -3437,7 +3437,7 @@ window.PHYSX_OMNI_LIBRARY = {
           "text": "质量判定"
         }
       ],
-      "excerpt": "这个清单用于确认 `dictmap/physx-omni-play` 不是一次性文件堆，而是一个可公开阅读、可验证、可继续维护的轻量复现仓库。 - `python official_viewer/build_materials_data.py` - `python scripts/validate_physx_omni_quality.py` - `python scripts/audit_publish_ready.py` - GitHub Actions `quality` workflow 通过 - `hf/` 不进入 Git；模型和数据集只在 `SOURCE_MANIFEST.json` 记录位置。 - `logs/` 不进入 Git；远端运行日志只在证据清单中说明。 - `__pycache__/`、Jupyter 临时目录、benchmark generated 输出不进入 Git。 - 单个 tracked 文件不"
+      "excerpt": "这个清单用于确认 `dictmap/physx-omni-play` 不是一次性文件堆，而是一个可公开阅读、可验证、可继续维护的轻量复现仓库。 - `python official_viewer/build_materials_data.py` - `python scripts/validate_physx_omni_quality.py` - `python scripts/audit_publish_ready.py` - `python scripts/audit_public_links.py` - GitHub Actions `quality` workflow 通过 - `hf/` 不进入 Git；模型和数据集只在 `SOURCE_MANIFEST.json` 记录位置。 - `logs/` 不进入 Git；远端运行日志只在证据清单中说明。 - `__pycache__/`、Jupyter 临时目录、benchm"
     },
     {
       "type": "markdown",
@@ -3494,6 +3494,42 @@ window.PHYSX_OMNI_LIBRARY = {
         }
       ],
       "excerpt": "日期：2026-06-25 这个文件只记录已经有证据支持的内容，以及不能越界声称的内容。它和教学叙述分开，方便快速审计。 状态：已复现 本地证据目录： 教学前端同步证据： 允许声称： - 本地 viewer 有 7 个官方 GLB 部件。 - 官方参考链路已生成 `basic_info.json`、`basic.urdf`、`basic.xml`。 - 官方 demo 可以在 HTTP 版 Three.js viewer 中交互查看。 不允许声称： - 生成的物理参数已经被证明真实可靠。 - 资产已经通过跨仿真器动态验证。 - 这些资产已经证明能提升真实机器人 sim-to-real。 状态：压力测试解码完成 本地证据目录： 教学前端同步证据： 实测事实： 允许声称： - body-focus 预处理提升了非空部件覆盖。 - TRELLIS 低显存 mesh-only 解码为 3 个非空部件生成了 GLB。 - 用户观察“罐子看"
+    },
+    {
+      "type": "markdown",
+      "group": "项目入口与交付说明",
+      "title": "第三方资产与授权边界",
+      "relPath": "THIRD_PARTY_NOTICES.md",
+      "href": "../THIRD_PARTY_NOTICES.md",
+      "lines": 41,
+      "bytes": 2291,
+      "outline": [
+        {
+          "level": 1,
+          "text": "第三方资产与授权边界"
+        },
+        {
+          "level": 2,
+          "text": "上游代码快照"
+        },
+        {
+          "level": 2,
+          "text": "论文、图表和源码"
+        },
+        {
+          "level": 2,
+          "text": "Hugging Face 模型与数据集"
+        },
+        {
+          "level": 2,
+          "text": "复现输出与查看器资产"
+        },
+        {
+          "level": 2,
+          "text": "本仓库新增内容"
+        }
+      ],
+      "excerpt": "本仓库是 PhysX-Omni 论文精读、复现证据和教学查看包，不重新授权上游论文、代码、模型、数据集或生成资产。 - 来源：`https://github.com/physx-omni/PhysX-Omni` - 本仓库位置：`code/PhysX-Omni/` - 记录版本：`46fa1cd` - 上游许可证文件：`code/PhysX-Omni/LICENSE` - 许可证名称：`S-Lab License 1.0` 该许可证允许非商业目的的源码和二进制再分发，但商业用途需要联系贡献者。使用 `code/PhysX-Omni/` 下的代码时，应以该目录内的上游许可证为准。 - arXiv 摘要页：`https://arxiv.org/abs/2605.21572v1` - arXiv HTML：`https://arxiv.org/html/2605.21572v1` - 本地论文缓存：`paper/2605.21572v"
     },
     {
       "type": "notebook",

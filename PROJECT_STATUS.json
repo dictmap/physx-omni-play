@@ -4,13 +4,13 @@
   "quality_status": "通过",
   "paper": "https://arxiv.org/abs/2605.21572v1",
   "code": "https://github.com/physx-omni/PhysX-Omni",
-  "local_project_root": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets",
-  "large_output_root": "C:\\Users\\robot\\physx_outputs",
+  "project_root": ".",
+  "large_output_note": "大体积输出不随仓库发布；源机器证据位置见 REMOTE_EVIDENCE_MANIFEST.md。",
   "viewer": {
     "http_url": "http://127.0.0.1:8017/index.html",
     "local_file": "official_viewer/index.html",
-    "teaching_documents_indexed": 91,
-    "markdown_documents": 82,
+    "teaching_documents_indexed": 92,
+    "markdown_documents": 83,
     "notebooks": 9,
     "file_mode": "教学内容、材料库和搜索可用",
     "http_mode": "教学内容和 Three.js GLB 交互都可用"

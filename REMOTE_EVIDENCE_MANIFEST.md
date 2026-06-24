@@ -116,8 +116,8 @@ official_viewer/materials-data.js
 
 当前索引数量：
 
-- 91 个总文档
-- 82 个 Markdown
+- 92 个总文档
+- 83 个 Markdown
 - 9 个 Jupyter Notebook
 
 验证命令：

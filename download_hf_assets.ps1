@@ -2,13 +2,24 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$hf = "C:\Users\robot\AppData\Local\Programs\Python\Python312\Scripts\hf.exe"
 $logs = Join-Path $root "logs"
 $modelDir = Join-Path $root "hf\PhysX-Omni-model"
 $datasetDir = Join-Path $root "hf\PhysXVerse-dataset"
 $statusPath = Join-Path $logs "hf_download_status.json"
 $logPath = Join-Path $logs "hf_download.log"
 
+function Resolve-HfCli {
+    if ($env:HF_BIN) {
+        return $env:HF_BIN
+    }
+    $command = Get-Command hf -ErrorAction SilentlyContinue
+    if ($command) {
+        return $command.Source
+    }
+    throw "Hugging Face CLI 'hf' not found. Install it with: python -m pip install -U huggingface_hub[cli], or set HF_BIN to the hf executable path."
+}
+
+$hf = Resolve-HfCli
 New-Item -ItemType Directory -Force -Path $logs, $modelDir, $datasetDir | Out-Null
 
 function Write-Status {
@@ -24,6 +35,7 @@ function Write-Status {
         message = $Message
         model_dir = $modelDir
         dataset_dir = $datasetDir
+        hf_bin = $hf
     }
     $payload | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $statusPath -Encoding UTF8
 }

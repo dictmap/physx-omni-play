@@ -66,6 +66,7 @@ def validate_required_files() -> None:
         "SOURCE_MANIFEST.json",
         "REMOTE_EVIDENCE_MANIFEST.md",
         "RELEASE_CHECKLIST.md",
+        "THIRD_PARTY_NOTICES.md",
         "reproduce_quality.sh",
         "physx_omni_repro_quality.patch",
         "official_viewer/index.html",
@@ -97,6 +98,7 @@ def validate_required_files() -> None:
         "code/PhysX-Omni/decoder_each.py",
         "code/PhysX-Omni/3jsongen_update.py",
         "scripts/audit_publish_ready.py",
+        "scripts/audit_public_links.py",
     ]
     for rel in required:
         require_file(rel)
@@ -226,6 +228,22 @@ def validate_viewer_structure() -> None:
         fail("viewer.js should use inspection-friendly material rendering")
 
 
+def validate_third_party_notice() -> None:
+    notice = require_file("THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
+    license_text = require_file("code/PhysX-Omni/LICENSE").read_text(encoding="utf-8")
+    for phrase in [
+        "S-Lab License 1.0",
+        "非商业",
+        "https://github.com/physx-omni/PhysX-Omni",
+        "https://huggingface.co/PhysX-Omni/PhysX-Omni",
+        "https://huggingface.co/datasets/PhysX-Omni/PhysXVerse",
+    ]:
+        if phrase not in notice:
+            fail(f"THIRD_PARTY_NOTICES.md missing phrase: {phrase}")
+    if "S-Lab License 1.0" not in license_text:
+        fail("official code license file is not the expected S-Lab License 1.0")
+
+
 def validate_no_generated_cache() -> None:
     cache_dirs = [
         path
@@ -246,6 +264,7 @@ def main() -> None:
     validate_materials_index()
     validate_viewer_assets()
     validate_viewer_structure()
+    validate_third_party_notice()
     validate_no_generated_cache()
     print("QUALITY CHECK PASSED")
 

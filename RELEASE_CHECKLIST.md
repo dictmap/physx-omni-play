@@ -7,6 +7,7 @@
 - `python official_viewer/build_materials_data.py`
 - `python scripts/validate_physx_omni_quality.py`
 - `python scripts/audit_publish_ready.py`
+- `python scripts/audit_public_links.py`
 - GitHub Actions `quality` workflow 通过
 
 ## 必须保持的边界
@@ -16,6 +17,9 @@
 - `__pycache__/`、Jupyter 临时目录、benchmark generated 输出不进入 Git。
 - 单个 tracked 文件不得超过 GitHub 硬限制，接近大文件时要改成 manifest 记录。
 - 不把 token、私钥、VNC 密码、API key 或个人凭证写入仓库。
+- 面向公开读者的入口文件不能残留个人机器绝对路径；本地证据路径只放在证据清单或实验记录里。
+- 下载脚本不能硬编码个人 Python、Hugging Face CLI 或 4090 根目录，必须允许环境变量覆盖。
+- 上游代码、论文、模型、数据集和复现同步资产的授权边界必须写在 `THIRD_PARTY_NOTICES.md`。
 
 ## 公开入口
 
@@ -25,6 +29,7 @@
 - `official_viewer/index.html` 是教学前端入口。
 - `REMOTE_EVIDENCE_MANIFEST.md` 是证据边界入口。
 - `CITATION.cff` 是引用入口。
+- `THIRD_PARTY_NOTICES.md` 是第三方授权边界入口。
 
 ## 质量判定
 

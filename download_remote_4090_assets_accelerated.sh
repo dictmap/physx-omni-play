@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="/data/light/repro/physx_omni_2605_21572"
-HF_BIN="${HF_BIN:-$HOME/.local/bin/hf}"
-HF_ENDPOINT_VALUE="${HF_ENDPOINT_VALUE:-https://hf-mirror.com}"
-
 export PATH="$HOME/.local/bin:$PATH"
+
+ROOT="${PHYSX_OMNI_ROOT:-/data/light/repro/physx_omni_2605_21572}"
+HF_BIN="${HF_BIN:-hf}"
+HF_ENDPOINT_VALUE="${HF_ENDPOINT_VALUE:-${HF_ENDPOINT:-https://hf-mirror.com}}"
 export HF_ENDPOINT="$HF_ENDPOINT_VALUE"
-export HF_HOME="/data/light/hf_cache"
-export HF_XET_CACHE="/data/light/hf_cache/xet"
+export HF_HOME="${HF_HOME:-/data/light/hf_cache}"
+export HF_XET_CACHE="${HF_XET_CACHE:-$HF_HOME/xet}"
+
+if ! command -v "$HF_BIN" >/dev/null 2>&1; then
+  echo "Hugging Face CLI not found: $HF_BIN. Install huggingface_hub[cli] or set HF_BIN." >&2
+  exit 127
+fi
 
 mkdir -p "$ROOT"/{paper,web,code,hf,logs} "$ROOT/hf/PhysX-Omni-model" "$ROOT/hf/PhysXVerse-dataset" "$HF_HOME" "$HF_XET_CACHE"
 

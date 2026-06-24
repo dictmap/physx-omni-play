@@ -16,8 +16,8 @@
 ## Run
 
 ```powershell
-python C:\Users\robot\Documents\成长学习库\physx-omni-assets\official_viewer\build_materials_data.py
-python C:\Users\robot\Documents\成长学习库\physx-omni-assets\official_viewer\serve_viewer.py
+python official_viewer/build_materials_data.py
+python official_viewer/serve_viewer.py
 ```
 
 Open:

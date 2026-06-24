@@ -11,6 +11,8 @@
     "repository": "https://github.com/physx-omni/PhysX-Omni",
     "local_checkout": "code/PhysX-Omni",
     "upstream_commit": "46fa1cd",
+    "license_file": "code/PhysX-Omni/LICENSE",
+    "license_name": "S-Lab License 1.0",
     "local_snapshot_note": "GitHub 发布仓库中按普通文件保留源码快照；上游 .git 元数据不进入轻量复现仓库。",
     "core_files": [
       "code/PhysX-Omni/1vlm_demo.py",
@@ -32,6 +34,10 @@
     "local_model_cache": "hf/PhysX-Omni-model",
     "local_dataset_cache": "hf/PhysXVerse-dataset",
     "notes": "大体积、gated 或远端资产必须在这里记录来源和本地位置，不能只用本地缓存存在来暗示已经完成。"
+  },
+  "third_party_notices": {
+    "file": "THIRD_PARTY_NOTICES.md",
+    "notes": "公开仓库不重新授权上游论文、代码、模型、数据集或复现同步资产。"
   },
   "learning_materials": {
     "root": "learning_materials",

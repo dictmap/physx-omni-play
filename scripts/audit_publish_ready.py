@@ -42,6 +42,7 @@ REQUIRED_FILES = [
     ".gitattributes",
     ".nojekyll",
     "CITATION.cff",
+    "THIRD_PARTY_NOTICES.md",
     "index.html",
     "README.md",
     "LEARNING_INDEX.md",
@@ -54,6 +55,7 @@ REQUIRED_FILES = [
     "official_viewer/materials-data.js",
     "scripts/validate_physx_omni_quality.py",
     "scripts/audit_publish_ready.py",
+    "scripts/audit_public_links.py",
 ]
 
 FORBIDDEN_TRACKED_PREFIXES = [
@@ -149,11 +151,26 @@ def validate_readme_links() -> None:
         "https://github.com/dictmap/physx-omni-play",
         "index.html",
         "RELEASE_CHECKLIST.md",
+        "THIRD_PARTY_NOTICES.md",
         "scripts/audit_publish_ready.py",
+        "scripts/audit_public_links.py",
     ]
     for phrase in required_phrases:
         if phrase not in readme:
             fail(f"README.md missing public publish phrase: {phrase}")
+
+
+def validate_third_party_notice() -> None:
+    notice = (ROOT / "THIRD_PARTY_NOTICES.md").read_text(encoding="utf-8")
+    for phrase in [
+        "S-Lab License 1.0",
+        "非商业",
+        "不重新授权",
+        "PhysX-Omni/PhysX-Omni",
+        "PhysX-Omni/PhysXVerse",
+    ]:
+        if phrase not in notice:
+            fail(f"THIRD_PARTY_NOTICES.md missing publish phrase: {phrase}")
 
 
 def main() -> None:
@@ -167,6 +184,7 @@ def main() -> None:
     validate_tracked_set(files, args.max_file_mb)
     validate_secret_scan(files)
     validate_readme_links()
+    validate_third_party_notice()
     print("PUBLISH AUDIT PASSED")
 
 

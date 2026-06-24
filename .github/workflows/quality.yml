@@ -31,3 +31,6 @@ jobs:
 
       - name: Audit publish readiness
         run: python scripts/audit_publish_ready.py
+
+      - name: Audit public links
+        run: python scripts/audit_public_links.py
