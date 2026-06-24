@@ -59,9 +59,21 @@
 
 - `build_materials_data.py` 可重新生成教学站材料索引。
 - `scripts/validate_physx_omni_quality.py` 可验证项目结构和资产数量。
+- `scripts/audit_publish_ready.py` 可验证公开发布边界、敏感信息和大文件风险。
 - `reproduce_quality.sh` 固化官方质量复现路径。
 
-## Gate 6：非声明项
+## Gate 6：公开发布质量
+
+状态：通过
+
+要求：
+
+- 根目录 `index.html` 可作为公开入口。
+- `.nojekyll` 存在，避免 GitHub Pages 对下划线目录做额外处理。
+- `RELEASE_CHECKLIST.md` 明确发布前命令、证据边界和非声明项。
+- GitHub Actions `quality` 同时运行项目质量检查和发布审计。
+
+## Gate 7：非声明项
 
 状态：通过
 

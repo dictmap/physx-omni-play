@@ -28,3 +28,6 @@ jobs:
 
       - name: Validate project quality gates
         run: python scripts/validate_physx_omni_quality.py
+
+      - name: Audit publish readiness
+        run: python scripts/audit_publish_ready.py

@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PhysX-Omni Play</title>
+    <meta
+      name="description"
+      content="PhysX-Omni 2605.21572v1 论文精读、复现证据、代码导读和 3D 资产查看入口。"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d1117;
+        --panel: #151b23;
+        --panel-2: #1b232e;
+        --text: #eef3f8;
+        --muted: #a9b6c6;
+        --line: #303b49;
+        --gold: #e4b640;
+        --cyan: #5fd0c4;
+        --blue: #79a8ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Microsoft YaHei", sans-serif;
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        background: rgba(13, 17, 23, 0.92);
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      .nav {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .brand strong {
+        font-size: 18px;
+      }
+
+      .brand span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .nav-links a,
+      .button {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 8px;
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+
+      main {
+        padding: 34px 0 48px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 420px;
+      }
+
+      .eyebrow {
+        color: var(--cyan);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: clamp(36px, 6vw, 72px);
+        line-height: 0.94;
+        margin: 14px 0 18px;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 720px;
+        color: var(--muted);
+        font-size: 18px;
+        margin: 0 0 24px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button.primary {
+        background: var(--gold);
+        color: #17140a;
+        border-color: var(--gold);
+        font-weight: 800;
+      }
+
+      .visual {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 8px;
+        padding: 14px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .visual img {
+        width: 100%;
+        border-radius: 6px;
+        border: 1px solid var(--line);
+        background: #05070a;
+        object-fit: cover;
+      }
+
+      .visual figcaption {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      .tile {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 8px;
+        padding: 18px;
+        min-height: 148px;
+      }
+
+      .tile b {
+        color: var(--gold);
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .tile p {
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .status {
+        margin-top: 26px;
+        border: 1px solid var(--line);
+        background: var(--panel-2);
+        border-radius: 8px;
+        padding: 18px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .metric {
+        border-left: 3px solid var(--blue);
+        padding-left: 12px;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 24px;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        padding: 22px 0 34px;
+        font-size: 13px;
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .grid,
+        .status {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-copy {
+          min-height: auto;
+        }
+
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 14px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="shell nav" aria-label="主导航">
+        <a class="brand" href="./index.html">
+          <strong>PhysX-Omni Play</strong>
+          <span>论文精读 · 复现证据 · 3D 资产查看</span>
+        </a>
+        <div class="nav-links">
+          <a href="./LEARNING_INDEX.md">阅读索引</a>
+          <a href="./REMOTE_EVIDENCE_MANIFEST.md">证据边界</a>
+          <a href="./SOURCE_MANIFEST.json">来源清单</a>
+          <a href="./official_viewer/index.html">教学前端</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">arXiv 2605.21572v1</div>
+          <h1>PhysX-Omni<br />可读、可复现、可验证</h1>
+          <p class="lead">
+            这个仓库把 PhysX-Omni 的论文精读、官方代码快照、复现记录、M&M's 高罐压力测试、
+            证据边界和本地 3D GLB 查看器整理为一个轻量交付包。
+          </p>
+          <div class="actions">
+            <a class="button primary" href="./official_viewer/index.html">打开教学前端</a>
+            <a class="button" href="./README.md">查看 README</a>
+            <a class="button" href="./PROJECT_QUALITY_STANDARD.md">质量标准</a>
+          </div>
+        </div>
+        <figure class="visual">
+          <img
+            src="./official_viewer/assets/evidence/official_7part_mesh_preview.png"
+            alt="官方 7 部件 demo 的本地复现预览"
+          />
+          <figcaption>
+            官方 7 部件 demo 是完整链路复现证据；M&M's 高罐是单图压力测试，不等同于官方指标成功。
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="grid" aria-label="核心入口">
+        <a class="tile" href="./learning_materials/paper_reading/physx_omni_paper_code_assets_deep_reading_step1.md">
+          <b>论文与代码主流程</b>
+          <p>从官方 pipeline、关键脚本、输入输出和复现资产开始阅读。</p>
+        </a>
+        <a class="tile" href="./learning_materials/reproduction/physx_omni_current_delivery_report.md">
+          <b>复现交付状态</b>
+          <p>区分官方 demo、M&M's 压力测试、可声明内容和剩余限制。</p>
+        </a>
+        <a class="tile" href="./learning_materials/physx_omni_step9_reviewer/00_reviewer_soul_questions.md">
+          <b>审稿人追问</b>
+          <p>把单图物理推断、VLM judge、跨仿真器一致性等问题拆开审计。</p>
+        </a>
+      </section>
+
+      <section class="status" aria-label="当前质量状态">
+        <div class="metric">
+          <strong>91</strong>
+          <span>Markdown / Notebook 材料索引</span>
+        </div>
+        <div class="metric">
+          <strong>7</strong>
+          <span>官方 demo GLB 部件</span>
+        </div>
+        <div class="metric">
+          <strong>3</strong>
+          <span>M&M's body-focus 非空 GLB</span>
+        </div>
+        <div class="metric">
+          <strong>CI</strong>
+          <span>质量脚本与发布审计自动运行</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell">
+        本页是仓库公开入口；完整 3D 交互请在本地 HTTP 服务下打开
+        <code>official_viewer/index.html</code>。
+      </div>
+    </footer>
+  </body>
+</html>

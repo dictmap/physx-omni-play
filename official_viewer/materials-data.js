@@ -2,14 +2,14 @@ window.PHYSX_OMNI_LIBRARY = {
   "generatedAt": "2026-06-25",
   "assetRoot": ".",
   "counts": {
-    "documents": 90,
-    "markdown": 81,
+    "documents": 91,
+    "markdown": 82,
     "notebooks": 9
   },
   "groups": {
     "官方代码文档": 6,
     "官方代码 Bench": 6,
-    "项目入口与交付说明": 8,
+    "项目入口与交付说明": 9,
     "主线精读 Step 1-7": 15,
     "Step 10 技术实验回答": 4,
     "Step 8 概念逐项精讲": 30,
@@ -3325,8 +3325,8 @@ window.PHYSX_OMNI_LIBRARY = {
       "title": "PhysX-Omni 项目质量标准",
       "relPath": "PROJECT_QUALITY_STANDARD.md",
       "href": "../PROJECT_QUALITY_STANDARD.md",
-      "lines": 75,
-      "bytes": 2165,
+      "lines": 87,
+      "bytes": 2611,
       "outline": [
         {
           "level": 1,
@@ -3354,7 +3354,11 @@ window.PHYSX_OMNI_LIBRARY = {
         },
         {
           "level": 2,
-          "text": "Gate 6：非声明项"
+          "text": "Gate 6：公开发布质量"
+        },
+        {
+          "level": 2,
+          "text": "Gate 7：非声明项"
         }
       ],
       "excerpt": "本项目按“可阅读、可复现、可验证”的研究交付标准整理。每个重要结论都应能对应到一个入口文件、一个来源记录、一个本地证据路径和一个可运行的验证检查。 状态：通过 要求： - Step 1-7 论文精读 Markdown 存在。 - Step 8 概念逐项精讲索引存在。 - Step 9 审稿人质疑存在。 - Step 10 技术实验回答存在。 - 教学前端通过 `materials-data.js` 索引 Markdown 和 Notebook。 状态：通过，但带明确边界 要求： - 官方 demo 有 7 个 GLB 部件。 - 官方 demo 在复现报告中记录了 `basic_info.json`、`basic.urdf`、`basic.xml`。 - M&M's body-focus 测试记录 voxel 数量和 mesh-only 输出。 - 复现证据旁必须说明限制，不能把压力测试说成 benchmark 成功。 已知限制"
@@ -3365,8 +3369,8 @@ window.PHYSX_OMNI_LIBRARY = {
       "title": "PhysX-Omni 2605.21572v1 精读与复现包",
       "relPath": "README.md",
       "href": "../README.md",
-      "lines": 116,
-      "bytes": 3774,
+      "lines": 132,
+      "bytes": 4360,
       "outline": [
         {
           "level": 1,
@@ -3401,7 +3405,39 @@ window.PHYSX_OMNI_LIBRARY = {
           "text": "更新教学前端"
         }
       ],
-      "excerpt": "这是 PhysX-Omni 的本地精读、代码导读、复现证据和交互查看包。 这次整理参考了 `dictmap/roboplay` 的轻量复现仓库风格：主入口清楚、证据边界清楚、来源清单清楚、脚本入口清楚、验证结果可复跑；大体积运行输出不塞进项目树，而是通过 manifest 和报告说明位置与可信边界。 - 论文精读材料已经组织为 Step 1-10。 - 官方参考 demo 已跑通 VLM/RLE、几何解码、URDF/MuJoCo XML 生成。 - 教学前端已经索引 90 个 Markdown/Notebook 文档。 - 官方 7 部件 demo 和 M&M's body-focus mesh 输出都可以在 Three.js viewer 中查看。 - M&M's 高罐结果被明确标注为真实图片压力测试，不等价于官方 benchmark 成功。 - 项目级验证脚本会检查结构、manifest、材料索引、viewer 资产和关键证"
+      "excerpt": "这是 PhysX-Omni 的本地精读、代码导读、复现证据和交互查看包。 这次整理参考了 `dictmap/roboplay` 的轻量复现仓库风格：主入口清楚、证据边界清楚、来源清单清楚、脚本入口清楚、验证结果可复跑；大体积运行输出不塞进项目树，而是通过 manifest 和报告说明位置与可信边界。 GitHub 仓库： - 论文精读材料已经组织为 Step 1-10。 - 官方参考 demo 已跑通 VLM/RLE、几何解码、URDF/MuJoCo XML 生成。 - 教学前端已经索引 91 个 Markdown/Notebook 文档。 - 官方 7 部件 demo 和 M&M's body-focus mesh 输出都可以在 Three.js viewer 中查看。 - M&M's 高罐结果被明确标注为真实图片压力测试，不等价于官方 benchmark 成功。 - 项目级验证脚本会检查结构、manifest、材料索引、vi"
+    },
+    {
+      "type": "markdown",
+      "group": "项目入口与交付说明",
+      "title": "发布检查清单",
+      "relPath": "RELEASE_CHECKLIST.md",
+      "href": "../RELEASE_CHECKLIST.md",
+      "lines": 31,
+      "bytes": 1420,
+      "outline": [
+        {
+          "level": 1,
+          "text": "发布检查清单"
+        },
+        {
+          "level": 2,
+          "text": "每次发布前必须通过"
+        },
+        {
+          "level": 2,
+          "text": "必须保持的边界"
+        },
+        {
+          "level": 2,
+          "text": "公开入口"
+        },
+        {
+          "level": 2,
+          "text": "质量判定"
+        }
+      ],
+      "excerpt": "这个清单用于确认 `dictmap/physx-omni-play` 不是一次性文件堆，而是一个可公开阅读、可验证、可继续维护的轻量复现仓库。 - `python official_viewer/build_materials_data.py` - `python scripts/validate_physx_omni_quality.py` - `python scripts/audit_publish_ready.py` - GitHub Actions `quality` workflow 通过 - `hf/` 不进入 Git；模型和数据集只在 `SOURCE_MANIFEST.json` 记录位置。 - `logs/` 不进入 Git；远端运行日志只在证据清单中说明。 - `__pycache__/`、Jupyter 临时目录、benchmark generated 输出不进入 Git。 - 单个 tracked 文件不"
     },
     {
       "type": "markdown",

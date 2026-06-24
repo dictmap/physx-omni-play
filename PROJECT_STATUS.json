@@ -9,8 +9,8 @@
   "viewer": {
     "http_url": "http://127.0.0.1:8017/index.html",
     "local_file": "official_viewer/index.html",
-    "teaching_documents_indexed": 90,
-    "markdown_documents": 81,
+    "teaching_documents_indexed": 91,
+    "markdown_documents": 82,
     "notebooks": 9,
     "file_mode": "教学内容、材料库和搜索可用",
     "http_mode": "教学内容和 Three.js GLB 交互都可用"

@@ -57,12 +57,15 @@ def validate_required_files() -> None:
         ".gitattributes",
         ".github/workflows/quality.yml",
         ".gitignore",
+        ".nojekyll",
+        "index.html",
         "README.md",
         "LEARNING_INDEX.md",
         "PROJECT_QUALITY_STANDARD.md",
         "PROJECT_STATUS.json",
         "SOURCE_MANIFEST.json",
         "REMOTE_EVIDENCE_MANIFEST.md",
+        "RELEASE_CHECKLIST.md",
         "reproduce_quality.sh",
         "physx_omni_repro_quality.patch",
         "official_viewer/index.html",
@@ -93,6 +96,7 @@ def validate_required_files() -> None:
         "code/PhysX-Omni/2infer_geo.py",
         "code/PhysX-Omni/decoder_each.py",
         "code/PhysX-Omni/3jsongen_update.py",
+        "scripts/audit_publish_ready.py",
     ]
     for rel in required:
         require_file(rel)
