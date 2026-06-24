@@ -20,7 +20,9 @@ jobs:
         run: python official_viewer/build_materials_data.py
 
       - name: Ensure generated material index is committed
-        run: git diff --exit-code official_viewer/materials-data.js
+        run: |
+          git diff -- official_viewer/materials-data.js
+          git diff --exit-code official_viewer/materials-data.js
 
       - name: Validate project quality gates
         run: python scripts/validate_physx_omni_quality.py
