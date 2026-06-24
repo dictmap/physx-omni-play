@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -22,7 +22,7 @@ jobs:
       - name: Report material index drift
         run: |
           if ! git diff --quiet -- official_viewer/materials-data.js; then
-            echo "::warning file=official_viewer/materials-data.js::Rebuilding the material index changed the generated file in CI. The validation step will run against the regenerated index."
+            echo "Rebuilding the material index changed the generated file in CI. The validation step will run against the regenerated index."
             git diff --stat -- official_viewer/materials-data.js
           fi
 
