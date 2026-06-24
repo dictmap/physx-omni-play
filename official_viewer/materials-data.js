@@ -3369,8 +3369,8 @@ window.PHYSX_OMNI_LIBRARY = {
       "title": "PhysX-Omni 2605.21572v1 精读与复现包",
       "relPath": "README.md",
       "href": "../README.md",
-      "lines": 132,
-      "bytes": 4360,
+      "lines": 138,
+      "bytes": 4806,
       "outline": [
         {
           "level": 1,
@@ -3413,8 +3413,8 @@ window.PHYSX_OMNI_LIBRARY = {
       "title": "发布检查清单",
       "relPath": "RELEASE_CHECKLIST.md",
       "href": "../RELEASE_CHECKLIST.md",
-      "lines": 31,
-      "bytes": 1420,
+      "lines": 32,
+      "bytes": 1456,
       "outline": [
         {
           "level": 1,

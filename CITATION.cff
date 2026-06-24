@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "如果使用这个精读与复现包，请同时引用原始 PhysX-Omni 论文和本仓库。"
+title: "PhysX-Omni Play: reading and reproduction package"
+type: software
+authors:
+  - name: "dictmap"
+date-released: "2026-06-25"
+repository-code: "https://github.com/dictmap/physx-omni-play"
+url: "https://github.com/dictmap/physx-omni-play"
+abstract: "A lightweight reading, reproduction, evidence, and local 3D viewer package for PhysX-Omni arXiv:2605.21572v1."
+preferred-citation:
+  type: article
+  title: "PhysX-Omni: Unified Simulation-Ready Physical 3D Generation for Rigid, Deformable, and Articulated Objects"
+  authors:
+    - family-names: "Cao"
+      given-names: "Ziang"
+    - family-names: "Liu"
+      given-names: "Yinghao"
+    - family-names: "Li"
+      given-names: "Haitian"
+    - family-names: "Yao"
+      given-names: "Runmao"
+    - family-names: "Hong"
+      given-names: "Fangzhou"
+    - family-names: "Chen"
+      given-names: "Zhaoxi"
+    - family-names: "Pan"
+      given-names: "Liang"
+    - family-names: "Liu"
+      given-names: "Ziwei"
+  year: 2026
+  identifiers:
+    - type: other
+      value: "arXiv:2605.21572"
+  url: "https://arxiv.org/abs/2605.21572v1"

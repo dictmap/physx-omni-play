@@ -88,7 +88,12 @@ def excerpt_from_markdown(text: str, limit: int = 420) -> str:
             continue
         if in_fence:
             continue
-        if not stripped or stripped.startswith("#") or stripped.startswith("|"):
+        if (
+            not stripped
+            or stripped.startswith("#")
+            or stripped.startswith("|")
+            or re.match(r"^\[!\[[^\]]+\]\(", stripped)
+        ):
             continue
         if re.match(r"^[-*]\s*$", stripped):
             continue

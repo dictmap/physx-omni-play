@@ -41,6 +41,7 @@ REQUIRED_FILES = [
     ".gitignore",
     ".gitattributes",
     ".nojekyll",
+    "CITATION.cff",
     "index.html",
     "README.md",
     "LEARNING_INDEX.md",

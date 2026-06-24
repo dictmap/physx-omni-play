@@ -24,6 +24,7 @@
 - `LEARNING_INDEX.md` 是阅读路径入口。
 - `official_viewer/index.html` 是教学前端入口。
 - `REMOTE_EVIDENCE_MANIFEST.md` 是证据边界入口。
+- `CITATION.cff` 是引用入口。
 
 ## 质量判定
 

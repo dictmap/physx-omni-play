@@ -1,5 +1,9 @@
 # PhysX-Omni 2605.21572v1 精读与复现包
 
+[![quality](https://github.com/dictmap/physx-omni-play/actions/workflows/quality.yml/badge.svg)](https://github.com/dictmap/physx-omni-play/actions/workflows/quality.yml)
+[![arXiv](https://img.shields.io/badge/arXiv-2605.21572-b31b1b.svg)](https://arxiv.org/abs/2605.21572v1)
+[![publish audit](https://img.shields.io/badge/publish_audit-passing-2ea44f.svg)](scripts/audit_publish_ready.py)
+
 这是 PhysX-Omni 的本地精读、代码导读、复现证据和交互查看包。
 
 这次整理参考了 `dictmap/roboplay` 的轻量复现仓库风格：主入口清楚、证据边界清楚、来源清单清楚、脚本入口清楚、验证结果可复跑；大体积运行输出不塞进项目树，而是通过 manifest 和报告说明位置与可信边界。
@@ -22,6 +26,7 @@ https://github.com/dictmap/physx-omni-play
 | 跑项目质量检查 | `python scripts/validate_physx_omni_quality.py` |
 | 跑发布前审计 | `python scripts/audit_publish_ready.py` |
 | 查看发布检查清单 | `RELEASE_CHECKLIST.md` |
+| 查看引用信息 | `CITATION.cff` |
 | 查看证据边界 | `REMOTE_EVIDENCE_MANIFEST.md` |
 | 查看来源清单 | `SOURCE_MANIFEST.json` |
 
@@ -54,6 +59,7 @@ physx-omni-assets/
   SOURCE_MANIFEST.json
   REMOTE_EVIDENCE_MANIFEST.md
   RELEASE_CHECKLIST.md
+  CITATION.cff
   scripts/
     validate_physx_omni_quality.py
     audit_publish_ready.py
