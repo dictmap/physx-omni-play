@@ -1,0 +1,1179 @@
+{
+  "paper": "https://arxiv.org/abs/2605.21572v1",
+  "code": "https://github.com/physx-omni/PhysX-Omni",
+  "local_repo": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\code\\PhysX-Omni",
+  "physx_outputs": "C:\\Users\\robot\\physx_outputs",
+  "repro_outputs": [
+    {
+      "name": "mesh_part0",
+      "path": "C:\\Users\\robot\\physx_outputs\\mesh_part0",
+      "files": [
+        "0_mesh_only.glb",
+        "0_mesh_only.obj",
+        "0_mesh_only.ply",
+        "lowmem_mesh_report.json",
+        "mesh_preview.png"
+      ],
+      "has_basic_info_json": false,
+      "has_urdf": false,
+      "has_mjcf_xml": false,
+      "has_voxel_projection": false,
+      "mesh_status": "success",
+      "mesh_elapsed_sec": 23.68,
+      "mesh_voxels": 56,
+      "mesh_vertices": 1716,
+      "mesh_faces": 3428,
+      "mesh_peak_mib": 5730.55
+    },
+    {
+      "name": "mms_yellow",
+      "path": "C:\\Users\\robot\\physx_outputs\\mms_yellow",
+      "files": [
+        "basic_info.txt",
+        "repro_summary.json",
+        "voxel_projection.png"
+      ],
+      "has_basic_info_json": false,
+      "has_urdf": false,
+      "has_mjcf_xml": false,
+      "has_voxel_projection": true,
+      "status": "success",
+      "elapsed_sec": 594.48,
+      "detected_parts": 4,
+      "parts_to_run": 4,
+      "total_voxels": 2237,
+      "nonzero_voxel_parts": 1,
+      "zero_voxel_parts": 3,
+      "voxel_counts": [
+        0,
+        0,
+        2237,
+        0
+      ],
+      "coord_text_chars": [
+        8193,
+        8192,
+        1506,
+        8196
+      ],
+      "remote_image": "/data/light/repro/physx_omni_2605_21572/custom_inputs/mms_yellow_170406c2.jpg",
+      "remote_output_dir": "/data/light/repro/physx_omni_2605_21572/repro_runs/user_mms_yellow_vlm/mms_yellow_170406c2"
+    },
+    {
+      "name": "mms_yellow_body_focus",
+      "path": "C:\\Users\\robot\\physx_outputs\\mms_yellow_body_focus",
+      "files": [
+        "basic_info.txt",
+        "repro_summary.json",
+        "voxel_projection.png"
+      ],
+      "has_basic_info_json": false,
+      "has_urdf": false,
+      "has_mjcf_xml": false,
+      "has_voxel_projection": true,
+      "status": "success",
+      "elapsed_sec": 428.57,
+      "detected_parts": 4,
+      "parts_to_run": 4,
+      "total_voxels": 6188,
+      "nonzero_voxel_parts": 3,
+      "zero_voxel_parts": 1,
+      "voxel_counts": [
+        0,
+        2866,
+        1759,
+        1563
+      ],
+      "coord_text_chars": [
+        8193,
+        8256,
+        1520,
+        4226
+      ],
+      "remote_image": "/data/light/repro/physx_omni_2605_21572/custom_inputs/mms_yellow_body_focus_square.jpg",
+      "remote_output_dir": "/data/light/repro/physx_omni_2605_21572/repro_runs/user_mms_yellow_body_focus_vlm/mms_yellow_body_focus"
+    },
+    {
+      "name": "mms_yellow_preprocessed",
+      "path": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed",
+      "files": [
+        "contact_sheet.jpg",
+        "mms_yellow_crop_body_focus.jpg",
+        "mms_yellow_crop_body_focus_square.jpg",
+        "mms_yellow_crop_lid_body.jpg",
+        "mms_yellow_crop_lid_body_square.jpg",
+        "mms_yellow_crop_whole_can.jpg",
+        "mms_yellow_crop_whole_can_square.jpg"
+      ],
+      "has_basic_info_json": false,
+      "has_urdf": false,
+      "has_mjcf_xml": false,
+      "has_voxel_projection": false
+    },
+    {
+      "name": "official_demo_full",
+      "path": "C:\\Users\\robot\\physx_outputs\\official_demo_full",
+      "files": [
+        "allind.npy",
+        "allind.ply",
+        "basic.urdf",
+        "basic.xml",
+        "basic_info.json",
+        "basic_info.txt",
+        "cond_img.png",
+        "coord_0.txt",
+        "coord_1.txt",
+        "coord_2.txt",
+        "coord_3.txt",
+        "coord_4.txt",
+        "coord_5.txt",
+        "coord_6.txt",
+        "desert.png",
+        "ind_0.npy",
+        "ind_0.ply",
+        "ind_1.npy",
+        "ind_1.ply",
+        "ind_2.npy",
+        "ind_2.ply",
+        "ind_3.npy",
+        "ind_3.ply",
+        "ind_4.npy",
+        "ind_4.ply",
+        "ind_5.npy",
+        "ind_5.ply",
+        "ind_6.npy",
+        "ind_6.ply",
+        "official_2infer_geo_demo_full_textured_retry.log",
+        "official_3jsongen_update_demo.log",
+        "official_7part_mesh_preview.png",
+        "repro_summary.json",
+        "voxel_projection.png"
+      ],
+      "has_basic_info_json": true,
+      "has_urdf": true,
+      "has_mjcf_xml": true,
+      "has_voxel_projection": true,
+      "status": "success",
+      "elapsed_sec": 393.95,
+      "detected_parts": 7,
+      "parts_to_run": 7,
+      "total_voxels": 22031,
+      "nonzero_voxel_parts": 7,
+      "zero_voxel_parts": 0,
+      "voxel_counts": [
+        56,
+        14065,
+        7570,
+        46,
+        186,
+        60,
+        48
+      ],
+      "coord_text_chars": [
+        758,
+        8446,
+        6771,
+        749,
+        1416,
+        765,
+        735
+      ],
+      "remote_image": "/data/light/repro/physx_omni_2605_21572/code/PhysX-Omni/demo/65e2f7b0452046be8ee948b49ee17ef4.png",
+      "remote_output_dir": "/data/light/repro/physx_omni_2605_21572/repro_runs/vlm_full/65e2f7b0452046be8ee948b49ee17ef4"
+    }
+  ],
+  "physics_file_audit": {
+    "official_demo_full": {
+      "urdf": {
+        "file": "C:\\Users\\robot\\physx_outputs\\official_demo_full\\basic.urdf",
+        "links": 13,
+        "joints": 12,
+        "joint_types": {
+          "fixed": 7,
+          "continuous": 4,
+          "revolute": 1
+        },
+        "mass_count": 13,
+        "unique_masses": [
+          1.0
+        ],
+        "all_mass_is_one": true,
+        "inertia_count": 13,
+        "unique_inertia_count": 1,
+        "limit_count": 5,
+        "limit_examples": [
+          {
+            "effort": "2000.0",
+            "velocity": "2.0"
+          },
+          {
+            "lower": "-3.141592653589793",
+            "upper": "0.0",
+            "effort": "2000.0",
+            "velocity": "2.0"
+          },
+          {
+            "effort": "2000.0",
+            "velocity": "2.0"
+          },
+          {
+            "effort": "2000.0",
+            "velocity": "2.0"
+          },
+          {
+            "effort": "2000.0",
+            "velocity": "2.0"
+          }
+        ],
+        "friction_attr_count": 0,
+        "friction_attrs": []
+      },
+      "mjcf_xml": {
+        "file": "C:\\Users\\robot\\physx_outputs\\official_demo_full\\basic.xml",
+        "geoms": 16,
+        "joints": 5,
+        "joint_types": {
+          "hinge": 5
+        },
+        "density_count": 7,
+        "unique_densities": [
+          "4450.0",
+          "7800.0",
+          "950.0"
+        ],
+        "geom_mass_attr_count": 0,
+        "body_inertia_attr_count": 0,
+        "friction_attr_count": 5,
+        "friction_attrs": [
+          [
+            "joint",
+            "frictionloss",
+            "0.0"
+          ],
+          [
+            "joint",
+            "frictionloss",
+            "0.0"
+          ],
+          [
+            "joint",
+            "frictionloss",
+            "0.0"
+          ],
+          [
+            "joint",
+            "frictionloss",
+            "0.0"
+          ],
+          [
+            "joint",
+            "frictionloss",
+            "0.0"
+          ]
+        ]
+      },
+      "basic_info": {
+        "object": "Dumpster",
+        "category": "Waste Container",
+        "dimension": "180*120*150",
+        "part_count": 7,
+        "materials": [
+          "Steel with Rubber",
+          "Steel",
+          "Plastic (HDPE)",
+          "Steel with Rubber",
+          "Steel",
+          "Steel with Rubber",
+          "Steel with Rubber"
+        ],
+        "density_values": [
+          4.45,
+          7.8,
+          0.95,
+          4.45,
+          7.8,
+          4.45,
+          4.45
+        ],
+        "youngs_modulus_gpa_values": [
+          100.005,
+          210.0,
+          1.0,
+          100.005,
+          210.0,
+          100.005,
+          200.0
+        ],
+        "poisson_ratio_values": [
+          0.395,
+          0.3,
+          0.4,
+          0.395,
+          0.3,
+          0.395,
+          0.3
+        ],
+        "group_info_type": "dict",
+        "group_info_count": 6
+      }
+    }
+  },
+  "projection_analysis": {
+    "source_crops": [
+      {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed\\contact_sheet.jpg",
+        "name": "contact_sheet.jpg",
+        "width": 3072,
+        "height": 2048,
+        "height_over_width": 0.6667
+      },
+      {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed\\mms_yellow_crop_body_focus.jpg",
+        "name": "mms_yellow_crop_body_focus.jpg",
+        "width": 1060,
+        "height": 1120,
+        "height_over_width": 1.0566
+      },
+      {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed\\mms_yellow_crop_body_focus_square.jpg",
+        "name": "mms_yellow_crop_body_focus_square.jpg",
+        "width": 1024,
+        "height": 1024,
+        "height_over_width": 1.0
+      },
+      {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed\\mms_yellow_crop_lid_body.jpg",
+        "name": "mms_yellow_crop_lid_body.jpg",
+        "width": 1050,
+        "height": 1105,
+        "height_over_width": 1.0524
+      },
+      {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed\\mms_yellow_crop_lid_body_square.jpg",
+        "name": "mms_yellow_crop_lid_body_square.jpg",
+        "width": 1024,
+        "height": 1024,
+        "height_over_width": 1.0
+      },
+      {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed\\mms_yellow_crop_whole_can.jpg",
+        "name": "mms_yellow_crop_whole_can.jpg",
+        "width": 1070,
+        "height": 1305,
+        "height_over_width": 1.2196
+      },
+      {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_preprocessed\\mms_yellow_crop_whole_can_square.jpg",
+        "name": "mms_yellow_crop_whole_can_square.jpg",
+        "width": 1024,
+        "height": 1024,
+        "height_over_width": 1.0
+      }
+    ],
+    "voxel_projections": {
+      "mms_yellow": {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow\\voxel_projection.png",
+        "image_size": [
+          1152,
+          438
+        ],
+        "panels": {
+          "XY_left": {
+            "overall_bbox": {
+              "x0": 11,
+              "y0": 18,
+              "x1": 373,
+              "y1": 426,
+              "width": 363,
+              "height": 409,
+              "height_over_width": 1.1267,
+              "colored_pixels": 6914
+            },
+            "components": [
+              {
+                "x0": 119,
+                "y0": 72,
+                "x1": 129,
+                "y1": 93,
+                "width": 11,
+                "height": 22,
+                "height_over_width": 2.0,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 131,
+                "y0": 72,
+                "x1": 141,
+                "y1": 93,
+                "width": 11,
+                "height": 22,
+                "height_over_width": 2.0,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 144,
+                "y0": 72,
+                "x1": 154,
+                "y1": 93,
+                "width": 11,
+                "height": 22,
+                "height_over_width": 2.0,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 156,
+                "y0": 72,
+                "x1": 166,
+                "y1": 93,
+                "width": 11,
+                "height": 22,
+                "height_over_width": 2.0,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 168,
+                "y0": 72,
+                "x1": 178,
+                "y1": 93,
+                "width": 11,
+                "height": 22,
+                "height_over_width": 2.0,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 181,
+                "y0": 72,
+                "x1": 191,
+                "y1": 93,
+                "width": 11,
+                "height": 22,
+                "height_over_width": 2.0,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              }
+            ]
+          },
+          "XZ_middle": {
+            "overall_bbox": {
+              "x0": 11,
+              "y0": 64,
+              "x1": 373,
+              "y1": 426,
+              "width": 363,
+              "height": 363,
+              "height_over_width": 1.0,
+              "colored_pixels": 2160
+            },
+            "components": [
+              {
+                "x0": 7,
+                "y0": 60,
+                "x1": 42,
+                "y1": 73,
+                "width": 36,
+                "height": 14,
+                "height_over_width": 0.3889,
+                "colored_pixels": 427,
+                "raw_colored_pixels": 26
+              },
+              {
+                "x0": 44,
+                "y0": 60,
+                "x1": 67,
+                "y1": 76,
+                "width": 24,
+                "height": 17,
+                "height_over_width": 0.7083,
+                "colored_pixels": 302,
+                "raw_colored_pixels": 19
+              }
+            ]
+          },
+          "YZ_right": {
+            "overall_bbox": {
+              "x0": 11,
+              "y0": 64,
+              "x1": 373,
+              "y1": 426,
+              "width": 363,
+              "height": 363,
+              "height_over_width": 1.0,
+              "colored_pixels": 2302
+            },
+            "components": [
+              {
+                "x0": 7,
+                "y0": 60,
+                "x1": 40,
+                "y1": 73,
+                "width": 34,
+                "height": 14,
+                "height_over_width": 0.4118,
+                "colored_pixels": 406,
+                "raw_colored_pixels": 26
+              },
+              {
+                "x0": 77,
+                "y0": 60,
+                "x1": 98,
+                "y1": 70,
+                "width": 22,
+                "height": 11,
+                "height_over_width": 0.5,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 112,
+                "y0": 60,
+                "x1": 133,
+                "y1": 70,
+                "width": 22,
+                "height": 11,
+                "height_over_width": 0.5,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 135,
+                "y0": 60,
+                "x1": 156,
+                "y1": 70,
+                "width": 22,
+                "height": 11,
+                "height_over_width": 0.5,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 170,
+                "y0": 60,
+                "x1": 191,
+                "y1": 70,
+                "width": 22,
+                "height": 11,
+                "height_over_width": 0.5,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              },
+              {
+                "x0": 193,
+                "y0": 60,
+                "x1": 214,
+                "y1": 70,
+                "width": 22,
+                "height": 11,
+                "height_over_width": 0.5,
+                "colored_pixels": 242,
+                "raw_colored_pixels": 18
+              }
+            ]
+          }
+        }
+      },
+      "mms_yellow_body_focus": {
+        "file": "C:\\Users\\robot\\physx_outputs\\mms_yellow_body_focus\\voxel_projection.png",
+        "image_size": [
+          1152,
+          438
+        ],
+        "panels": {
+          "XY_left": {
+            "overall_bbox": {
+              "x0": 15,
+              "y0": 18,
+              "x1": 320,
+              "y1": 390,
+              "width": 306,
+              "height": 373,
+              "height_over_width": 1.219,
+              "colored_pixels": 7570
+            },
+            "components": [
+              {
+                "x0": 33,
+                "y0": 96,
+                "x1": 324,
+                "y1": 394,
+                "width": 292,
+                "height": 299,
+                "height_over_width": 1.024,
+                "colored_pixels": 67371,
+                "raw_colored_pixels": 7524
+              },
+              {
+                "x0": 90,
+                "y0": 16,
+                "x1": 133,
+                "y1": 29,
+                "width": 44,
+                "height": 14,
+                "height_over_width": 0.3182,
+                "colored_pixels": 538,
+                "raw_colored_pixels": 14
+              }
+            ]
+          },
+          "XZ_middle": {
+            "overall_bbox": {
+              "x0": 15,
+              "y0": 64,
+              "x1": 320,
+              "y1": 140,
+              "width": 306,
+              "height": 77,
+              "height_over_width": 0.2516,
+              "colored_pixels": 3214
+            },
+            "components": [
+              {
+                "x0": 25,
+                "y0": 60,
+                "x1": 324,
+                "y1": 144,
+                "width": 300,
+                "height": 85,
+                "height_over_width": 0.2833,
+                "colored_pixels": 19756,
+                "raw_colored_pixels": 3213
+              }
+            ]
+          },
+          "YZ_right": {
+            "overall_bbox": {
+              "x0": 14,
+              "y0": 64,
+              "x1": 337,
+              "y1": 140,
+              "width": 324,
+              "height": 77,
+              "height_over_width": 0.2377,
+              "colored_pixels": 3248
+            },
+            "components": [
+              {
+                "x0": 43,
+                "y0": 60,
+                "x1": 341,
+                "y1": 144,
+                "width": 299,
+                "height": 85,
+                "height_over_width": 0.2843,
+                "colored_pixels": 20303,
+                "raw_colored_pixels": 3246
+              }
+            ]
+          }
+        }
+      },
+      "official_demo_full": {
+        "file": "C:\\Users\\robot\\physx_outputs\\official_demo_full\\voxel_projection.png",
+        "image_size": [
+          1152,
+          438
+        ],
+        "panels": {
+          "XY_left": {
+            "overall_bbox": {
+              "x0": 15,
+              "y0": 18,
+              "x1": 354,
+              "y1": 409,
+              "width": 340,
+              "height": 392,
+              "height_over_width": 1.1529,
+              "colored_pixels": 18624
+            },
+            "components": [
+              {
+                "x0": 16,
+                "y0": 77,
+                "x1": 358,
+                "y1": 413,
+                "width": 343,
+                "height": 337,
+                "height_over_width": 0.9825,
+                "colored_pixels": 114783,
+                "raw_colored_pixels": 18567
+              },
+              {
+                "x0": 90,
+                "y0": 16,
+                "x1": 133,
+                "y1": 29,
+                "width": 44,
+                "height": 14,
+                "height_over_width": 0.3182,
+                "colored_pixels": 538,
+                "raw_colored_pixels": 14
+              },
+              {
+                "x0": 11,
+                "y0": 62,
+                "x1": 45,
+                "y1": 75,
+                "width": 35,
+                "height": 14,
+                "height_over_width": 0.4,
+                "colored_pixels": 396,
+                "raw_colored_pixels": 10
+              }
+            ]
+          },
+          "XZ_middle": {
+            "overall_bbox": {
+              "x0": 15,
+              "y0": 64,
+              "x1": 373,
+              "y1": 426,
+              "width": 359,
+              "height": 363,
+              "height_over_width": 1.0111,
+              "colored_pixels": 1537
+            },
+            "components": [
+              {
+                "x0": 11,
+                "y0": 60,
+                "x1": 377,
+                "y1": 158,
+                "width": 367,
+                "height": 99,
+                "height_over_width": 0.2698,
+                "colored_pixels": 12734,
+                "raw_colored_pixels": 1339
+              },
+              {
+                "x0": 301,
+                "y0": 388,
+                "x1": 349,
+                "y1": 430,
+                "width": 49,
+                "height": 43,
+                "height_over_width": 0.8776,
+                "colored_pixels": 1875,
+                "raw_colored_pixels": 198
+              }
+            ]
+          },
+          "YZ_right": {
+            "overall_bbox": {
+              "x0": 14,
+              "y0": 64,
+              "x1": 356,
+              "y1": 154,
+              "width": 343,
+              "height": 91,
+              "height_over_width": 0.2653,
+              "colored_pixels": 6138
+            },
+            "components": [
+              {
+                "x0": 24,
+                "y0": 60,
+                "x1": 360,
+                "y1": 158,
+                "width": 337,
+                "height": 99,
+                "height_over_width": 0.2938,
+                "colored_pixels": 32819,
+                "raw_colored_pixels": 6136
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "rle_stress_test": [
+    {
+      "shape": "solid_cylinder",
+      "grid": 32,
+      "occupied_voxels": 8300,
+      "occupancy_ratio": 0.253296,
+      "total_runs": 500,
+      "max_runs_per_slice": 20,
+      "nonempty_slices": 25,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0625,
+      "rle_char_count_proxy": 3450,
+      "approx_tokens_char_div4": 862.5,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "hollow_cylinder_shell",
+      "grid": 32,
+      "occupied_voxels": 4200,
+      "occupancy_ratio": 0.128174,
+      "total_runs": 850,
+      "max_runs_per_slice": 34,
+      "nonempty_slices": 25,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0625,
+      "rle_char_count_proxy": 5200,
+      "approx_tokens_char_div4": 1300.0,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "thin_diagonal_wires",
+      "grid": 32,
+      "occupied_voxels": 366,
+      "occupancy_ratio": 0.011169,
+      "total_runs": 152,
+      "max_runs_per_slice": 5,
+      "nonempty_slices": 32,
+      "unique_slice_signatures": 32,
+      "unique_slice_ratio": 1.0,
+      "rle_char_count_proxy": 906,
+      "approx_tokens_char_div4": 226.5,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "checkerboard_dense",
+      "grid": 32,
+      "occupied_voxels": 16384,
+      "occupancy_ratio": 0.5,
+      "total_runs": 15888,
+      "max_runs_per_slice": 497,
+      "nonempty_slices": 32,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0625,
+      "rle_char_count_proxy": 94000,
+      "approx_tokens_char_div4": 23500.0,
+      "exceeds_20000_token_proxy": true
+    },
+    {
+      "shape": "random_5pct",
+      "grid": 32,
+      "occupied_voxels": 1663,
+      "occupancy_ratio": 0.050751,
+      "total_runs": 1589,
+      "max_runs_per_slice": 61,
+      "nonempty_slices": 32,
+      "unique_slice_signatures": 32,
+      "unique_slice_ratio": 1.0,
+      "rle_char_count_proxy": 9431,
+      "approx_tokens_char_div4": 2357.8,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "solid_cylinder",
+      "grid": 64,
+      "occupied_voxels": 66504,
+      "occupancy_ratio": 0.253693,
+      "total_runs": 2040,
+      "max_runs_per_slice": 40,
+      "nonempty_slices": 51,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0312,
+      "rle_char_count_proxy": 16116,
+      "approx_tokens_char_div4": 4029.0,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "hollow_cylinder_shell",
+      "grid": 64,
+      "occupied_voxels": 31416,
+      "occupancy_ratio": 0.119843,
+      "total_runs": 3570,
+      "max_runs_per_slice": 70,
+      "nonempty_slices": 51,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0312,
+      "rle_char_count_proxy": 25500,
+      "approx_tokens_char_div4": 6375.0,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "thin_diagonal_wires",
+      "grid": 64,
+      "occupied_voxels": 750,
+      "occupancy_ratio": 0.002861,
+      "total_runs": 312,
+      "max_runs_per_slice": 5,
+      "nonempty_slices": 64,
+      "unique_slice_signatures": 64,
+      "unique_slice_ratio": 1.0,
+      "rle_char_count_proxy": 2132,
+      "approx_tokens_char_div4": 533.0,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "checkerboard_dense",
+      "grid": 64,
+      "occupied_voxels": 131072,
+      "occupancy_ratio": 0.5,
+      "total_runs": 129056,
+      "max_runs_per_slice": 2017,
+      "nonempty_slices": 64,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0312,
+      "rle_char_count_proxy": 868384,
+      "approx_tokens_char_div4": 217096.0,
+      "exceeds_20000_token_proxy": true
+    },
+    {
+      "shape": "random_5pct",
+      "grid": 64,
+      "occupied_voxels": 12926,
+      "occupancy_ratio": 0.049309,
+      "total_runs": 12306,
+      "max_runs_per_slice": 224,
+      "nonempty_slices": 64,
+      "unique_slice_signatures": 64,
+      "unique_slice_ratio": 1.0,
+      "rle_char_count_proxy": 82814,
+      "approx_tokens_char_div4": 20703.5,
+      "exceeds_20000_token_proxy": true
+    },
+    {
+      "shape": "solid_cylinder",
+      "grid": 128,
+      "occupied_voxels": 542604,
+      "occupancy_ratio": 0.258734,
+      "total_runs": 8446,
+      "max_runs_per_slice": 82,
+      "nonempty_slices": 103,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0156,
+      "rle_char_count_proxy": 70349,
+      "approx_tokens_char_div4": 17587.2,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "hollow_cylinder_shell",
+      "grid": 128,
+      "occupied_voxels": 262032,
+      "occupancy_ratio": 0.124947,
+      "total_runs": 14420,
+      "max_runs_per_slice": 140,
+      "nonempty_slices": 103,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0156,
+      "rle_char_count_proxy": 119686,
+      "approx_tokens_char_div4": 29921.5,
+      "exceeds_20000_token_proxy": true
+    },
+    {
+      "shape": "thin_diagonal_wires",
+      "grid": 128,
+      "occupied_voxels": 1518,
+      "occupancy_ratio": 0.000724,
+      "total_runs": 632,
+      "max_runs_per_slice": 5,
+      "nonempty_slices": 128,
+      "unique_slice_signatures": 128,
+      "unique_slice_ratio": 1.0,
+      "rle_char_count_proxy": 4548,
+      "approx_tokens_char_div4": 1137.0,
+      "exceeds_20000_token_proxy": false
+    },
+    {
+      "shape": "checkerboard_dense",
+      "grid": 128,
+      "occupied_voxels": 1048576,
+      "occupancy_ratio": 0.5,
+      "total_runs": 1040448,
+      "max_runs_per_slice": 8129,
+      "nonempty_slices": 128,
+      "unique_slice_signatures": 2,
+      "unique_slice_ratio": 0.0156,
+      "rle_char_count_proxy": 7617984,
+      "approx_tokens_char_div4": 1904496.0,
+      "exceeds_20000_token_proxy": true
+    },
+    {
+      "shape": "random_5pct",
+      "grid": 128,
+      "occupied_voxels": 105049,
+      "occupancy_ratio": 0.050091,
+      "total_runs": 99846,
+      "max_runs_per_slice": 852,
+      "nonempty_slices": 128,
+      "unique_slice_signatures": 128,
+      "unique_slice_ratio": 1.0,
+      "rle_char_count_proxy": 731116,
+      "approx_tokens_char_div4": 182779.0,
+      "exceeds_20000_token_proxy": true
+    }
+  ],
+  "prompt_and_benchmark_audit": {
+    "default_judge_mentions": 9,
+    "temperature_none_mentions": 2,
+    "auto_score_mentions": 10,
+    "prompt_prior_hit_counts": {
+      "prompts_affordance.yaml": 6,
+      "prompts_consistency.yaml": 0,
+      "prompts_description.yaml": 0,
+      "prompts_dimension.yaml": 1,
+      "prompts_material.yaml": 15,
+      "prompts_quality.yaml": 0,
+      "prompts_vaps_english.yaml": 24
+    },
+    "prompt_prior_examples": {
+      "prompts_affordance.yaml": [
+        {
+          "line": 44,
+          "text": "- If a region may cause harm to the human body according to common sense, it should usually be regarded as having lower affordance."
+        },
+        {
+          "line": 74,
+          "text": "Based only on the original image and everyday common sense, judge:"
+        },
+        {
+          "line": 94,
+          "text": "- High score: the relative ranking in the heatmap is highly consistent with everyday common sense, the priority of key regions is reasonable, and dangerous regions are not highlighted incorrectly"
+        },
+        {
+          "line": 99,
+          "text": "- 90–100: the relative ranking is highly reasonable, and the overall result strongly matches common sense"
+        },
+        {
+          "line": 103,
+          "text": "- 0–39: very poor, with an overall ranking that clearly violates common sense, or dangerous / unreasonable regions being severely highlighted incorrectly"
+        },
+        {
+          "line": 111,
+          "text": "List the key regions that should have the highest affordance according to common sense."
+        }
+      ],
+      "prompts_consistency.yaml": [],
+      "prompts_description.yaml": [],
+      "prompts_dimension.yaml": [
+        {
+          "line": 16,
+          "text": "- If the image lacks a clear scale reference, give the best estimate based on object category priors, common everyday dimensions, and visual cues in the image."
+        }
+      ],
+      "prompts_material.yaml": [
+        {
+          "line": 8,
+          "text": "You are a visual evaluator with knowledge of material physics, common object materials, and video-based physical reasoning."
+        },
+        {
+          "line": 22,
+          "text": "Based on the condition image, common material knowledge, the generated physical parameters, and the physical behavior observed in the two generated simulation videos, evaluate whether the generated 3D object's material behavior is plausible."
+        },
+        {
+          "line": 24,
+          "text": "First, internally infer image-based material priors from the condition image:"
+        },
+        {
+          "line": 33,
+          "text": "Use those image-based priors to score the generated object's material behavior. Give more weight to priors that are visually clear and high confidence. If a material property cannot be reliably inferred from the image, state the uncertainty and avoid over-penalization."
+        },
+        {
+          "line": 39,
+          "text": "- Your primary judgment should be whether the generated object's behavior in the videos is consistent with the condition image, image-based material priors, and common material knowledge."
+        },
+        {
+          "line": 72,
+          "text": "- If video behavior contradicts the generated parameter values or high-confidence image-based material priors, lower the corresponding score."
+        },
+        {
+          "line": 78,
+          "text": "1 = Very implausible. The object's overall behavior or the behavior of multiple major parts under impact or compression strongly contradicts high-confidence image priors, common material knowledge, or observed behavior."
+        },
+        {
+          "line": 81,
+          "text": "4 = Plausible. Most major parts show deformation, stiffness, rebound, and recovery behavior that is broadly consistent with the image priors and the given Young's modulus, with only a few unreasonable parts or minor uncertainty."
+        }
+      ],
+      "prompts_quality.yaml": [],
+      "prompts_vaps_english.yaml": [
+        {
+          "line": 33,
+          "text": "likely_motion: \"fixed\" | \"prismatic\" | \"revolute\" | \"free\" | \"unknown\""
+        },
+        {
+          "line": 40,
+          "text": "3. Rules for likely_motion:"
+        },
+        {
+          "line": 41,
+          "text": "- If prior_class is \"immovable\", then likely_motion must be \"fixed\"."
+        },
+        {
+          "line": 42,
+          "text": "- If prior_class is \"movable\", then likely_motion should be one of \"prismatic\", \"revolute\", \"free\", or \"unknown\"."
+        },
+        {
+          "line": 43,
+          "text": "- If prior_class is \"uncertain\", then likely_motion may be any allowed value."
+        },
+        {
+          "line": 48,
+          "text": "- Based on common sense and object-category information, if the image implies that a structural part exists, or if such a part should logically exist, output it with visibility = \"occluded_possible\"."
+        },
+        {
+          "line": 74,
+          "text": "\"likely_motion\": \"revolute\","
+        },
+        {
+          "line": 117,
+          "text": "observed_state: \"fixed\" | \"prismatic\" | \"revolute\" | \"free\" | \"unrevealed\""
+        }
+      ]
+    },
+    "tiny_benchmark_summary": [
+      {
+        "method": "ours",
+        "dataset": "mobility",
+        "metric": "RQS",
+        "count": "1",
+        "mean": "100.0",
+        "std": "0.0"
+      }
+    ]
+  },
+  "simulator_availability": {
+    "mujoco": true,
+    "genesis": false,
+    "isaacsim": false,
+    "omni": false,
+    "pxr": true
+  },
+  "mujoco_smoke_test": {
+    "xml": "C:\\Users\\robot\\physx_outputs\\official_demo_full\\basic.xml",
+    "xml_exists": true,
+    "status": "success",
+    "nq": 12,
+    "nv": 11,
+    "nbody": 7,
+    "ngeom": 8,
+    "njnt": 6,
+    "final_time": 0.4000000000000003,
+    "qpos_sample": [
+      -0.0127738724212079,
+      -0.0016314129914182021,
+      0.6064502729754294,
+      0.999997687920297,
+      0.0004885796433256361,
+      -0.001960978111940062,
+      0.0007348529358553999,
+      1.097804186254372
+    ],
+    "qvel_abs_max": 2.184303557376938
+  },
+  "step9_reviewer_audit_summary": {
+    "default_judge_mentions_step9": 9,
+    "urdf_unique_masses_step9": [
+      1.0
+    ],
+    "urdf_unique_inertia_count_step9": 1,
+    "rle_audit_hit_counts_step9": {
+      "shape_64": 2,
+      "encode_func": 1,
+      "decode_func": 1,
+      "lossless_comment": 1,
+      "assert_equal": 2,
+      "token_filter_20000": 1,
+      "grid_64_prompt": 2
+    }
+  }
+}

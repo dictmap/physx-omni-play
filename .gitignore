@@ -1,0 +1,24 @@
+# Python / Jupyter cache
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Local runtime logs and scratch output
+logs/
+*.log
+*.pid
+*.tmp
+
+# Hugging Face and model cache placeholders are recorded in SOURCE_MANIFEST.json.
+# The large gated/model/dataset files stay outside the lightweight GitHub repo.
+hf/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Nested upstream checkout metadata; the source snapshot is tracked as files.
+code/PhysX-Omni/.git/
+code/PhysX-Omni/benchmark/tiny_example/generated/

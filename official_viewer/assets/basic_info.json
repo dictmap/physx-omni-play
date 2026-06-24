@@ -1,0 +1,168 @@
+{
+    "object_name": "Dumpster",
+    "category": "Waste Container",
+    "dimension": "180*120*150",
+    "parts": [
+        {
+            "label": 0,
+            "name": "Caster Wheel (Front Right)",
+            "material": "Steel with Rubber",
+            "density": 4.45,
+            "priority_rank": 7,
+            "Basic_description": "A caster wheel attached to the bottom of the dumpster, made of steel and rubber.",
+            "Young's Modulus (GPa)": 100.005,
+            "Poisson's Ratio": 0.395
+        },
+        {
+            "label": 1,
+            "name": "Main Body",
+            "material": "Steel",
+            "density": 7.8,
+            "priority_rank": 10,
+            "Basic_description": "The main container structure of the dumpster, made of steel.",
+            "Young's Modulus (GPa)": 210.0,
+            "Poisson's Ratio": 0.3
+        },
+        {
+            "label": 2,
+            "name": "Lid",
+            "material": "Plastic (HDPE)",
+            "density": 0.95,
+            "priority_rank": 1,
+            "Basic_description": "A hinged plastic lid covering the dumpster.",
+            "Young's Modulus (GPa)": 1.0,
+            "Poisson's Ratio": 0.4
+        },
+        {
+            "label": 3,
+            "name": "Caster Wheel (Front Left)",
+            "material": "Steel with Rubber",
+            "density": 4.45,
+            "priority_rank": 8,
+            "Basic_description": "A caster wheel attached to the bottom of the dumpster, made of steel and rubber.",
+            "Young's Modulus (GPa)": 100.005,
+            "Poisson's Ratio": 0.395
+        },
+        {
+            "label": 4,
+            "name": "Front Bar Handle",
+            "material": "Steel",
+            "density": 7.8,
+            "priority_rank": 2,
+            "Basic_description": "A steel bar handle located at the front of the dumpster.",
+            "Young's Modulus (GPa)": 210.0,
+            "Poisson's Ratio": 0.3
+        },
+        {
+            "label": 5,
+            "name": "right rear wheel",
+            "material": "Steel with Rubber",
+            "density": 4.45,
+            "priority_rank": 9,
+            "Basic_description": "Wheels located at the rear right side of the garbage truck.",
+            "Young's Modulus (GPa)": 100.005,
+            "Poisson's Ratio": 0.395
+        },
+        {
+            "label": 6,
+            "name": "Caster Wheel (Rear Left)",
+            "material": "Steel with Rubber",
+            "density": 4.45,
+            "priority_rank": 6,
+            "Basic_description": "A caster wheel attached to the rear left bottom of the dumpster.",
+            "Young's Modulus (GPa)": 200.0,
+            "Poisson's Ratio": 0.3
+        }
+    ],
+    "group_info": {
+        "0": [
+            1,
+            4
+        ],
+        "1": [
+            [
+                0
+            ],
+            "0",
+            [
+                0.0,
+                0.0,
+                1.0,
+                0.20328124999999997,
+                0.400625,
+                -0.5,
+                -1.0,
+                1.0
+            ],
+            "C"
+        ],
+        "2": [
+            [
+                2
+            ],
+            "0",
+            [
+                0.0,
+                1.0,
+                0.0,
+                -0.2915625,
+                -0.5,
+                0.3203125,
+                -1.0,
+                0.0
+            ],
+            "C"
+        ],
+        "3": [
+            [
+                3
+            ],
+            "0",
+            [
+                0.0,
+                0.0,
+                1.0,
+                0.20265624999999998,
+                -0.38828125,
+                -0.5,
+                -1.0,
+                1.0
+            ],
+            "C"
+        ],
+        "4": [
+            [
+                5
+            ],
+            "0",
+            [
+                0.0,
+                0.0,
+                1.0,
+                -0.2165625,
+                0.40156250000000004,
+                -0.5,
+                -1.0,
+                1.0
+            ],
+            "C"
+        ],
+        "5": [
+            [
+                6
+            ],
+            "0",
+            [
+                0.0,
+                0.0,
+                1.0,
+                -0.21625,
+                -0.388125,
+                -0.5,
+                -1.0,
+                1.0
+            ],
+            "C"
+        ]
+    }
+}

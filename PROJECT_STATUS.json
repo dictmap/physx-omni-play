@@ -1,0 +1,39 @@
+{
+  "project": "PhysX-Omni 2605.21572v1 精读与复现包",
+  "status_date": "2026-06-25",
+  "quality_status": "通过",
+  "paper": "https://arxiv.org/abs/2605.21572v1",
+  "code": "https://github.com/physx-omni/PhysX-Omni",
+  "local_project_root": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets",
+  "large_output_root": "C:\\Users\\robot\\physx_outputs",
+  "viewer": {
+    "http_url": "http://127.0.0.1:8017/index.html",
+    "local_file": "official_viewer/index.html",
+    "teaching_documents_indexed": 90,
+    "markdown_documents": 81,
+    "notebooks": 9,
+    "file_mode": "教学内容、材料库和搜索可用",
+    "http_mode": "教学内容和 Three.js GLB 交互都可用"
+  },
+  "official_demo": {
+    "status": "已复现",
+    "local_output": "C:\\Users\\robot\\physx_outputs\\official_demo_full",
+    "glb_parts": 7,
+    "has_basic_info_json": true,
+    "has_urdf": true,
+    "has_mujoco_xml": true,
+    "total_voxels": 22031
+  },
+  "mms_body_focus": {
+    "status": "压力测试解码完成",
+    "local_output": "C:\\Users\\robot\\physx_outputs\\mms_yellow_body_focus",
+    "nonzero_parts": 3,
+    "total_voxels": 6188,
+    "glb_parts": 3,
+    "limitation": "主罐身仍偏矮，因为 VLM/RLE 体素输出本身被压扁"
+  },
+  "validation": {
+    "command": "python scripts/validate_physx_omni_quality.py",
+    "expected": "QUALITY CHECK PASSED"
+  }
+}

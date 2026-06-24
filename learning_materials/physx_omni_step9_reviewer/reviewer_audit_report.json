@@ -1,0 +1,194 @@
+{
+  "paper": "https://arxiv.org/abs/2605.21572v1",
+  "code": "https://github.com/physx-omni/PhysX-Omni",
+  "local_repo": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\code\\PhysX-Omni",
+  "local_demo": "C:\\Users\\robot\\physx_outputs\\official_demo_full",
+  "default_judge_mentions": 9,
+  "missing_policy_lines": [
+    "- missing RQS/MCS rendered views become score 0;",
+    "- missing DCS color/mask/description evidence becomes DCS 0;",
+    "- malformed or missing DQS generated dimensions become DQS 0;",
+    "- missing APS heatmaps become APS 0;",
+    "- missing KPS videos become KPS 0 for active methods;",
+    "- missing MPS water/floor video pairs become MPS 0."
+  ],
+  "auto_score_terms": {
+    "APS": 10,
+    "KPS": 14,
+    "MPS": 9,
+    "DCS": 9,
+    "RQS": 5,
+    "MCS": 4,
+    "AutoScore": 5,
+    "score=0": 5
+  },
+  "aggregator_terms": {
+    "MPS": 8,
+    "DCS": 7,
+    "KPS": 3,
+    "APS": 5,
+    "DQS": 3,
+    "weighted_score": 6,
+    "25.0": 4
+  },
+  "prompt_hit_counts": {
+    "prompts_affordance.yaml": 20,
+    "prompts_consistency.yaml": 3,
+    "prompts_description.yaml": 2,
+    "prompts_dimension.yaml": 1,
+    "prompts_material.yaml": 51,
+    "prompts_vaps_english.yaml": 36
+  },
+  "urdf_audit": {
+    "links": 13,
+    "joints": 12,
+    "joint_types": {
+      "fixed": 7,
+      "continuous": 4,
+      "revolute": 1
+    },
+    "masses": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "unique_masses": [
+      1.0
+    ],
+    "inertia_count": 13,
+    "unique_inertia_count": 1,
+    "limits": [
+      {
+        "effort": "2000.0",
+        "velocity": "2.0"
+      },
+      {
+        "lower": "-3.141592653589793",
+        "upper": "0.0",
+        "effort": "2000.0",
+        "velocity": "2.0"
+      },
+      {
+        "effort": "2000.0",
+        "velocity": "2.0"
+      },
+      {
+        "effort": "2000.0",
+        "velocity": "2.0"
+      },
+      {
+        "effort": "2000.0",
+        "velocity": "2.0"
+      }
+    ],
+    "friction_attrs": []
+  },
+  "xml_audit": {
+    "geoms": 16,
+    "joints": 5,
+    "joint_types": {
+      "hinge": 5
+    },
+    "densities": [
+      "4450.0",
+      "7800.0",
+      "950.0",
+      "4450.0",
+      "7800.0",
+      "4450.0",
+      "4450.0"
+    ],
+    "geom_mass_attrs": [],
+    "body_inertia_attrs": [],
+    "friction_attrs": [
+      [
+        "joint",
+        "frictionloss",
+        "0.0"
+      ],
+      [
+        "joint",
+        "frictionloss",
+        "0.0"
+      ],
+      [
+        "joint",
+        "frictionloss",
+        "0.0"
+      ],
+      [
+        "joint",
+        "frictionloss",
+        "0.0"
+      ],
+      [
+        "joint",
+        "frictionloss",
+        "0.0"
+      ]
+    ]
+  },
+  "rle_audit_hit_counts": {
+    "shape_64": 2,
+    "encode_func": 1,
+    "decode_func": 1,
+    "lossless_comment": 1,
+    "assert_equal": 2,
+    "token_filter_20000": 1,
+    "grid_64_prompt": 2
+  },
+  "reviewer_questions": [
+    {
+      "id": "Q1",
+      "topic": "single-image physical properties",
+      "verdict": "mostly plausible priors, not calibrated measurements",
+      "evidence": "dimension/material/affordance prompts explicitly rely on priors and common knowledge"
+    },
+    {
+      "id": "Q2",
+      "topic": "VLM judge stability",
+      "verdict": "not proven",
+      "evidence": "default Qwen3.5 judge is clear; multi-judge rank correlation is needed"
+    },
+    {
+      "id": "Q3",
+      "topic": "cross-simulator consistency",
+      "verdict": "not proven",
+      "evidence": "benchmark uses simulator evidence, but not equivalent to MuJoCo/Isaac/Genesis consistency"
+    },
+    {
+      "id": "Q4",
+      "topic": "URDF/XML physical completeness",
+      "verdict": "insufficient in local demo",
+      "evidence": "URDF mass all 1.0 and repeated inertia; XML density exists but frictionloss is 0.0"
+    },
+    {
+      "id": "Q5",
+      "topic": "real robot sim-to-real",
+      "verdict": "not proven by local evidence",
+      "evidence": "needs generated vs scanned/handcrafted vs baseline robot ablation"
+    },
+    {
+      "id": "Q6",
+      "topic": "template RLE generalization",
+      "verdict": "encoding is solid; scaling unproven",
+      "evidence": "64^3 and token<20000 indicate resolution/token bottleneck"
+    },
+    {
+      "id": "Q7",
+      "topic": "stronger decoder bottleneck",
+      "verdict": "bottleneck shifts",
+      "evidence": "geometry improves, but physical calibration/joints/simulator files/judge remain bottlenecks"
+    }
+  ]
+}

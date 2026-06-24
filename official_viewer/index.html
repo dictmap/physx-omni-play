@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PhysX-Omni 论文精读与复现教学站</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="workspace">
+      <nav class="rail" aria-label="PhysX-Omni 教学导航">
+        <div class="brand-block">
+          <span class="kicker">arXiv:2605.21572v1</span>
+          <h1>PhysX-Omni<br />精读复现课</h1>
+          <p>把论文、代码、数据、复现证据、审稿质疑和 3D 输出按学习路径串起来。</p>
+        </div>
+
+        <div class="nav-stack">
+          <a href="#course">课程总览</a>
+          <a href="#pipeline">论文主流程</a>
+          <a href="#innovations">核心创新</a>
+          <a href="#code">代码导读</a>
+          <a href="#reproduction">复现证据</a>
+          <a href="#bench">Bench 与数据</a>
+          <a href="#reviewer">审稿追问</a>
+          <a href="#library">材料库</a>
+          <a href="#paths">本地路径</a>
+        </div>
+
+        <div class="rail-note">
+          <span>建议顺序</span>
+          <strong>Step 1 -> Step 10</strong>
+          <small>先读主线，再看代码，最后用复现实验回答论文边界。</small>
+        </div>
+
+        <div class="rail-footer">
+          <a href="https://arxiv.org/abs/2605.21572v1" target="_blank" rel="noreferrer">arXiv</a>
+          <a href="https://github.com/physx-omni/PhysX-Omni" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+
+      <section class="content" aria-label="PhysX-Omni 教学内容">
+        <section id="course" class="section lead-section">
+          <div class="lead-copy">
+            <span class="section-label">Course map</span>
+            <h2>不是“文件堆”，而是一条可检查的复现学习链</h2>
+            <p class="lead">
+              这套材料的核心任务是说明：PhysX-Omni 如何从单张图像推断对象部件、体素结构、几何 mesh、材料与关节，
+              再把它们装配成可进入 MuJoCo/URDF 工作流的资产；以及这个链路在官方 demo 和真实 M&M's 高罐图上实际表现如何。
+            </p>
+          </div>
+
+          <div class="truth-panel">
+            <div>
+              <span>已纳入材料</span>
+              <strong id="docCount">--</strong>
+              <small>Markdown + Notebook</small>
+            </div>
+            <div>
+              <span>官方闭环</span>
+              <strong>7 parts</strong>
+              <small>GLB / URDF / XML</small>
+            </div>
+            <div>
+              <span>M&M's 裁剪后</span>
+              <strong>6188 voxels</strong>
+              <small>3 个非空部件</small>
+            </div>
+            <div>
+              <span>审稿质疑</span>
+              <strong>7 questions</strong>
+              <small>含技术实验回答</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="section compact-section">
+          <div class="section-heading">
+            <span class="section-label">Reading route</span>
+            <h2>十步精读路线</h2>
+            <p>每一步都对应本地 Markdown；有 Notebook 的章节同时提供 Jupyter 版本。</p>
+          </div>
+          <div id="roadmapGrid" class="roadmap-grid"></div>
+        </section>
+
+        <section id="pipeline" class="section">
+          <div class="section-heading">
+            <span class="section-label">Paper and code flow</span>
+            <h2>论文主流程：从单图到物理资产</h2>
+            <p>下面按真实运行链路组织，不按论文段落顺序组织。看代码时也应沿这条链路走。</p>
+          </div>
+
+          <div class="pipeline-board" aria-label="PhysX-Omni pipeline">
+            <article>
+              <span class="step-code">01</span>
+              <h3>图像理解与部件拆分</h3>
+              <p>Qwen2.5-VL 读取输入图像，输出对象名、部件、材料/尺度描述、group_info 以及每个部件的 template RLE。</p>
+              <ul>
+                <li><code>1vlm_demo.py</code></li>
+                <li><code>basic_info.txt</code></li>
+                <li><code>coord_*.txt</code></li>
+              </ul>
+            </article>
+            <article>
+              <span class="step-code">02</span>
+              <h3>RLE 到稀疏体素</h3>
+              <p>把 template-based RLE 解码成 64³ 稀疏坐标。这里决定了“部件有没有体积”和“体积是否被压扁”。</p>
+              <ul>
+                <li><code>decode_voxel_2drle_by_z()</code></li>
+                <li><code>ind_*.npy</code></li>
+                <li><code>allind.npy</code></li>
+              </ul>
+            </article>
+            <article>
+              <span class="step-code">03</span>
+              <h3>TRELLIS 几何解码</h3>
+              <p>将每个部件的稀疏坐标和条件图像送入 3D decoder，生成 textured GLB/OBJ/贴图。</p>
+              <ul>
+                <li><code>2infer_geo.py</code></li>
+                <li><code>decoder_each.py</code></li>
+                <li><code>to_glb()</code></li>
+              </ul>
+            </article>
+            <article>
+              <span class="step-code">04</span>
+              <h3>物理结构装配</h3>
+              <p>把部件、group_info、材料与关节假设写入 URDF 和 MuJoCo XML，形成可被仿真器消费的资产入口。</p>
+              <ul>
+                <li><code>3jsongen_update.py</code></li>
+                <li><code>basic.urdf</code></li>
+                <li><code>basic.xml</code></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="innovations" class="section">
+          <div class="section-heading">
+            <span class="section-label">Core ideas</span>
+            <h2>三个核心创新点怎么落地</h2>
+            <p>这里对应 Step 3 和 supporting notes，重点看“论文说法”和“代码实际承载点”是否一致。</p>
+          </div>
+
+          <div class="innovation-grid">
+            <article>
+              <h3>Template-based RLE 让 VLM 输出可解码体素</h3>
+              <p>
+                论文把复杂 3D 结构压成可由 VLM 生成的文本序列。好处是输出接口简单；风险是分辨率、拓扑复杂度和长序列稳定性。
+              </p>
+              <a href="../learning_materials/supporting_notes/physx_omni_step3_innovation_1_template_rle_deepdive.md" target="_blank">打开精讲</a>
+            </article>
+            <article>
+              <h3>PhysXVerse / PhysX-Bench 把评测从“像不像”推到“能不能用”</h3>
+              <p>
+                Bench 覆盖材料、尺度、affordance、运动学、描述一致性与渲染质量。关键争议在于 VLM judge 的稳定性和可复现性。
+              </p>
+              <a href="../learning_materials/supporting_notes/physx_omni_step3_innovation_2_physxverse_physxbench_deepdive.md" target="_blank">打开精讲</a>
+            </article>
+            <article>
+              <h3>生成链路端到端，但每一段误差会传递</h3>
+              <p>
+                VLM 部件识别、RLE 体素、TRELLIS decoder、URDF/XML 装配彼此串联。M&M's 高罐偏矮就是体素阶段误差传到几何阶段的例子。
+              </p>
+              <a href="../learning_materials/supporting_notes/physx_omni_step3_innovation_3_pipeline_code_repro_mapping.md" target="_blank">打开精讲</a>
+            </article>
+          </div>
+        </section>
+
+        <section id="code" class="section">
+          <div class="section-heading">
+            <span class="section-label">Code reading</span>
+            <h2>核心代码导读</h2>
+            <p>下面是最应该先看的文件。前端里的路径都指向本地 checkout，不再只给抽象描述。</p>
+          </div>
+
+          <div id="codeGrid" class="code-grid"></div>
+
+          <div class="code-flow">
+            <h3>最小复现命令</h3>
+            <pre><code>bash reproduce_quality.sh
+
+# 关键环境变量在脚本内设置：
+# DINO_LOCAL_REPO=/home/yjl/.cache/torch/hub/facebookresearch_dinov2_main
+# ATTN_BACKEND=xformers
+# SPCONV_ALGO=native
+# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True</code></pre>
+          </div>
+        </section>
+
+        <section id="reproduction" class="section">
+          <div class="section-heading">
+            <span class="section-label">Reproduction evidence</span>
+            <h2>复现记录与明确输出</h2>
+            <p>这里区分“官方参考链路闭环”和“真实用户图片实测”。两者不能混为同一个质量结论。</p>
+          </div>
+
+          <div class="evidence-layout">
+            <figure class="evidence-figure">
+              <img src="./assets/evidence/official_7part_mesh_preview.png" alt="Official 7-part mesh preview" />
+              <figcaption>官方 demo：7 个 textured GLB 已生成，URDF/XML 已解析通过。</figcaption>
+            </figure>
+            <div class="evidence-stack">
+              <article>
+                <h3>官方 demo 完整闭环</h3>
+                <p>已完成 VLM/RLE -> 几何贴图解码 -> URDF/XML 结构转换；本地输出包含 <code>basic_info.json</code>、<code>basic.urdf</code>、<code>basic.xml</code>、7 个 GLB/OBJ/贴图和 voxel preview。</p>
+                <a href="../learning_materials/reproduction/physx-omni-official-demo-full-repro-report.md" target="_blank">打开复现报告</a>
+              </article>
+              <article>
+                <h3>M&M's 高罐：原图 vs body-focus</h3>
+                <p>原图只有盖子非空，2237 voxels；body-focus 裁剪后变为 6188 voxels，罐身、盖子、瓶颈都非空。但主罐 bbox 仍偏扁，所以你看到“矮”是合理观察。</p>
+                <a href="../learning_materials/reproduction/physx-omni-next-steps-and-mms-body-focus.md" target="_blank">打开 M&M's 记录</a>
+              </article>
+            </div>
+          </div>
+
+          <div class="mms-grid">
+            <figure>
+              <img src="./assets/mms/cond_img.png" alt="M&M's body-focus input" />
+              <figcaption>body-focus 裁剪输入</figcaption>
+            </figure>
+            <figure>
+              <img src="./assets/mms/voxel_projection.png" alt="M&M's voxel projection" />
+              <figcaption>裁剪后 voxel 投影</figcaption>
+            </figure>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>测试对象</th>
+                  <th>有效体素</th>
+                  <th>非空部件</th>
+                  <th>结论边界</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>官方 Dumpster demo</td>
+                  <td>22031</td>
+                  <td>7 / 7</td>
+                  <td>官方参考链路已复现成功，可作为代码闭环证据。</td>
+                </tr>
+                <tr>
+                  <td>M&M's 原图</td>
+                  <td>2237</td>
+                  <td>1 / 4</td>
+                  <td>只重建盖子，不能代表高罐主体几何成功。</td>
+                </tr>
+                <tr>
+                  <td>M&M's body-focus</td>
+                  <td>6188</td>
+                  <td>3 / 4</td>
+                  <td>比原图明显改善，但主罐高度仍不足，需要继续做几何解码/输入归一化。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="bench" class="section">
+          <div class="section-heading">
+            <span class="section-label">Bench and data</span>
+            <h2>Baseline、实验、Bench、数据集</h2>
+            <p>这一组材料需要论文和代码一起看，尤其是 benchmark 目录下的 manifest、prompt、render、score、aggregation。</p>
+          </div>
+
+          <div class="bench-grid">
+            <article>
+              <h3>Step 4：baseline 与实验</h3>
+              <p>对照表、实验表和 benchmark 代码映射被拆成了三份 supporting notes，适合逐项核对论文分数与代码实现。</p>
+              <a href="../learning_materials/paper_reading/physx_omni_paper_baselines_experiments_step4.md" target="_blank">打开 Step 4</a>
+            </article>
+            <article>
+              <h3>Step 5：PhysX-Bench 字段</h3>
+              <p>核心字段包括 description、material、dimension、affordance、kinematic、render views 和 VLM judge prompts。</p>
+              <a href="../learning_materials/supporting_notes/physx_omni_step5_bench_data_fields.md" target="_blank">打开字段精讲</a>
+            </article>
+            <article>
+              <h3>Step 6：数据集构建</h3>
+              <p>重点看 PhysXVerse 如何被体素化、RLE 化、转成 VLM 可学习文本，以及数量/来源/构建偏差。</p>
+              <a href="../learning_materials/supporting_notes/physx_omni_step6_dataset_schema_pipeline.md" target="_blank">打开数据链路</a>
+            </article>
+            <article>
+              <h3>Step 7：竞品与后续</h3>
+              <p>优先复现论文高频提到、分数接近或同一时期声称改进的方向，而不是随机找对比项。</p>
+              <a href="../learning_materials/paper_reading/physx_omni_paper_competitor_landscape_step7.md" target="_blank">打开 Step 7</a>
+            </article>
+          </div>
+        </section>
+
+        <section id="reviewer" class="section">
+          <div class="section-heading">
+            <span class="section-label">Reviewer audit</span>
+            <h2>审稿人七问与技术实验回答</h2>
+            <p>这些问题不是附录，而是判断论文可信度的主线：它们决定“生成资产是否真的可用于物理仿真”。</p>
+          </div>
+          <div id="questionList" class="question-list"></div>
+          <div class="audit-links">
+            <a href="../learning_materials/physx_omni_step9_reviewer/00_reviewer_soul_questions.md" target="_blank">Step 9 审稿质疑全文</a>
+            <a href="../learning_materials/physx_omni_step10_technical_experiments/00_technical_experiment_answer.md" target="_blank">Step 10 技术实验回答</a>
+            <a href="../learning_materials/physx_omni_step10_technical_experiments/results/step10_experiment_results.json" target="_blank">实验 JSON 结果</a>
+          </div>
+        </section>
+
+        <section id="library" class="section library-section">
+          <div class="section-heading">
+            <span class="section-label">Complete library</span>
+            <h2>完整材料库</h2>
+            <p>所有核心 Markdown 和 Jupyter 都在这里，可搜索、按组过滤、查看章节大纲，并直接打开原文件。</p>
+          </div>
+
+          <div class="library-toolbar">
+            <label>
+              <span>搜索材料</span>
+              <input id="librarySearch" type="search" placeholder="例如 RLE、baseline、M&M、URDF、judge" />
+            </label>
+            <div id="libraryFilters" class="filter-row" role="group" aria-label="材料分组过滤"></div>
+          </div>
+
+          <div class="library-layout">
+            <div id="libraryList" class="library-list" aria-label="材料列表"></div>
+            <article id="docPreview" class="doc-preview" aria-live="polite">
+              <span class="section-label">Select a document</span>
+              <h3>从左侧选择一篇材料</h3>
+              <p>这里会显示标题、路径、摘要和章节大纲。完整内容请用“打开文件”进入原 Markdown 或 Notebook。</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="paths" class="section">
+          <div class="section-heading">
+            <span class="section-label">Local assets</span>
+            <h2>本地路径与资产入口</h2>
+            <p>这些路径是复现和教学站的实际来源。复制按钮可直接复制到剪贴板。</p>
+          </div>
+          <div class="path-list">
+            <button class="copy-button" data-copy="C:\Users\robot\Documents\成长学习库\physx-omni-assets">复制项目目录</button>
+            <code>C:\Users\robot\Documents\成长学习库\physx-omni-assets</code>
+            <button class="copy-button" data-copy="C:\Users\robot\Documents\成长学习库\physx-omni-assets\code\PhysX-Omni">复制官方代码</button>
+            <code>C:\Users\robot\Documents\成长学习库\physx-omni-assets\code\PhysX-Omni</code>
+            <button class="copy-button" data-copy="C:\Users\robot\physx_outputs">复制复现输出</button>
+            <code>C:\Users\robot\physx_outputs</code>
+            <button class="copy-button" data-copy="C:\Users\robot\Documents\成长学习库\physx-omni-assets\learning_materials">复制学习材料</button>
+            <code>C:\Users\robot\Documents\成长学习库\physx-omni-assets\learning_materials</code>
+          </div>
+        </section>
+      </section>
+
+      <aside class="stage" aria-label="3D 资产与部件查看器">
+        <div class="stage-header">
+          <div>
+            <span class="section-label">Asset viewer</span>
+            <h2 id="assetTitle">Official demo</h2>
+            <p id="assetMeta">Loading</p>
+          </div>
+          <div id="status" class="status">Loading</div>
+        </div>
+
+        <div class="asset-switch" role="group" aria-label="切换查看资产">
+          <button type="button" class="active" data-scene="official">官方 7 部件</button>
+          <button type="button" data-scene="mms">M&M's 高罐</button>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="scene"></canvas>
+        </div>
+
+        <div class="source-strip">
+          <img id="sourceImage" src="./assets/cond_img.png" alt="Condition image" />
+          <div>
+            <strong id="objectName">Official demo</strong>
+            <span id="objectMeta">7 parts</span>
+          </div>
+        </div>
+
+        <section class="stage-section">
+          <h3>部件显隐</h3>
+          <div id="partList" class="part-list"></div>
+        </section>
+
+        <section class="stage-section controls">
+          <h3>查看控制</h3>
+          <div class="button-row">
+            <button id="showAll" type="button">全部</button>
+            <button id="soloBody" type="button">主体</button>
+            <button id="resetView" type="button">复位</button>
+          </div>
+          <label class="range-row">
+            <span>透明度</span>
+            <input id="opacity" type="range" min="0.18" max="1" step="0.01" value="1" />
+          </label>
+          <label class="check-row">
+            <input id="autoRotate" type="checkbox" />
+            <span>自动旋转</span>
+          </label>
+          <label class="check-row">
+            <input id="wireframe" type="checkbox" />
+            <span>线框</span>
+          </label>
+        </section>
+
+        <section class="stage-section stage-facts">
+          <h3>质量边界</h3>
+          <p>官方 demo 是完整链路复现证据；M&M's 是真实图片压力测试，不等价于官方指标复现。</p>
+        </section>
+      </aside>
+    </main>
+
+    <script src="./materials-data.js"></script>
+    <script src="./teaching.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script src="./boot-viewer.js"></script>
+  </body>
+</html>

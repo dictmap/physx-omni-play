@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="PhysX-Omni: Unified Simulation-Ready Physical 3D Generation for Rigid, Deformable, and Articulated Objects">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PhysX-Omni: Unified Simulation-Ready Physical 3D Generation for Rigid, Deformable, and Articulated Objects</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title" style="
+          font-size: 2.6rem;
+          white-space: nowrap;
+          line-height: 1.1;
+          letter-spacing: -1px;
+        ">PhysX-Omni: Unified Simulation-Ready Physical 3D Generation<br> for Rigid, Deformable, and Articulated Objects</h1>
+          
+          
+          
+            <div class="column has-text-centered">
+            <div class="publication-links">
+
+
+
+             
+              
+              <span class="link-block">
+                <a href="https://github.com/physx-omni/PhysX-Omni"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/PhysX-Omni/PhysXVerse"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fa fa-database"></i>
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+
+              
+        
+              <span class="link-block">
+                <a href="https://youtu.be/ZCgj4ffz4yk"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+                  
+                 
+            </div>
+            
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+
+
+      <div id="results-carousel" class="carousel results-carousel">
+
+        <div class="item item-steve" >
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/7_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline>
+            <source src="./static/videos/res/8_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/10_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-steve" >
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/1_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline>
+            <source src="./static/videos/res/2_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/3_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>        
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/4_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/5_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/6_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/9_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>        
+        
+
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/11_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+
+
+
+
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+
+
+      <div id="results-carousel1" class="carousel results-carousel">
+        
+        <div class="item item-steve" >
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/19_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/12_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-steve" >
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/13_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline>
+            <source src="./static/videos/res/14_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/15_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>        
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/16_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/17_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/18_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline>
+            <source src="./static/videos/res/20_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/21_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>        
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline >
+            <source src="./static/videos/res/22_concat.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <section class="section">
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Demo Video</h2> -->
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/ZCgj4ffz4yk"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+
+
+
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          
+          
+          <p>
+            Simulation-ready physical 3D assets have emerged as a promising direction owing to their broad applicability in downstream tasks. However, most existing 3D generation methods either neglect physical properties or are limited to a single asset category, e.g., rigid, deformable, or articulated objects. To address these limitations, we introduce <b>PhysX-Omni</b>, <b>a unified framework</b> for simulation-ready physical 3D generation across diverse asset types.
+Specifically, we develop a novel and efficient geometry representation tailored for Vision-Language Models, which directly encodes high-resolution 3D structures without compression, significantly improving generation performance. In addition, we construct the <b>first general simulation-ready 3D dataset</b>, <b>PhysXVerse</b>, covering diverse indoor and outdoor categories. Furthermore, to comprehensively and flexibly evaluate both generative and understanding capabilities in the wild, we propose <b>PhysX-Bench</b>, which encompasses six key attributes: geometry, <span style="font-weight: bold; color: rgb(30.0000003 ,  70.99999935, 173.9999997);">absolute scale</span>, <span style="font-weight: bold; color: rgb(220.0000005 ,  22.00000005,  74.0000004);">material</span>, <span style="font-weight: bold; color: rgb(255       , 158,  42.99999975);">affordance</span>, <span style="font-weight: bold; color: rgb(79.99999995, 178.9999989 ,  34.9999995);">kinematics</span>, and <span style="font-weight: bold; color: rgb(119.00000085,  33.99999915,   5.99999955);">function description</span>.
+Extensive experiments with conventional metrics and PhysX-Bench show that PhysX-Omni performs strongly in both generation and understanding. Moreover, additional studies further validate the potential of PhysX-Omni for applications in simulation-ready scene generation and robotic policy learning. We believe PhysX-Omni can significantly advance a wide range of downstream applications, particularly in embodied AI and physics-based simulation.
+          </p>
+        </div>
+        <br>
+        <img class="summary-img" src="./static/videos/teaser2.png" style="width:100%;">
+        <br>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+
+  </div>
+</section>
+
+<div class="container is-max-desktop">
+  <!-- method. -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-4">I. Overview of Phys-Omni</h2>
+      
+      <div class="content has-text-justified">
+
+      <img class="summary-img" src="./static/videos/framework.png" style="width:100%;">
+
+
+      
+      
+      </div>
+    </div>
+  </div>
+  <!--/ method. -->
+  <br>
+</div>
+
+
+
+
+
+
+<div class="container is-max-desktop">
+  <!-- method. -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-4">II. Statistics and Distribution of PhysVerse</h2>
+      
+      <div class="content has-text-justified">
+
+      <img class="summary-img" src="./static/videos/data_distribution.png" style="width:100%;">
+
+      </div>
+    </div>
+  </div>
+  <!--/ method. -->
+  <br>
+</div>
+
+
+
+
+
+
+
+<div class="container is-widescreen">
+  <h2 class="title is-4 has-text-centered">III. Overview of PhysX-Bench</h2>
+
+  <div class="columns is-centered is-vcentered" style="overflow:visible; column-gap:0;">
+    
+    <div class="column is-6" style="padding-right:0;">
+      <h3 class="title is-5 has-text-centered" style="transform:translateX(60px);">Benchmark Overview</h3>
+      <div style="height:520px; display:flex; align-items:center; justify-content:center; margin-top:-40px;">
+        <img
+          src="./static/videos/physx-bench.png"
+          style="width:70%; max-width:520px; border-radius:10px; transform:translateX(60px);"
+        >
+      </div>
+    </div>
+
+    <div class="column is-6" style="padding-left:0;">
+      <h3 class="title is-5 has-text-centered" style="transform:translateX(-60px);">Evaluation Dimensions</h3>
+
+      <div style="width:700px; display:flex; align-items:center; justify-content:center;   margin-left:-60px; margin-top:-40px;">
+        <div style="width:606px; height:490px; overflow:hidden;">
+          <iframe
+            src="./static/videos/radar_chart.html"
+            width="760"
+            height="720"
+            frameborder="0"
+            scrolling="no"
+            style="
+              border:none;
+              transform:scale(0.77) translateX(-30px) translateY(-40px);
+              transform-origin:top left;
+            "
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container is-max-desktop">
+  <!-- method. -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-4">IV. Experiment Results</h2>
+      
+      <div class="content has-text-justified">
+
+      <img class="summary-img" src="./static/videos/qualitative_other1.png" style="width:100%;">
+
+
+      
+      
+      </div>
+    </div>
+  </div>
+  <!--/ method. -->
+  <br>
+</div>
+
+
+<div class="container is-max-desktop">
+  <!-- method. -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-4">V. Future Applications</h2>
+      
+      <div class="content has-text-justified">
+
+      <img class="summary-img" src="./static/videos/robotics.png" style="width:100%;">
+      <br>
+      <br>
+      <br>
+      <img class="summary-img" src="./static/videos/scene.png" style="width:100%;">
+      <br>
+      <br>
+      <div style="display:flex; gap:16px; align-items:center; justify-content:center;">
+        <img class="summary-img"
+             src="./static/videos/scene2_kine_sim.gif"
+             style="width:50%;">
+      
+        <img class="summary-img"
+             src="./static/videos/scene1_kine_sim.gif"
+             style="width:50%;">
+      </div>
+
+
+      
+      
+      </div>
+    </div>
+  </div>
+  <!--/ method. -->
+  <br>
+</div>
+
+
+
+
+
+
+
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      
+      
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+                 Source code mainly borrowed from Keunhong Park's  <a rel="license"
+                                                href="https://nerfies.github.io/">Nerfies website</a>.
+          </p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

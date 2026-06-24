@@ -1,0 +1,31 @@
+diff --git a/decoder_each.py b/decoder_each.py
+index d8fd1a0..639542b 100644
+--- a/decoder_each.py
++++ b/decoder_each.py
+@@ -83,7 +83,7 @@ if os.path.exists(os.path.join(qwenpath,'allind.npy')):
+     
+ 
+     
+-    outputs = pipeline.run_decoder(coords,image,seed=1,eachcoords=eachcoords)
++    outputs = pipeline.run_decoder(coords, image, seed=1, eachcoords=eachcoords, formats=['mesh', 'gaussian'])
+     for i in range(len(outputs)):
+         objfilepath=os.path.join(objspath,str(i))
+         os.makedirs(os.path.join(objfilepath), exist_ok=True)
+diff --git a/trellis/pipelines/trellis_image_to_3d.py b/trellis/pipelines/trellis_image_to_3d.py
+index b9269b6..cab551a 100644
+--- a/trellis/pipelines/trellis_image_to_3d.py
++++ b/trellis/pipelines/trellis_image_to_3d.py
+@@ -74,7 +74,12 @@ class TrellisImageTo3DPipeline(Pipeline):
+         """
+         Initialize the image conditioning model.
+         """
+-        dinov2_model = torch.hub.load('facebookresearch/dinov2', name, pretrained=True)
++        import os
++        local_dino_repo = os.environ.get('DINO_LOCAL_REPO')
++        if local_dino_repo:
++            dinov2_model = torch.hub.load(local_dino_repo, name, pretrained=True, source='local')
++        else:
++            dinov2_model = torch.hub.load('facebookresearch/dinov2', name, pretrained=True)
+         dinov2_model.eval()
+         self.models['image_cond_model'] = dinov2_model
+         transform = transforms.Compose([

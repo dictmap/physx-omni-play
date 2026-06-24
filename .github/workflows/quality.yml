@@ -1,0 +1,26 @@
+name: quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Rebuild material index
+        run: python official_viewer/build_materials_data.py
+
+      - name: Ensure generated material index is committed
+        run: git diff --exit-code official_viewer/materials-data.js
+
+      - name: Validate project quality gates
+        run: python scripts/validate_physx_omni_quality.py

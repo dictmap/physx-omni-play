@@ -1,0 +1,57 @@
+{
+  "manifest_date": "2026-06-25",
+  "paper": {
+    "title": "PhysX-Omni",
+    "arxiv_abs": "https://arxiv.org/abs/2605.21572v1",
+    "arxiv_html": "https://arxiv.org/html/2605.21572v1",
+    "local_pdf": "paper/2605.21572v1.pdf",
+    "local_html": "paper/2605.21572v1.html"
+  },
+  "official_code": {
+    "repository": "https://github.com/physx-omni/PhysX-Omni",
+    "local_checkout": "code/PhysX-Omni",
+    "upstream_commit": "46fa1cd",
+    "local_snapshot_note": "GitHub 发布仓库中按普通文件保留源码快照；上游 .git 元数据不进入轻量复现仓库。",
+    "core_files": [
+      "code/PhysX-Omni/1vlm_demo.py",
+      "code/PhysX-Omni/2infer_geo.py",
+      "code/PhysX-Omni/decoder_each.py",
+      "code/PhysX-Omni/3jsongen_update.py",
+      "code/PhysX-Omni/benchmark/README.md",
+      "code/PhysX-Omni/dataset/3generate_data_new_64_finetune_rle.py"
+    ]
+  },
+  "author_sources": {
+    "tarball": "author_sources/2605.21572v1.tar",
+    "tex_root": "author_sources/src",
+    "main_tex": "author_sources/src/main.tex",
+    "bibliography": "author_sources/src/reference.bib",
+    "figures_dir": "author_sources/src/figure"
+  },
+  "hugging_face_assets": {
+    "local_model_cache": "hf/PhysX-Omni-model",
+    "local_dataset_cache": "hf/PhysXVerse-dataset",
+    "notes": "大体积、gated 或远端资产必须在这里记录来源和本地位置，不能只用本地缓存存在来暗示已经完成。"
+  },
+  "learning_materials": {
+    "root": "learning_materials",
+    "main_index": "learning_materials/README.md",
+    "paper_reading": "learning_materials/paper_reading",
+    "reproduction": "learning_materials/reproduction",
+    "supporting_notes": "learning_materials/supporting_notes",
+    "step8_deepdives": "learning_materials/physx_omni_step8_deepdives",
+    "step9_reviewer": "learning_materials/physx_omni_step9_reviewer",
+    "step10_experiments": "learning_materials/physx_omni_step10_technical_experiments"
+  },
+  "viewer_assets": {
+    "viewer": "official_viewer/index.html",
+    "material_index": "official_viewer/materials-data.js",
+    "official_glb_parts": "official_viewer/assets/parts",
+    "mms_glb_parts": "official_viewer/assets/mms/parts",
+    "evidence_preview": "official_viewer/assets/evidence/official_7part_mesh_preview.png"
+  },
+  "reference_style": {
+    "repository": "https://github.com/dictmap/roboplay",
+    "used_for": "参考其轻量复现包组织方式：清晰入口、证据边界、来源清单、脚本入口和验证门槛。"
+  }
+}
