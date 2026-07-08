@@ -354,14 +354,25 @@ def write_generated_proxy_usda(
     stage.GetRootLayer().Save()
 
 
-def stage_text_excerpt(stage: Usd.Stage, out_path: Path, limit_lines: int = TEXT_LIMIT_LINES) -> dict[str, Any]:
+def stage_text_export(
+    stage: Usd.Stage,
+    full_path: Path,
+    excerpt_path: Path,
+    limit_lines: int = TEXT_LIMIT_LINES,
+) -> dict[str, Any]:
     text = stage.ExportToString()
+    full_path.write_text(text if text.endswith("\n") else text + "\n", encoding="utf-8")
     lines = text.splitlines()
     excerpt = "\n".join(lines[:limit_lines])
     if len(lines) > limit_lines:
         excerpt += f"\n# ... 截断：完整 stage 导出共 {len(lines)} 行，本实验只嵌入前 {limit_lines} 行。"
-    out_path.write_text(excerpt + "\n", encoding="utf-8")
-    return {"line_count": len(lines), "excerpt_path": str(out_path), "excerpt": excerpt}
+    excerpt_path.write_text(excerpt + "\n", encoding="utf-8")
+    return {
+        "line_count": len(lines),
+        "full_path": str(full_path),
+        "excerpt_path": str(excerpt_path),
+        "excerpt": excerpt,
+    }
 
 
 def try_usdrecord(usd_path: Path, out_png: Path) -> dict[str, Any]:
@@ -553,7 +564,7 @@ def write_html_report(out_dir: Path, summary: dict[str, Any]) -> Path:
             for row in comparison["joint_rows"]
         ]
 
-        original_excerpt = Path(asset["original_excerpt_path"]).read_text(encoding="utf-8")
+        original_usd_text = Path(asset["original_export_usda"]).read_text(encoding="utf-8")
         generated_text = Path(asset["generated_usda"]).read_text(encoding="utf-8")
         projection = asset["projection_rel"]
         render_status = asset["render_attempt"]["status"]
@@ -587,14 +598,25 @@ def write_html_report(out_dir: Path, summary: dict[str, Any]) -> Path:
                 <li>它不是 PhysX-Omni VLM/decoder 的真实输出；真实 PhysX-Omni 需要条件图、模型权重和 4090 运行环境。</li>
                 <li>本 proxy 用来建立 USD->PhysX-Omni 实验 harness、HTML 对比和质量基线，不能声称高保真重建成功。</li>
               </ul>
-              <details>
-                <summary>原始 USD 文本摘录（由 pxr Stage.ExportToString 生成，已截断）</summary>
-                <pre>{html.escape(original_excerpt)}</pre>
-              </details>
-              <details>
-                <summary>生成 USDA 全文</summary>
-                <pre>{html.escape(generated_text)}</pre>
-              </details>
+              <h3>USD 内容左右对比</h3>
+              <div class="usd-compare">
+                <article class="code-panel">
+                  <div class="code-panel-head">
+                    <strong>左：原始 Lightwheel USD 导出文本</strong>
+                    <a href="{html.escape(asset['original_export_usda_rel'])}">打开原始导出 USDA</a>
+                  </div>
+                  <p class="muted">由 <code>pxr.Usd.Stage.ExportToString()</code> 从二进制/源 USD 导出，行数：{asset['original_export_line_count']}。</p>
+                  <pre>{html.escape(original_usd_text)}</pre>
+                </article>
+                <article class="code-panel">
+                  <div class="code-panel-head">
+                    <strong>右：generated PhysX-Omni structural proxy USDA</strong>
+                    <a href="{html.escape(asset['generated_usda_rel'])}">打开生成 USDA</a>
+                  </div>
+                  <p class="muted">本分支生成的可读 USDA，用 bbox mesh + collision proxy + joint skeleton 对齐原始结构。</p>
+                  <pre>{html.escape(generated_text)}</pre>
+                </article>
+              </div>
               <details>
                 <summary>usdrecord/渲染尝试输出</summary>
                 <pre>{html.escape(render_error or json.dumps(asset['render_attempt'], ensure_ascii=False, indent=2))}</pre>
@@ -615,13 +637,18 @@ def write_html_report(out_dir: Path, summary: dict[str, Any]) -> Path:
     .summary, .asset { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:18px; margin:18px 0; }
     .asset-grid { display:grid; grid-template-columns: minmax(320px, 0.9fr) minmax(320px, 1.1fr); gap:18px; align-items:start; }
     img { width:100%; border:1px solid var(--line); border-radius:6px; background:#111827; }
+    .usd-compare { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:14px; align-items:start; }
+    .code-panel { min-width:0; border:1px solid var(--line); border-radius:8px; background:#f8fafc; padding:12px; }
+    .code-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+    .code-panel-head a { color:var(--accent); font-size:13px; }
+    .code-panel pre { max-height:720px; min-height:420px; margin-bottom:0; }
     table { width:100%; border-collapse: collapse; margin:10px 0 18px; font-size:14px; }
     th, td { text-align:left; border-bottom:1px solid var(--line); padding:8px 9px; vertical-align:top; }
     th { background:#edf2f7; }
     pre { white-space:pre-wrap; overflow:auto; max-height:520px; background:#101820; color:#ecf4ff; padding:14px; border-radius:6px; font-size:12px; }
     .muted { color:var(--muted); }
     .warning { color:var(--warn); font-weight:600; }
-    @media (max-width: 820px) { .asset-grid { grid-template-columns:1fr; } }
+    @media (max-width: 980px) { .asset-grid, .usd-compare { grid-template-columns:1fr; } }
     """
     html_text = f"""<!doctype html>
 <html lang="zh-CN">
@@ -691,7 +718,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         original_counts = stage_counts(stage)
         bodies, joints = extract_bodies_and_joints(stage, asset_name)
 
-        original_excerpt = stage_text_excerpt(stage, asset_out / "original_usd_excerpt.usda.txt")
+        original_export = stage_text_export(
+            stage,
+            asset_out / f"{asset_name}_original_export.usda",
+            asset_out / "original_usd_excerpt.usda.txt",
+        )
         generated_usda = asset_out / f"{asset_name}_physx_omni_structural_proxy.usda"
         write_generated_proxy_usda(asset_name, usd_path, bodies, joints, generated_usda)
         generated_stage = Usd.Stage.Open(str(generated_usda))
@@ -731,7 +762,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "joints_extracted": [joint.__dict__ for joint in joints],
             "generated_usda": str(generated_usda),
             "generated_usda_rel": rel(generated_usda, out_dir),
-            "original_excerpt_path": str(Path(original_excerpt["excerpt_path"])),
+            "original_export_usda": str(Path(original_export["full_path"])),
+            "original_export_usda_rel": rel(Path(original_export["full_path"]), out_dir),
+            "original_export_line_count": original_export["line_count"],
+            "original_excerpt_path": str(Path(original_export["excerpt_path"])),
             "projection": str(projection_png),
             "projection_rel": rel(projection_png, out_dir),
             "projection_kind": projection_kind,
