@@ -1,0 +1,2764 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lightwheel -> PhysX-Omni 重建实验</title>
+    <style>
+    :root { color-scheme: light; --bg:#f6f8fb; --panel:#ffffff; --ink:#17202a; --muted:#627386; --line:#d9e1ea; --accent:#205e8a; --warn:#a15d00; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family: Inter, "Microsoft YaHei", system-ui, sans-serif; line-height:1.55; }
+    header, main { width:min(1180px, calc(100% - 32px)); margin:0 auto; }
+    header { padding:32px 0 18px; }
+    h1 { margin:0 0 10px; font-size:34px; }
+    h2 { margin-top:0; }
+    code { background:#edf2f7; border:1px solid var(--line); border-radius:5px; padding:1px 5px; }
+    .summary, .asset { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:18px; margin:18px 0; }
+    .asset-grid { display:grid; grid-template-columns: minmax(320px, 0.9fr) minmax(320px, 1.1fr); gap:18px; align-items:start; }
+    img { width:100%; border:1px solid var(--line); border-radius:6px; background:#111827; }
+    table { width:100%; border-collapse: collapse; margin:10px 0 18px; font-size:14px; }
+    th, td { text-align:left; border-bottom:1px solid var(--line); padding:8px 9px; vertical-align:top; }
+    th { background:#edf2f7; }
+    pre { white-space:pre-wrap; overflow:auto; max-height:520px; background:#101820; color:#ecf4ff; padding:14px; border-radius:6px; font-size:12px; }
+    .muted { color:var(--muted); }
+    .warning { color:var(--warn); font-weight:600; }
+    @media (max-width: 820px) { .asset-grid { grid-template-columns:1fr; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Lightwheel 多资产输入 -> PhysX-Omni 重建分支实验</h1>
+      <p class="muted">生成时间：2026-07-08T21:51:53+0800；样本数：5；分支目标：建立 Lightwheel USD 输入、生成 USDA 输出和详细对比 HTML 的可复跑 harness。</p>
+    </header>
+    <main>
+      <section class="summary">
+        <h2>实验结论边界</h2>
+        <ul>
+          <li>已完成：读取多个 Lightwheel 原始 USD，抽取结构/关节/材质/碰撞统计，生成可打开的结构 proxy USDA，并生成本 HTML 对比报告。</li>
+          <li>未完成：真实 PhysX-Omni VLM/decoder 重建没有执行，因为本地 `hf/PhysX-Omni-model` 只有缓存元数据，没有模型权重；`usdrecord` 本机也缺 renderer plugin，无法生成真实条件渲染图。</li>
+          <li>当前生成 USDA 不能声称为 PhysX-Omni 论文方法成功结果，只能作为分支 harness 和 USD-to-reconstruction proxy baseline。</li>
+        </ul>
+        <h2>总览</h2>
+        <table><thead><tr><th>asset</th><th>original_mesh</th><th>generated_mesh</th><th>original_joint</th><th>generated_joint</th><th>generated_usda</th><th>physx_status</th></tr></thead><tbody><tr><td>Blender010</td><td>8</td><td>7</td><td>7</td><td>7</td><td>Blender010/Blender010_physx_omni_structural_proxy.usda</td><td>not_run_missing_model_weights</td></tr><tr><td>Dishwasher036</td><td>6</td><td>6</td><td>6</td><td>6</td><td>Dishwasher036/Dishwasher036_physx_omni_structural_proxy.usda</td><td>not_run_missing_model_weights</td></tr><tr><td>Microwave047</td><td>4</td><td>3</td><td>3</td><td>3</td><td>Microwave047/Microwave047_physx_omni_structural_proxy.usda</td><td>not_run_missing_model_weights</td></tr><tr><td>Oven038</td><td>7</td><td>6</td><td>6</td><td>6</td><td>Oven038/Oven038_physx_omni_structural_proxy.usda</td><td>not_run_missing_model_weights</td></tr><tr><td>Refrigerator038</td><td>6</td><td>4</td><td>4</td><td>4</td><td>Refrigerator038/Refrigerator038_physx_omni_structural_proxy.usda</td><td>not_run_missing_model_weights</td></tr></tbody></table>
+      </section>
+      
+            <section class="asset">
+              <h2>Blender010</h2>
+              <div class="asset-grid">
+                <div>
+                  <img src="Blender010/Blender010_bbox_projection.png" alt="Blender010 结构投影" />
+                  <p class="muted">预览来源：bbox_projection_fallback；usdrecord 状态：<code>failed</code></p>
+                </div>
+                <div>
+                  <h3>路径与状态</h3>
+                  <p><b>原始 USD：</b><code>C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Blender010\Blender010.usd</code></p>
+                  <p><b>生成 USDA：</b><a href="Blender010/Blender010_physx_omni_structural_proxy.usda">Blender010/Blender010_physx_omni_structural_proxy.usda</a></p>
+                  <p><b>原始 SHA256：</b><code>44757dc8e88d17cd</code></p>
+                  <p><b>PhysX-Omni 模型重建：</b><code>not_run_missing_model_weights</code></p>
+                  <p class="warning">本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。</p>
+                </div>
+              </div>
+              <h3>数量对比</h3>
+              <table><thead><tr><th>metric</th><th>original</th><th>generated</th><th>delta</th><th>ratio</th></tr></thead><tbody><tr><td>prim</td><td>94</td><td>50</td><td>-44</td><td>0.532</td></tr><tr><td>mesh</td><td>8</td><td>7</td><td>-1</td><td>0.875</td></tr><tr><td>material</td><td>9</td><td>2</td><td>-7</td><td>0.222</td></tr><tr><td>collision</td><td>36</td><td>7</td><td>-29</td><td>0.194</td></tr><tr><td>rigid_body</td><td>7</td><td>7</td><td>0</td><td>1.0</td></tr><tr><td>mass_api</td><td>7</td><td>7</td><td>0</td><td>1.0</td></tr><tr><td>joint</td><td>7</td><td>7</td><td>0</td><td>1.0</td></tr></tbody></table>
+              <h3>关节类型对比</h3>
+              <table><thead><tr><th>type</th><th>original</th><th>generated</th><th>delta</th></tr></thead><tbody><tr><td>PhysicsFixedJoint</td><td>1</td><td>1</td><td>0</td></tr><tr><td>PhysicsPrismaticJoint</td><td>4</td><td>4</td><td>0</td></tr><tr><td>PhysicsRevoluteJoint</td><td>2</td><td>2</td><td>0</td></tr></tbody></table>
+              <h3>生成解释</h3>
+              <ul>
+                <li>生成 USDA 是本分支的结构化 proxy：它从 Lightwheel USD 提取 body bbox、刚体和 joint skeleton，再写成可读 USDA。</li>
+                <li>它不是 PhysX-Omni VLM/decoder 的真实输出；真实 PhysX-Omni 需要条件图、模型权重和 4090 运行环境。</li>
+                <li>本 proxy 用来建立 USD->PhysX-Omni 实验 harness、HTML 对比和质量基线，不能声称高保真重建成功。</li>
+              </ul>
+              <details>
+                <summary>原始 USD 文本摘录（由 pxr Stage.ExportToString 生成，已截断）</summary>
+                <pre>#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-0.5077668423602755, -0.967445266602569, 0.3999099500504205)
+                double3 target = (0.04878970282745465, 0.056804859124867546, -0.02093829313769291)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = &quot;/OmniverseKit_Persp&quot;
+        }
+        dictionary navmeshSettings = {
+            double agentHeight = 180
+            double agentRadius = 20
+            bool excludeRigidBodies = 1
+            int ver = 1
+            double voxelCeiling = 460
+        }
+        dictionary omni_layer = {
+            string authoring_layer = &quot;./Blender010.usd&quot;
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            bool &quot;rtx:raytracing:fractionalCutoutOpacity&quot; = 1
+            token &quot;rtx:rendermode&quot; = &quot;PathTracing&quot;
+        }
+    }
+    defaultPrim = &quot;root&quot;
+    doc = &quot;&quot;&quot;Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd
+&quot;&quot;&quot;
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+)
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;, &quot;xformOp:orient&quot;, &quot;xformOp:scale&quot;]
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;material_Body001_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = &quot;Albedo&quot;
+                    displayName = &quot;Albedo Color&quot;
+                    doc = &quot;&quot;&quot;This is the albedo base color
+
+&quot;&quot;&quot;
+                    hidden = false
+                    renderType = &quot;color&quot;
+                )
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Blender010/texture/T_Blender010_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = &quot;Albedo&quot;
+                    displayName = &quot;Albedo Map&quot;
+                    hidden = false
+                    renderType = &quot;texture_2d&quot;
+                )
+                bool inputs:enable_ORM_texture = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = &quot;Reflectivity&quot;
+                    displayName = &quot;Enable ORM Texture&quot;
+                    doc = &quot;&quot;&quot;The ORM texture will be used to extract the Occlusion, Roughness and Metallic textures from R,G,B channels
+
+&quot;&quot;&quot;
+                    hidden = false
+                )
+                bool inputs:flip_tangent_v = 0 (
+                    customData = {
+                        bool default = 1
+                    }
+                    displayGroup = &quot;Normal&quot;
+                    displayName = &quot;Normal Map Flip V Tangent&quot;
+                    hidden = false
+                )
+                float inputs:metallic_constant = 0.5 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = &quot;Reflectivity&quot;
+                    displayName = &quot;Metallic Amount&quot;
+                    doc = &quot;&quot;&quot;Metallic Material
+
+&quot;&quot;&quot;
+                    hidden = false
+                )
+                float inputs:metallic_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = &quot;Reflectivity&quot;
+                    displayName = &quot;Metallic Map Influence&quot;
+                    doc = &quot;&quot;&quot;Blends between the constant value and the lookup of the metallic texture
+
+&quot;&quot;&quot;
+                    hidden = false
+                )
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Blender010/texture/T_Blender010_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = &quot;Normal&quot;
+                    displayName = &quot;Normal Map&quot;
+                    hidden = false
+                    renderType = &quot;texture_2d&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Blender010/texture/T_Blender010_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = &quot;Reflectivity&quot;
+                    displayName = &quot;ORM Map&quot;
+                    doc = &quot;&quot;&quot;Texture that has Occlusion, Roughness and Metallic maps stored in their respective R, G and B channels
+
+&quot;&quot;&quot;
+                    hidden = false
+                    renderType = &quot;texture_2d&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = &quot;Reflectivity&quot;
+                    displayName = &quot;Roughness Map Influence&quot;
+                    doc = &quot;&quot;&quot;Blends between the constant value and the lookup of the roughness texture
+
+&quot;&quot;&quot;
+# ... 截断：完整 stage 导出共 2232 行，本实验只嵌入前 180 行。
+</pre>
+              </details>
+              <details>
+                <summary>生成 USDA 全文</summary>
+                <pre>#usda 1.0
+(
+    defaultPrim = &quot;root&quot;
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    prepend apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+    assetInfo = {
+        string name = &quot;Blender010_physx_omni_structural_proxy&quot;
+        string reconstruction_mode = &quot;usd_structural_proxy_not_vlm_decoder_output&quot;
+        string source_lightwheel_usd = &quot;C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd&quot;
+    }
+    kind = &quot;component&quot;
+)
+{
+    def PhysicsScene &quot;PhysicsScene&quot;
+    {
+    }
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;ProxyBodyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material &quot;CollisionProxyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope &quot;Joints&quot;
+    {
+        def PhysicsFixedJoint &quot;Blender010_FixedJoint&quot;
+        {
+            rel physics:body1 = &lt;/root/Blender010_Blender010&gt;
+        }
+
+        def PhysicsPrismaticJoint &quot;Blender010_Button001_Button001_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Blender010_Blender010&gt;
+            rel physics:body1 = &lt;/root/Blender010_Blender010_Button001&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.003
+        }
+
+        def PhysicsPrismaticJoint &quot;Blender010_Button002_Button002_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Blender010_Blender010&gt;
+            rel physics:body1 = &lt;/root/Blender010_Blender010_Button002&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.003
+        }
+
+        def PhysicsPrismaticJoint &quot;Blender010_Jug001_Jug001_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Blender010_Blender010&gt;
+            rel physics:body1 = &lt;/root/Blender010_Blender010_Jug001&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.05
+        }
+
+        def PhysicsRevoluteJoint &quot;Blender010_Blade001_Blade001_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Blender010_Blender010_Jug001&gt;
+            rel physics:body1 = &lt;/root/Blender010_Blender010_Blade001&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 20626.48
+        }
+
+        def PhysicsRevoluteJoint &quot;Blender010_Knob001_Knob001_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Blender010_Blender010&gt;
+            rel physics:body1 = &lt;/root/Blender010_Blender010_Knob001&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 240
+        }
+
+        def PhysicsPrismaticJoint &quot;Blender010_Lid001_Lid001_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Blender010_Blender010&gt;
+            rel physics:body1 = &lt;/root/Blender010_Blender010_Lid001&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.08
+        }
+    }
+
+    def Xform &quot;Blender010_Blender010&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1526
+        double3 xformOp:translate = (-0.01672549918293953, -0.007311001420021057, -0.2014715000987053)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Blender010_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.1281555, -0.157757, -0.09438), (0.1281555, -0.157757, -0.09438), (0.1281555, 0.157757, -0.09438), (-0.1281555, 0.157757, -0.09438), (-0.1281555, -0.157757, 0.09438), (0.1281555, -0.157757, 0.09438), (0.1281555, 0.157757, 0.09438), (-0.1281555, 0.157757, 0.09438)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Blender010_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.256311, 0.315514, 0.18876)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Blender010_Blender010_Button001&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (0.057515500113368034, -0.11539699882268906, -0.1786924973130226)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Blender010_Button001_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Blender010_Button001_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Blender010_Blender010_Button002&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.08866849914193153, -0.11540499702095985, -0.17864900082349777)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Blender010_Button002_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Blender010_Button002_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Blender010_Blender010_Jug001&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.2334
+        double3 xformOp:translate = (0.00471150130033493, 0.04698999598622322, 0.0639830008149147)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Blender010_Jug001_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.14929551, -0.108447, -0.18022251), (0.14929551, -0.108447, -0.18022251), (0.14929551, 0.108447, -0.18022251), (-0.14929551, 0.108447, -0.18022251), (-0.14929551, -0.108447, 0.18022251), (0.14929551, -0.108447, 0.18022251), (0.14929551, 0.108447, 0.18022251), (-0.14929551, 0.108447, 0.18022251)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Blender010_Jug001_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.29859102, 0.216894, 0.36044502)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Blender010_Blender010_Blade001&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.016946997493505478, 0.04698000196367502, -0.03920849971473217)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Blender010_Blade001_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.056422, -0.065346, -0.025), (0.056422, -0.065346, -0.025), (0.056422, 0.065346, -0.025), (-0.056422, 0.065346, -0.025), (-0.056422, -0.065346, 0.025), (0.056422, -0.065346, 0.025), (0.056422, 0.065346, 0.025), (-0.056422, 0.065346, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Blender010_Blade001_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.112844, 0.130692, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Blender010_Blender010_Knob001&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.014930999837815762, -0.09838450327515602, -0.164512000977993)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Blender010_Knob001_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.025952999, -0.0252905, -0.025), (0.025952999, -0.0252905, -0.025), (0.025952999, 0.0252905, -0.025), (-0.025952999, 0.0252905, -0.025), (-0.025952999, -0.0252905, 0.025), (0.025952999, -0.0252905, 0.025), (0.025952999, 0.0252905, 0.025), (-0.025952999, 0.0252905, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Blender010_Knob001_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.051905997, 0.050581, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Blender010_Blender010_Lid001&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.03352050110697746, 0.0470070019364357, 0.2554749995470047)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Blender010_Lid001_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.1204865, -0.118061, -0.0403765), (0.1204865, -0.118061, -0.0403765), (0.1204865, 0.118061, -0.0403765), (-0.1204865, 0.118061, -0.0403765), (-0.1204865, -0.118061, 0.0403765), (0.1204865, -0.118061, 0.0403765), (0.1204865, 0.118061, 0.0403765), (-0.1204865, 0.118061, 0.0403765)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Blender010_Lid001_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.240973, 0.236122, 0.080753)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+}
+
+</pre>
+              </details>
+              <details>
+                <summary>usdrecord/渲染尝试输出</summary>
+                <pre>Traceback (most recent call last):
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\Library\bin\usdrecord&quot;, line 9, in &lt;module&gt;
+
+    from pxr import Ar
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Ar\__init__.py&quot;, line 7, in &lt;module&gt;
+
+    from pxr import Tf
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 163, in &lt;module&gt;
+
+    PreparePythonModule()
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 86, in PreparePythonModule
+
+    module = importlib.import_module(
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\importlib\__init__.py&quot;, line 126, in import_module
+
+    return _bootstrap._gcd_import(name[level:], package, level)
+
+ImportError: DLL load failed while importing _tf: 找不到指定的程序。
+
+
+ERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Blender010\Blender010.usd C:\Users\robot\Documents\成长学习库\physx-omni-assets\experiments\lightwheel_physx_reconstruction\run_latest\Blender010\Blender010_usdrecord.png` failed. (See above for error)
+</pre>
+              </details>
+            </section>
+            
+            <section class="asset">
+              <h2>Dishwasher036</h2>
+              <div class="asset-grid">
+                <div>
+                  <img src="Dishwasher036/Dishwasher036_bbox_projection.png" alt="Dishwasher036 结构投影" />
+                  <p class="muted">预览来源：bbox_projection_fallback；usdrecord 状态：<code>failed</code></p>
+                </div>
+                <div>
+                  <h3>路径与状态</h3>
+                  <p><b>原始 USD：</b><code>C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Dishwasher036\Dishwasher036.usd</code></p>
+                  <p><b>生成 USDA：</b><a href="Dishwasher036/Dishwasher036_physx_omni_structural_proxy.usda">Dishwasher036/Dishwasher036_physx_omni_structural_proxy.usda</a></p>
+                  <p><b>原始 SHA256：</b><code>4e95542ed9b1ed8e</code></p>
+                  <p><b>PhysX-Omni 模型重建：</b><code>not_run_missing_model_weights</code></p>
+                  <p class="warning">本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。</p>
+                </div>
+              </div>
+              <h3>数量对比</h3>
+              <table><thead><tr><th>metric</th><th>original</th><th>generated</th><th>delta</th><th>ratio</th></tr></thead><tbody><tr><td>prim</td><td>121</td><td>44</td><td>-77</td><td>0.364</td></tr><tr><td>mesh</td><td>6</td><td>6</td><td>0</td><td>1.0</td></tr><tr><td>material</td><td>7</td><td>2</td><td>-5</td><td>0.286</td></tr><tr><td>collision</td><td>75</td><td>6</td><td>-69</td><td>0.08</td></tr><tr><td>rigid_body</td><td>6</td><td>6</td><td>0</td><td>1.0</td></tr><tr><td>mass_api</td><td>6</td><td>6</td><td>0</td><td>1.0</td></tr><tr><td>joint</td><td>6</td><td>6</td><td>0</td><td>1.0</td></tr></tbody></table>
+              <h3>关节类型对比</h3>
+              <table><thead><tr><th>type</th><th>original</th><th>generated</th><th>delta</th></tr></thead><tbody><tr><td>PhysicsFixedJoint</td><td>1</td><td>1</td><td>0</td></tr><tr><td>PhysicsPrismaticJoint</td><td>4</td><td>4</td><td>0</td></tr><tr><td>PhysicsRevoluteJoint</td><td>1</td><td>1</td><td>0</td></tr></tbody></table>
+              <h3>生成解释</h3>
+              <ul>
+                <li>生成 USDA 是本分支的结构化 proxy：它从 Lightwheel USD 提取 body bbox、刚体和 joint skeleton，再写成可读 USDA。</li>
+                <li>它不是 PhysX-Omni VLM/decoder 的真实输出；真实 PhysX-Omni 需要条件图、模型权重和 4090 运行环境。</li>
+                <li>本 proxy 用来建立 USD->PhysX-Omni 实验 harness、HTML 对比和质量基线，不能声称高保真重建成功。</li>
+              </ul>
+              <details>
+                <summary>原始 USD 文本摘录（由 pxr Stage.ExportToString 生成，已截断）</summary>
+                <pre>#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-0.9741017815098221, -1.1897300966040663, 1.081456992640718)
+                double3 target = (0.17907231442808635, -0.078659780676269, 0.15654227030250445)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = &quot;/OmniverseKit_Persp&quot;
+        }
+        dictionary omni_layer = {
+            string authoring_layer = &quot;./Dishwasher036.usd&quot;
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = &quot;root&quot;
+    doc = &quot;&quot;&quot;Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Dishwasher036\\Dishwasher036.usd
+&quot;&quot;&quot;
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+)
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;, &quot;xformOp:orient&quot;, &quot;xformOp:scale&quot;]
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;material_Body001_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_button_lock_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_button_lock_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_button_lock_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_button_lock_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_button_power_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_button_power_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_button_power_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_button_power_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_door_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_rack0_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_rack0_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_rack0_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_rack0_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+# ... 截断：完整 stage 导出共 1844 行，本实验只嵌入前 180 行。
+</pre>
+              </details>
+              <details>
+                <summary>生成 USDA 全文</summary>
+                <pre>#usda 1.0
+(
+    defaultPrim = &quot;root&quot;
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    prepend apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+    assetInfo = {
+        string name = &quot;Dishwasher036_physx_omni_structural_proxy&quot;
+        string reconstruction_mode = &quot;usd_structural_proxy_not_vlm_decoder_output&quot;
+        string source_lightwheel_usd = &quot;C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Dishwasher036\\Dishwasher036.usd&quot;
+    }
+    kind = &quot;component&quot;
+)
+{
+    def PhysicsScene &quot;PhysicsScene&quot;
+    {
+    }
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;ProxyBodyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material &quot;CollisionProxyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope &quot;Joints&quot;
+    {
+        def PhysicsFixedJoint &quot;Dishwasher036_FixedJoint&quot;
+        {
+            rel physics:body1 = &lt;/root/Dishwasher036_Dishwasher036&gt;
+        }
+
+        def PhysicsPrismaticJoint &quot;Dishwasher036_button_lock_button_lock_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Dishwasher036_Dishwasher036&gt;
+            rel physics:body1 = &lt;/root/Dishwasher036_Dishwasher036_button_lock&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.004
+        }
+
+        def PhysicsPrismaticJoint &quot;Dishwasher036_button_power_button_power_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Dishwasher036_Dishwasher036&gt;
+            rel physics:body1 = &lt;/root/Dishwasher036_Dishwasher036_button_power&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.004
+        }
+
+        def PhysicsRevoluteJoint &quot;Dishwasher036_door_door_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Dishwasher036_Dishwasher036&gt;
+            rel physics:body1 = &lt;/root/Dishwasher036_Dishwasher036_door&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 30
+        }
+
+        def PhysicsPrismaticJoint &quot;Dishwasher036_rack0_rack0_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Dishwasher036_Dishwasher036&gt;
+            rel physics:body1 = &lt;/root/Dishwasher036_Dishwasher036_rack0&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.144
+        }
+
+        def PhysicsPrismaticJoint &quot;Dishwasher036_rack1_rack1_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Dishwasher036_Dishwasher036&gt;
+            rel physics:body1 = &lt;/root/Dishwasher036_Dishwasher036_rack1&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.274
+        }
+    }
+
+    def Xform &quot;Dishwasher036_Dishwasher036&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 3.1175
+        double3 xformOp:translate = (0, 0.03118300437927246, 0)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Dishwasher036_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.318744, -0.302153, -0.404619), (0.318744, -0.302153, -0.404619), (0.318744, 0.302153, -0.404619), (-0.318744, 0.302153, -0.404619), (-0.318744, -0.302153, 0.404619), (0.318744, -0.302153, 0.404619), (0.318744, 0.302153, 0.404619), (-0.318744, 0.302153, 0.404619)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Dishwasher036_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.637488, 0.604306, 0.809238)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Dishwasher036_Dishwasher036_button_lock&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.2100209966301918, -0.2743444889783859, 0.33237549662590027)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Dishwasher036_button_lock_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Dishwasher036_button_lock_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Dishwasher036_Dishwasher036_button_power&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (0.20922300219535828, -0.2743444889783859, 0.33237549662590027)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Dishwasher036_button_power_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Dishwasher036_button_power_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Dishwasher036_Dishwasher036_door&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.2585
+        double3 xformOp:translate = (0.00013500452041625977, -0.2977589964866638, -0.04992648959159851)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Dishwasher036_door_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.292234, -0.035577, -0.3107475), (0.292234, -0.035577, -0.3107475), (0.292234, 0.035577, -0.3107475), (-0.292234, 0.035577, -0.3107475), (-0.292234, -0.035577, 0.3107475), (0.292234, -0.035577, 0.3107475), (0.292234, 0.035577, 0.3107475), (-0.292234, 0.035577, 0.3107475)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Dishwasher036_door_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.584468, 0.071154, 0.621495)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Dishwasher036_Dishwasher036_rack0&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.3152
+        double3 xformOp:translate = (0.00148850679397583, 0.005912996828556061, -0.17713599279522896)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Dishwasher036_rack0_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.2596075, -0.20161399, -0.075278), (0.2596075, -0.20161399, -0.075278), (0.2596075, 0.20161399, -0.075278), (-0.2596075, 0.20161399, -0.075278), (-0.2596075, -0.20161399, 0.075278), (0.2596075, -0.20161399, 0.075278), (0.2596075, 0.20161399, 0.075278), (-0.2596075, 0.20161399, 0.075278)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Dishwasher036_rack0_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.519215, 0.40322798, 0.150556)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Dishwasher036_Dishwasher036_rack1&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.3152
+        double3 xformOp:translate = (0.00148850679397583, 0.005912996828556061, 0.04921100102365017)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Dishwasher036_rack1_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.2596075, -0.20161399, -0.075278), (0.2596075, -0.20161399, -0.075278), (0.2596075, 0.20161399, -0.075278), (-0.2596075, 0.20161399, -0.075278), (-0.2596075, -0.20161399, 0.075278), (0.2596075, -0.20161399, 0.075278), (0.2596075, 0.20161399, 0.075278), (-0.2596075, 0.20161399, 0.075278)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Dishwasher036_rack1_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.519215, 0.40322798, 0.150556)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+}
+
+</pre>
+              </details>
+              <details>
+                <summary>usdrecord/渲染尝试输出</summary>
+                <pre>Traceback (most recent call last):
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\Library\bin\usdrecord&quot;, line 9, in &lt;module&gt;
+
+    from pxr import Ar
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Ar\__init__.py&quot;, line 7, in &lt;module&gt;
+
+    from pxr import Tf
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 163, in &lt;module&gt;
+
+    PreparePythonModule()
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 86, in PreparePythonModule
+
+    module = importlib.import_module(
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\importlib\__init__.py&quot;, line 126, in import_module
+
+    return _bootstrap._gcd_import(name[level:], package, level)
+
+ImportError: DLL load failed while importing _tf: 找不到指定的程序。
+
+
+ERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Dishwasher036\Dishwasher036.usd C:\Users\robot\Documents\成长学习库\physx-omni-assets\experiments\lightwheel_physx_reconstruction\run_latest\Dishwasher036\Dishwasher036_usdrecord.png` failed. (See above for error)
+</pre>
+              </details>
+            </section>
+            
+            <section class="asset">
+              <h2>Microwave047</h2>
+              <div class="asset-grid">
+                <div>
+                  <img src="Microwave047/Microwave047_bbox_projection.png" alt="Microwave047 结构投影" />
+                  <p class="muted">预览来源：bbox_projection_fallback；usdrecord 状态：<code>failed</code></p>
+                </div>
+                <div>
+                  <h3>路径与状态</h3>
+                  <p><b>原始 USD：</b><code>C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Microwave047\Microwave047.usd</code></p>
+                  <p><b>生成 USDA：</b><a href="Microwave047/Microwave047_physx_omni_structural_proxy.usda">Microwave047/Microwave047_physx_omni_structural_proxy.usda</a></p>
+                  <p><b>原始 SHA256：</b><code>b1fa01d23e55bc77</code></p>
+                  <p><b>PhysX-Omni 模型重建：</b><code>not_run_missing_model_weights</code></p>
+                  <p class="warning">本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。</p>
+                </div>
+              </div>
+              <h3>数量对比</h3>
+              <table><thead><tr><th>metric</th><th>original</th><th>generated</th><th>delta</th><th>ratio</th></tr></thead><tbody><tr><td>prim</td><td>52</td><td>26</td><td>-26</td><td>0.5</td></tr><tr><td>mesh</td><td>4</td><td>3</td><td>-1</td><td>0.75</td></tr><tr><td>material</td><td>5</td><td>2</td><td>-3</td><td>0.4</td></tr><tr><td>collision</td><td>22</td><td>3</td><td>-19</td><td>0.136</td></tr><tr><td>rigid_body</td><td>3</td><td>3</td><td>0</td><td>1.0</td></tr><tr><td>mass_api</td><td>3</td><td>3</td><td>0</td><td>1.0</td></tr><tr><td>joint</td><td>3</td><td>3</td><td>0</td><td>1.0</td></tr></tbody></table>
+              <h3>关节类型对比</h3>
+              <table><thead><tr><th>type</th><th>original</th><th>generated</th><th>delta</th></tr></thead><tbody><tr><td>PhysicsFixedJoint</td><td>1</td><td>1</td><td>0</td></tr><tr><td>PhysicsRevoluteJoint</td><td>2</td><td>2</td><td>0</td></tr></tbody></table>
+              <h3>生成解释</h3>
+              <ul>
+                <li>生成 USDA 是本分支的结构化 proxy：它从 Lightwheel USD 提取 body bbox、刚体和 joint skeleton，再写成可读 USDA。</li>
+                <li>它不是 PhysX-Omni VLM/decoder 的真实输出；真实 PhysX-Omni 需要条件图、模型权重和 4090 运行环境。</li>
+                <li>本 proxy 用来建立 USD->PhysX-Omni 实验 harness、HTML 对比和质量基线，不能声称高保真重建成功。</li>
+              </ul>
+              <details>
+                <summary>原始 USD 文本摘录（由 pxr Stage.ExportToString 生成，已截断）</summary>
+                <pre>#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (0.8419030792910864, -1.5090333977735941, 0.8453647637258791)
+                double3 target = (0.09479169492579775, 0.04659151938046335, 0.061942195305777936)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = &quot;/OmniverseKit_Persp&quot;
+        }
+        dictionary omni_layer = {
+            string authoring_layer = &quot;./Microwave047.usd&quot;
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            bool &quot;rtx:raytracing:fractionalCutoutOpacity&quot; = 1
+        }
+    }
+    defaultPrim = &quot;root&quot;
+    doc = &quot;&quot;&quot;Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd
+&quot;&quot;&quot;
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+)
+{
+    double3 xformOp:rotateZYX = (0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;, &quot;xformOp:rotateZYX&quot;, &quot;xformOp:scale&quot;]
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;material_Body001_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_door_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_door_Clear_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_door_Clear_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_door_Clear_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_door_Clear_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (0.4409222, 0.4409178, 0.4409178)
+                asset inputs:diffuse_texture = @@
+                bool inputs:enable_opacity = 1
+                float inputs:opacity_constant = 0.089999996
+                float inputs:specular_level = 0.31034485
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_Disc001_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_Disc001_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_Disc001_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_Disc001_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_N001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.31034485
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+    }
+
+    def Xform &quot;Microwave047&quot; (
+        apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysxRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;, &quot;PhysicsFilteredPairsAPI&quot;]
+    )
+    {
+        float physics:density = 1000
+        float physics:mass = 10
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;, &quot;xformOp:orient&quot;, &quot;xformOp:scale&quot;]
+# ... 截断：完整 stage 导出共 768 行，本实验只嵌入前 180 行。
+</pre>
+              </details>
+              <details>
+                <summary>生成 USDA 全文</summary>
+                <pre>#usda 1.0
+(
+    defaultPrim = &quot;root&quot;
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    prepend apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+    assetInfo = {
+        string name = &quot;Microwave047_physx_omni_structural_proxy&quot;
+        string reconstruction_mode = &quot;usd_structural_proxy_not_vlm_decoder_output&quot;
+        string source_lightwheel_usd = &quot;C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd&quot;
+    }
+    kind = &quot;component&quot;
+)
+{
+    def PhysicsScene &quot;PhysicsScene&quot;
+    {
+    }
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;ProxyBodyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material &quot;CollisionProxyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope &quot;Joints&quot;
+    {
+        def PhysicsFixedJoint &quot;Microwave047_FixedJoint&quot;
+        {
+            rel physics:body1 = &lt;/root/Microwave047_Microwave047&gt;
+        }
+
+        def PhysicsRevoluteJoint &quot;Microwave047_door_microjoint&quot;
+        {
+            rel physics:body0 = &lt;/root/Microwave047_Microwave047&gt;
+            rel physics:body1 = &lt;/root/Microwave047_Microwave047_door&gt;
+            float physics:lowerLimit = -90
+            float physics:upperLimit = 0
+        }
+
+        def PhysicsRevoluteJoint &quot;Microwave047_Disc001_Disc001_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Microwave047_Microwave047&gt;
+            rel physics:body1 = &lt;/root/Microwave047_Microwave047_Disc001&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 20626.48
+        }
+    }
+
+    def Xform &quot;Microwave047_Microwave047&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.7926
+        double3 xformOp:translate = (0.00002199411392211914, 0.018282994627952576, -0.000005498528480529785)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Microwave047_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.29569, -0.211327, -0.158545), (0.29569, -0.211327, -0.158545), (0.29569, 0.211327, -0.158545), (-0.29569, 0.211327, -0.158545), (-0.29569, -0.211327, 0.158545), (0.29569, -0.211327, 0.158545), (0.29569, 0.211327, 0.158545), (-0.29569, 0.211327, 0.158545)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Microwave047_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.59138, 0.422654, 0.31709)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Microwave047_Microwave047_door&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1095
+        double3 xformOp:translate = (-0.05620499700307846, -0.193571999669075, 9.98377799987793e-7)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Microwave047_door_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.23950699, -0.036037996, -0.1585495), (0.23950699, -0.036037996, -0.1585495), (0.23950699, 0.036037996, -0.1585495), (-0.23950699, 0.036037996, -0.1585495), (-0.23950699, -0.036037996, 0.1585495), (0.23950699, -0.036037996, 0.1585495), (0.23950699, 0.036037996, 0.1585495), (-0.23950699, 0.036037996, 0.1585495)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Microwave047_door_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.47901398, 0.07207599, 0.317099)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Microwave047_Microwave047_Disc001&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.06338150054216385, 0.016181498765945435, -0.12842949852347374)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Microwave047_Disc001_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.15664351, -0.1566435, -0.025), (0.15664351, -0.1566435, -0.025), (0.15664351, 0.1566435, -0.025), (-0.15664351, 0.1566435, -0.025), (-0.15664351, -0.1566435, 0.025), (0.15664351, -0.1566435, 0.025), (0.15664351, 0.1566435, 0.025), (-0.15664351, 0.1566435, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Microwave047_Disc001_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.31328702, 0.313287, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+}
+
+</pre>
+              </details>
+              <details>
+                <summary>usdrecord/渲染尝试输出</summary>
+                <pre>Traceback (most recent call last):
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\Library\bin\usdrecord&quot;, line 9, in &lt;module&gt;
+
+    from pxr import Ar
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Ar\__init__.py&quot;, line 7, in &lt;module&gt;
+
+    from pxr import Tf
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 163, in &lt;module&gt;
+
+    PreparePythonModule()
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 86, in PreparePythonModule
+
+    module = importlib.import_module(
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\importlib\__init__.py&quot;, line 126, in import_module
+
+    return _bootstrap._gcd_import(name[level:], package, level)
+
+ImportError: DLL load failed while importing _tf: 找不到指定的程序。
+
+
+ERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Microwave047\Microwave047.usd C:\Users\robot\Documents\成长学习库\physx-omni-assets\experiments\lightwheel_physx_reconstruction\run_latest\Microwave047\Microwave047_usdrecord.png` failed. (See above for error)
+</pre>
+              </details>
+            </section>
+            
+            <section class="asset">
+              <h2>Oven038</h2>
+              <div class="asset-grid">
+                <div>
+                  <img src="Oven038/Oven038_bbox_projection.png" alt="Oven038 结构投影" />
+                  <p class="muted">预览来源：bbox_projection_fallback；usdrecord 状态：<code>failed</code></p>
+                </div>
+                <div>
+                  <h3>路径与状态</h3>
+                  <p><b>原始 USD：</b><code>C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Oven038\Oven038.usd</code></p>
+                  <p><b>生成 USDA：</b><a href="Oven038/Oven038_physx_omni_structural_proxy.usda">Oven038/Oven038_physx_omni_structural_proxy.usda</a></p>
+                  <p><b>原始 SHA256：</b><code>ac1a297b783bab6b</code></p>
+                  <p><b>PhysX-Omni 模型重建：</b><code>not_run_missing_model_weights</code></p>
+                  <p class="warning">本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。</p>
+                </div>
+              </div>
+              <h3>数量对比</h3>
+              <table><thead><tr><th>metric</th><th>original</th><th>generated</th><th>delta</th><th>ratio</th></tr></thead><tbody><tr><td>prim</td><td>85</td><td>44</td><td>-41</td><td>0.518</td></tr><tr><td>mesh</td><td>7</td><td>6</td><td>-1</td><td>0.857</td></tr><tr><td>material</td><td>8</td><td>2</td><td>-6</td><td>0.25</td></tr><tr><td>collision</td><td>34</td><td>6</td><td>-28</td><td>0.176</td></tr><tr><td>rigid_body</td><td>6</td><td>6</td><td>0</td><td>1.0</td></tr><tr><td>mass_api</td><td>6</td><td>6</td><td>0</td><td>1.0</td></tr><tr><td>joint</td><td>6</td><td>6</td><td>0</td><td>1.0</td></tr></tbody></table>
+              <h3>关节类型对比</h3>
+              <table><thead><tr><th>type</th><th>original</th><th>generated</th><th>delta</th></tr></thead><tbody><tr><td>PhysicsFixedJoint</td><td>1</td><td>1</td><td>0</td></tr><tr><td>PhysicsPrismaticJoint</td><td>2</td><td>2</td><td>0</td></tr><tr><td>PhysicsRevoluteJoint</td><td>3</td><td>3</td><td>0</td></tr></tbody></table>
+              <h3>生成解释</h3>
+              <ul>
+                <li>生成 USDA 是本分支的结构化 proxy：它从 Lightwheel USD 提取 body bbox、刚体和 joint skeleton，再写成可读 USDA。</li>
+                <li>它不是 PhysX-Omni VLM/decoder 的真实输出；真实 PhysX-Omni 需要条件图、模型权重和 4090 运行环境。</li>
+                <li>本 proxy 用来建立 USD->PhysX-Omni 实验 harness、HTML 对比和质量基线，不能声称高保真重建成功。</li>
+              </ul>
+              <details>
+                <summary>原始 USD 文本摘录（由 pxr Stage.ExportToString 生成，已截断）</summary>
+                <pre>#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-0.7604947649399959, -0.589665298600307, 0.4359422851344942)
+                double3 target = (-0.0014960866165674158, -0.05302313510470946, -0.03850944414440288)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = &quot;/OmniverseKit_Persp&quot;
+        }
+        dictionary omni_layer = {
+            string authoring_layer = &quot;./Oven038.usd&quot;
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            bool &quot;rtx:raytracing:fractionalCutoutOpacity&quot; = 1
+        }
+    }
+    defaultPrim = &quot;root&quot;
+    doc = &quot;&quot;&quot;Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Oven038\\Oven038.usd
+&quot;&quot;&quot;
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+)
+{
+    double3 xformOp:rotateZYX = (0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;, &quot;xformOp:rotateZYX&quot;, &quot;xformOp:scale&quot;]
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;material_Body001_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_door_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_door_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_knob_temp_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_knob_temp_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_knob_temp_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_knob_temp_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_knob_time_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_knob_time_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_knob_time_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_knob_time_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_rack0_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_rack0_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_rack0_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_rack0_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Oven038/texture/T_Oven038_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+# ... 截断：完整 stage 导出共 1327 行，本实验只嵌入前 180 行。
+</pre>
+              </details>
+              <details>
+                <summary>生成 USDA 全文</summary>
+                <pre>#usda 1.0
+(
+    defaultPrim = &quot;root&quot;
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    prepend apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+    assetInfo = {
+        string name = &quot;Oven038_physx_omni_structural_proxy&quot;
+        string reconstruction_mode = &quot;usd_structural_proxy_not_vlm_decoder_output&quot;
+        string source_lightwheel_usd = &quot;C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Oven038\\Oven038.usd&quot;
+    }
+    kind = &quot;component&quot;
+)
+{
+    def PhysicsScene &quot;PhysicsScene&quot;
+    {
+    }
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;ProxyBodyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material &quot;CollisionProxyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope &quot;Joints&quot;
+    {
+        def PhysicsFixedJoint &quot;Oven038_FixedJoint&quot;
+        {
+            rel physics:body1 = &lt;/root/Oven038_Oven038&gt;
+        }
+
+        def PhysicsRevoluteJoint &quot;Oven038_door_door_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Oven038_Oven038&gt;
+            rel physics:body1 = &lt;/root/Oven038_Oven038_door&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 65.890144
+        }
+
+        def PhysicsRevoluteJoint &quot;Oven038_knob_temp_knob_temp_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Oven038_Oven038&gt;
+            rel physics:body1 = &lt;/root/Oven038_Oven038_knob_temp&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 180
+        }
+
+        def PhysicsRevoluteJoint &quot;Oven038_knob_time_knob_time_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Oven038_Oven038&gt;
+            rel physics:body1 = &lt;/root/Oven038_Oven038_knob_time&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 226
+        }
+
+        def PhysicsPrismaticJoint &quot;Oven038_rack0_rack0_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Oven038_Oven038&gt;
+            rel physics:body1 = &lt;/root/Oven038_Oven038_rack0&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.2
+        }
+
+        def PhysicsPrismaticJoint &quot;Oven038_rack1_rack1_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Oven038_Oven038&gt;
+            rel physics:body1 = &lt;/root/Oven038_Oven038_rack1&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.2
+        }
+    }
+
+    def Xform &quot;Oven038_Oven038&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 1.5337
+        double3 xformOp:translate = (-0.00009998679161071777, 0.019710004329681396, 0)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Oven038_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.304261, -0.210335, -0.299566), (0.304261, -0.210335, -0.299566), (0.304261, 0.210335, -0.299566), (-0.304261, 0.210335, -0.299566), (-0.304261, -0.210335, 0.299566), (0.304261, -0.210335, 0.299566), (0.304261, 0.210335, 0.299566), (-0.304261, 0.210335, 0.299566)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Oven038_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.608522, 0.42067, 0.599132)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Oven038_Oven038_door&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1206
+        double3 xformOp:translate = (0, -0.1995595023036003, 0.014927498996257782)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Oven038_door_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.305185, -0.030485503, -0.1620735), (0.305185, -0.030485503, -0.1620735), (0.305185, 0.030485503, -0.1620735), (-0.305185, 0.030485503, -0.1620735), (-0.305185, -0.030485503, 0.1620735), (0.305185, -0.030485503, 0.1620735), (0.305185, 0.030485503, 0.1620735), (-0.305185, 0.030485503, 0.1620735)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Oven038_door_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.61037, 0.060971007, 0.324147)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Oven038_Oven038_knob_temp&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (0.23417649418115616, -0.19979850202798843, 0.23511099815368652)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Oven038_knob_temp_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.0288065, -0.025, -0.028807998), (0.0288065, -0.025, -0.028807998), (0.0288065, 0.025, -0.028807998), (-0.0288065, 0.025, -0.028807998), (-0.0288065, -0.025, 0.028807998), (0.0288065, -0.025, 0.028807998), (0.0288065, 0.025, 0.028807998), (-0.0288065, 0.025, 0.028807998)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Oven038_knob_temp_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.057613, 0.05, 0.057615995)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Oven038_Oven038_knob_time&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.23664599657058716, -0.19979850202798843, 0.23511100560426712)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Oven038_knob_time_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.028807998, -0.025, -0.028807007), (0.028807998, -0.025, -0.028807007), (0.028807998, 0.025, -0.028807007), (-0.028807998, 0.025, -0.028807007), (-0.028807998, -0.025, 0.028807007), (0.028807998, -0.025, 0.028807007), (0.028807998, 0.025, 0.028807007), (-0.028807998, 0.025, 0.028807007)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Oven038_knob_time_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.057615995, 0.05, 0.057614014)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Oven038_Oven038_rack0&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.0001989901065826416, 0.010073497891426086, -0.02277499996125698)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Oven038_rack0_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.261498, -0.1269165, -0.025), (0.261498, -0.1269165, -0.025), (0.261498, 0.1269165, -0.025), (-0.261498, 0.1269165, -0.025), (-0.261498, -0.1269165, 0.025), (0.261498, -0.1269165, 0.025), (0.261498, 0.1269165, 0.025), (-0.261498, 0.1269165, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Oven038_rack0_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.522996, 0.253833, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Oven038_Oven038_rack1&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.00019949674606323242, 0.020662494003772736, 0.05219949968159199)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Oven038_rack1_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.2561075, -0.15361351, -0.025), (0.2561075, -0.15361351, -0.025), (0.2561075, 0.15361351, -0.025), (-0.2561075, 0.15361351, -0.025), (-0.2561075, -0.15361351, 0.025), (0.2561075, -0.15361351, 0.025), (0.2561075, 0.15361351, 0.025), (-0.2561075, 0.15361351, 0.025)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Oven038_rack1_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.512215, 0.30722702, 0.05)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+}
+
+</pre>
+              </details>
+              <details>
+                <summary>usdrecord/渲染尝试输出</summary>
+                <pre>Traceback (most recent call last):
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\Library\bin\usdrecord&quot;, line 9, in &lt;module&gt;
+
+    from pxr import Ar
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Ar\__init__.py&quot;, line 7, in &lt;module&gt;
+
+    from pxr import Tf
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 163, in &lt;module&gt;
+
+    PreparePythonModule()
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 86, in PreparePythonModule
+
+    module = importlib.import_module(
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\importlib\__init__.py&quot;, line 126, in import_module
+
+    return _bootstrap._gcd_import(name[level:], package, level)
+
+ImportError: DLL load failed while importing _tf: 找不到指定的程序。
+
+
+ERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Oven038\Oven038.usd C:\Users\robot\Documents\成长学习库\physx-omni-assets\experiments\lightwheel_physx_reconstruction\run_latest\Oven038\Oven038_usdrecord.png` failed. (See above for error)
+</pre>
+              </details>
+            </section>
+            
+            <section class="asset">
+              <h2>Refrigerator038</h2>
+              <div class="asset-grid">
+                <div>
+                  <img src="Refrigerator038/Refrigerator038_bbox_projection.png" alt="Refrigerator038 结构投影" />
+                  <p class="muted">预览来源：bbox_projection_fallback；usdrecord 状态：<code>failed</code></p>
+                </div>
+                <div>
+                  <h3>路径与状态</h3>
+                  <p><b>原始 USD：</b><code>C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Refrigerator038\Refrigerator038.usd</code></p>
+                  <p><b>生成 USDA：</b><a href="Refrigerator038/Refrigerator038_physx_omni_structural_proxy.usda">Refrigerator038/Refrigerator038_physx_omni_structural_proxy.usda</a></p>
+                  <p><b>原始 SHA256：</b><code>df7d8237578e5ac0</code></p>
+                  <p><b>PhysX-Omni 模型重建：</b><code>not_run_missing_model_weights</code></p>
+                  <p class="warning">本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。</p>
+                </div>
+              </div>
+              <h3>数量对比</h3>
+              <table><thead><tr><th>metric</th><th>original</th><th>generated</th><th>delta</th><th>ratio</th></tr></thead><tbody><tr><td>prim</td><td>103</td><td>32</td><td>-71</td><td>0.311</td></tr><tr><td>mesh</td><td>6</td><td>4</td><td>-2</td><td>0.667</td></tr><tr><td>material</td><td>7</td><td>2</td><td>-5</td><td>0.286</td></tr><tr><td>collision</td><td>63</td><td>4</td><td>-59</td><td>0.063</td></tr><tr><td>rigid_body</td><td>4</td><td>4</td><td>0</td><td>1.0</td></tr><tr><td>mass_api</td><td>4</td><td>4</td><td>0</td><td>1.0</td></tr><tr><td>joint</td><td>4</td><td>4</td><td>0</td><td>1.0</td></tr></tbody></table>
+              <h3>关节类型对比</h3>
+              <table><thead><tr><th>type</th><th>original</th><th>generated</th><th>delta</th></tr></thead><tbody><tr><td>PhysicsFixedJoint</td><td>1</td><td>1</td><td>0</td></tr><tr><td>PhysicsPrismaticJoint</td><td>2</td><td>2</td><td>0</td></tr><tr><td>PhysicsRevoluteJoint</td><td>1</td><td>1</td><td>0</td></tr></tbody></table>
+              <h3>生成解释</h3>
+              <ul>
+                <li>生成 USDA 是本分支的结构化 proxy：它从 Lightwheel USD 提取 body bbox、刚体和 joint skeleton，再写成可读 USDA。</li>
+                <li>它不是 PhysX-Omni VLM/decoder 的真实输出；真实 PhysX-Omni 需要条件图、模型权重和 4090 运行环境。</li>
+                <li>本 proxy 用来建立 USD->PhysX-Omni 实验 harness、HTML 对比和质量基线，不能声称高保真重建成功。</li>
+              </ul>
+              <details>
+                <summary>原始 USD 文本摘录（由 pxr Stage.ExportToString 生成，已截断）</summary>
+                <pre>#usda 1.0
+(
+    customLayerData = {
+        dictionary MovieCaptureSettings = {
+            double animation_fps = 60
+            int bad_frame_size_threshold = 0
+            int batch_count = 1
+            string camera_name = &quot;/OmniverseKit_Persp&quot;
+            bool capture_application = 0
+            int capture_every_nth_frames = 20
+            bool capture_every_nth_frames_checked = 0
+            int capture_frame_end = 1000000
+            int capture_frame_start = 0
+            string capture_name = &quot;Capture&quot;
+            string capture_range = &quot;Custom Range - Frames&quot;
+            double capture_time_end = 10
+            double capture_time_start = 0
+            int early_quit_time_limit = 0
+            string exr_compression_method = &quot;zips&quot;
+            double fps = 60
+            bool generate_shader_cache = 0
+            bool hdr_for_exr_checked = 1
+            bool hdr_for_exr_visible = 0
+            int iray_pathtrace_spp = 1
+            int iray_subframes_per_frame = 32
+            int max_bad_frame_threshold = 3
+            string movie_type = &quot;Sequence&quot;
+            int mp4_encoding_bitrate = 16777216
+            int mp4_encoding_iframe_interval = 60
+            string mp4_encoding_preset = &quot;PRESET_DEFAULT&quot;
+            string mp4_encoding_profile = &quot;H264_PROFILE_HIGH&quot;
+            string mp4_encoding_rc_mode = &quot;RC_VBR&quot;
+            int mp4_encoding_rc_target_quality = 0
+            bool mp4_encoding_video_full_range_flag = 0
+            string output_format = &quot;.png&quot;
+            string output_path = &quot;C:/Users/Administrator/Desktop/&quot;
+            bool overwrite_existing_frame_checked = 0
+            bool pathtrace_mb_checked = 0
+            double pathtrace_mb_frame_shutter_close = 0.5
+            double pathtrace_mb_frame_shutter_open = 0
+            int pathtrace_mb_subframes = 64
+            int pathtrace_spp_per_iteration_mgpu = 10
+            int pathtrace_spp_per_subframe = 10
+            string queue_instance = &quot;localhost Queue&quot;
+            int realtime_settle_latency = 10
+            int realtime_wait_for_render_resolve = 10
+            string render_preset = &quot;RaytracedLighting&quot;
+            bool render_style = 1
+            bool renumber_negtive_frames_checked = 0
+            int resolution_aspect_ratio_selected = 0
+            string resolution_aspect_ratios = &#x27;[&quot;1.000:1&quot;, &quot;16:9&quot;, &quot;4:3&quot;]&#x27;
+            int resolution_height = 2048
+            string resolution_type = &quot;Custom&quot;
+            bool resolution_w_h_linked = 0
+            int resolution_width = 2048
+            int run_n_frames_before_start = 20
+            bool run_n_frames_before_start_checked = 0
+            bool save_alpha_checked = 1
+            bool skip_upload_to_s3 = 0
+            int start_delay_seconds = 10
+            double sunstudy_end = 18
+            int sunstudy_movie_minutes = 1
+            int sunstudy_movie_seconds = 1
+            double sunstudy_start = 6
+            string task_comment = &quot;&quot;
+            int task_priority = 65535
+            string task_type = &quot;create-render&quot;
+            double texture_streaming_memory_budget = 0.6000000238418579
+            bool upload_to_s3 = 0
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-0.5486838983294444, -2.1823854490614685, 0.6016850598684715)
+                double3 target = (0.14353265873607812, -0.16898327276696845, 0.024543161346620823)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = &quot;/OmniverseKit_Persp&quot;
+        }
+        dictionary omni_layer = {
+            string authoring_layer = &quot;./Refrigerator038.usd&quot;
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            int &quot;rtx:externalFrameCounter&quot; = 1
+            bool &quot;rtx:raytracing:fractionalCutoutOpacity&quot; = 1
+        }
+    }
+    defaultPrim = &quot;root&quot;
+    doc = &quot;&quot;&quot;Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd
+&quot;&quot;&quot;
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+)
+{
+    double3 xformOp:rotateZYX = (0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;, &quot;xformOp:rotateZYX&quot;, &quot;xformOp:scale&quot;]
+
+    def Scope &quot;Looks&quot;
+    {
+        token visibility = &quot;inherited&quot;
+
+        def Material &quot;material_Body001_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_Body001_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+        def Material &quot;material_freezer0_material&quot;
+        {
+            token outputs:mdl:displacement.connect = &lt;/root/Looks/material_freezer0_material/Shader.outputs:out&gt;
+            token outputs:mdl:surface.connect = &lt;/root/Looks/material_freezer0_material/Shader.outputs:out&gt;
+            token outputs:mdl:volume.connect = &lt;/root/Looks/material_freezer0_material/Shader.outputs:out&gt;
+
+            def Shader &quot;Shader&quot;
+            {
+                uniform token info:implementationSource = &quot;sourceAsset&quot;
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = &quot;OmniPBR&quot;
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_BC001.png@ (
+                    colorSpace = &quot;sRGB&quot;
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_ORM001.png@ (
+                    colorSpace = &quot;raw&quot;
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = &quot;material&quot;
+                )
+            }
+        }
+
+# ... 截断：完整 stage 导出共 1714 行，本实验只嵌入前 180 行。
+</pre>
+              </details>
+              <details>
+                <summary>生成 USDA 全文</summary>
+                <pre>#usda 1.0
+(
+    defaultPrim = &quot;root&quot;
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = &quot;Z&quot;
+)
+
+def Xform &quot;root&quot; (
+    prepend apiSchemas = [&quot;PhysicsArticulationRootAPI&quot;]
+    assetInfo = {
+        string name = &quot;Refrigerator038_physx_omni_structural_proxy&quot;
+        string reconstruction_mode = &quot;usd_structural_proxy_not_vlm_decoder_output&quot;
+        string source_lightwheel_usd = &quot;C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd&quot;
+    }
+    kind = &quot;component&quot;
+)
+{
+    def PhysicsScene &quot;PhysicsScene&quot;
+    {
+    }
+
+    def Scope &quot;Looks&quot;
+    {
+        def Material &quot;ProxyBodyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material &quot;CollisionProxyMaterial&quot;
+        {
+            token outputs:surface.connect = &lt;/root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface&gt;
+
+            def Shader &quot;PreviewSurface&quot;
+            {
+                uniform token info:id = &quot;UsdPreviewSurface&quot;
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope &quot;Joints&quot;
+    {
+        def PhysicsFixedJoint &quot;Refrigerator038_FixedJoint&quot;
+        {
+            rel physics:body1 = &lt;/root/Refrigerator038_Refrigerator038&gt;
+        }
+
+        def PhysicsPrismaticJoint &quot;Refrigerator038_freezer0_freezer0_door_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Refrigerator038_Refrigerator038&gt;
+            rel physics:body1 = &lt;/root/Refrigerator038_Refrigerator038_freezer0&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.4
+        }
+
+        def PhysicsRevoluteJoint &quot;Refrigerator038_fridge_door_fridge_door_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Refrigerator038_Refrigerator038&gt;
+            rel physics:body1 = &lt;/root/Refrigerator038_Refrigerator038_fridge_door&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 90
+        }
+
+        def PhysicsPrismaticJoint &quot;Refrigerator038_fridge_drawer0_fridge_drawer0_joint&quot;
+        {
+            rel physics:body0 = &lt;/root/Refrigerator038_Refrigerator038&gt;
+            rel physics:body1 = &lt;/root/Refrigerator038_Refrigerator038_fridge_drawer0&gt;
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.5
+        }
+    }
+
+    def Xform &quot;Refrigerator038_Refrigerator038&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 8.0864
+        double3 xformOp:translate = (0, 0.02955348789691925, 0)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Refrigerator038_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.360823, -0.35797548, -0.782563), (0.360823, -0.35797548, -0.782563), (0.360823, 0.35797548, -0.782563), (-0.360823, 0.35797548, -0.782563), (-0.360823, -0.35797548, 0.782563), (0.360823, -0.35797548, 0.782563), (0.360823, 0.35797548, 0.782563), (-0.360823, 0.35797548, 0.782563)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Refrigerator038_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.721646, 0.71595097, 1.565126)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Refrigerator038_Refrigerator038_freezer0&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 2.293
+        double3 xformOp:translate = (-0.0016334950923919678, -0.09853298962116241, -0.4131369963288307)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Refrigerator038_freezer0_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.3591485, -0.28899598, -0.276158), (0.3591485, -0.28899598, -0.276158), (0.3591485, 0.28899598, -0.276158), (-0.3591485, 0.28899598, -0.276158), (-0.3591485, -0.28899598, 0.276158), (0.3591485, -0.28899598, 0.276158), (0.3591485, 0.28899598, 0.276158), (-0.3591485, 0.28899598, 0.276158)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Refrigerator038_freezer0_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.718297, 0.57799196, 0.552316)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Refrigerator038_Refrigerator038_fridge_door&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 1.402
+        double3 xformOp:translate = (-0.001632004976272583, -0.28059399127960205, 0.32514501363039017)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Refrigerator038_fridge_door_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.359142, -0.106934994, -0.456331), (0.359142, -0.106934994, -0.456331), (0.359142, 0.106934994, -0.456331), (-0.359142, 0.106934994, -0.456331), (-0.359142, -0.106934994, 0.456331), (0.359142, -0.106934994, 0.456331), (0.359142, 0.106934994, 0.456331), (-0.359142, 0.106934994, 0.456331)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Refrigerator038_fridge_door_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.718284, 0.21386999, 0.912662)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+
+    def Xform &quot;Refrigerator038_Refrigerator038_fridge_drawer0&quot; (
+        prepend apiSchemas = [&quot;PhysicsRigidBodyAPI&quot;, &quot;PhysicsMassAPI&quot;]
+    )
+    {
+        float physics:mass = 0.5196
+        double3 xformOp:translate = (-0.0010794997215270996, 0.07222399860620499, -0.017408497631549835)
+        uniform token[] xformOpOrder = [&quot;xformOp:translate&quot;]
+
+        def Scope &quot;Visuals&quot;
+        {
+            def Mesh &quot;Refrigerator038_fridge_drawer0_bbox_mesh&quot; (
+                prepend apiSchemas = [&quot;MaterialBindingAPI&quot;]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = &lt;/root/Looks/ProxyBodyMaterial&gt;
+                point3f[] points = [(-0.2869515, -0.260311, -0.0869475), (0.2869515, -0.260311, -0.0869475), (0.2869515, 0.260311, -0.0869475), (-0.2869515, 0.260311, -0.0869475), (-0.2869515, -0.260311, 0.0869475), (0.2869515, -0.260311, 0.0869475), (0.2869515, 0.260311, 0.0869475), (-0.2869515, 0.260311, 0.0869475)]
+                uniform token purpose = &quot;render&quot;
+                uniform token subdivisionScheme = &quot;none&quot;
+            }
+        }
+
+        def Scope &quot;Collisions&quot;
+        {
+            def Cube &quot;Refrigerator038_fridge_drawer0_collision_proxy&quot; (
+                prepend apiSchemas = [&quot;PhysicsCollisionAPI&quot;, &quot;MaterialBindingAPI&quot;]
+            )
+            {
+                rel material:binding = &lt;/root/Looks/CollisionProxyMaterial&gt;
+                uniform token purpose = &quot;proxy&quot;
+                double size = 1
+                token visibility = &quot;invisible&quot;
+                float3 xformOp:scale = (0.573903, 0.520622, 0.173895)
+                uniform token[] xformOpOrder = [&quot;xformOp:scale&quot;]
+            }
+        }
+    }
+}
+
+</pre>
+              </details>
+              <details>
+                <summary>usdrecord/渲染尝试输出</summary>
+                <pre>Traceback (most recent call last):
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\Library\bin\usdrecord&quot;, line 9, in &lt;module&gt;
+
+    from pxr import Ar
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Ar\__init__.py&quot;, line 7, in &lt;module&gt;
+
+    from pxr import Tf
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 163, in &lt;module&gt;
+
+    PreparePythonModule()
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\site-packages\pxr\Tf\__init__.py&quot;, line 86, in PreparePythonModule
+
+    module = importlib.import_module(
+
+  File &quot;C:\Users\robot\anaconda3\envs\openusd-tools\lib\importlib\__init__.py&quot;, line 126, in import_module
+
+    return _bootstrap._gcd_import(name[level:], package, level)
+
+ImportError: DLL load failed while importing _tf: 找不到指定的程序。
+
+
+ERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\Users\robot\Documents\workplace\test\Lightwheel_OpenSource\Manipulation\Refrigerator038\Refrigerator038.usd C:\Users\robot\Documents\成长学习库\physx-omni-assets\experiments\lightwheel_physx_reconstruction\run_latest\Refrigerator038\Refrigerator038_usdrecord.png` failed. (See above for error)
+</pre>
+              </details>
+            </section>
+            
+    </main>
+  </body>
+</html>

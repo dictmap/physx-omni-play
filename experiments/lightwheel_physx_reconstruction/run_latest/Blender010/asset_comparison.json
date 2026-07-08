@@ -1,0 +1,412 @@
+{
+  "asset_name": "Blender010",
+  "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd",
+  "source_sha256_short": "44757dc8e88d17cd",
+  "source_size_bytes": 2222570,
+  "original": {
+    "default_prim": "/root",
+    "meters_per_unit": 1.0,
+    "up_axis": "Z",
+    "counts": {
+      "prim": 94,
+      "type:Xform": 23,
+      "type:Scope": 2,
+      "type:Material": 9,
+      "material": 9,
+      "type:Shader": 8,
+      "rigid_body": 7,
+      "mass_api": 7,
+      "type:PhysicsFixedJoint": 1,
+      "joint": 7,
+      "type:Mesh": 8,
+      "mesh": 8,
+      "type:Cube": 28,
+      "collision": 36,
+      "type:Cylinder": 9,
+      "type:PhysicsPrismaticJoint": 4,
+      "type:PhysicsRevoluteJoint": 2
+    },
+    "joint_types": {
+      "PhysicsFixedJoint": 1,
+      "PhysicsPrismaticJoint": 4,
+      "PhysicsRevoluteJoint": 2
+    },
+    "applied_schema_counts": {
+      "PhysicsArticulationRootAPI": 1,
+      "NodeDefAPI": 8,
+      "PhysicsRigidBodyAPI": 7,
+      "PhysicsMassAPI": 7,
+      "PhysicsFilteredPairsAPI": 7,
+      "MaterialBindingAPI": 44,
+      "PhysicsCollisionAPI": 36,
+      "PhysicsMeshCollisionAPI": 36,
+      "PhysicsDriveAPI:linear": 2,
+      "PhysicsDriveAPI:X": 4,
+      "PhysicsMaterialAPI": 1
+    },
+    "texture_ref_count": 29,
+    "texture_refs_sample": [
+      "./texture/T_Blender010_BC001.png",
+      "./texture/T_Blender010_N001.png",
+      "./texture/T_Blender010_ORM001.png",
+      "OmniGlass.mdl",
+      "OmniPBR.mdl"
+    ]
+  },
+  "generated": {
+    "default_prim": "/root",
+    "meters_per_unit": 1.0,
+    "up_axis": "Z",
+    "counts": {
+      "prim": 50,
+      "type:Xform": 8,
+      "type:PhysicsScene": 1,
+      "type:Scope": 16,
+      "type:Material": 2,
+      "material": 2,
+      "type:Shader": 2,
+      "type:PhysicsFixedJoint": 1,
+      "joint": 7,
+      "type:PhysicsPrismaticJoint": 4,
+      "type:PhysicsRevoluteJoint": 2,
+      "rigid_body": 7,
+      "mass_api": 7,
+      "type:Mesh": 7,
+      "mesh": 7,
+      "type:Cube": 7,
+      "collision": 7
+    },
+    "joint_types": {
+      "PhysicsFixedJoint": 1,
+      "PhysicsPrismaticJoint": 4,
+      "PhysicsRevoluteJoint": 2
+    },
+    "applied_schema_counts": {
+      "PhysicsArticulationRootAPI": 1,
+      "NodeDefAPI": 2,
+      "PhysicsRigidBodyAPI": 7,
+      "PhysicsMassAPI": 7,
+      "MaterialBindingAPI": 14,
+      "PhysicsCollisionAPI": 7
+    },
+    "texture_ref_count": 0,
+    "texture_refs_sample": []
+  },
+  "bodies_extracted": [
+    {
+      "original_path": "/root/Blender010",
+      "generated_path": "/root/Blender010_Blender010",
+      "name": "Blender010",
+      "center": [
+        -0.01672549918293953,
+        -0.007311001420021057,
+        -0.2014715000987053
+      ],
+      "size": [
+        0.25631099194288254,
+        0.3155139982700348,
+        0.18875999748706818
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Blender010_Button001",
+      "generated_path": "/root/Blender010_Blender010_Button001",
+      "name": "Blender010_Button001",
+      "center": [
+        0.057515500113368034,
+        -0.11539699882268906,
+        -0.1786924973130226
+      ],
+      "size": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Blender010_Button002",
+      "generated_path": "/root/Blender010_Blender010_Button002",
+      "name": "Blender010_Button002",
+      "center": [
+        -0.08866849914193153,
+        -0.11540499702095985,
+        -0.17864900082349777
+      ],
+      "size": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Blender010_Jug001",
+      "generated_path": "/root/Blender010_Blender010_Jug001",
+      "name": "Blender010_Jug001",
+      "center": [
+        0.00471150130033493,
+        0.04698999598622322,
+        0.0639830008149147
+      ],
+      "size": [
+        0.2985910028219223,
+        0.2168939933180809,
+        0.3604450076818466
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Blender010_Blade001",
+      "generated_path": "/root/Blender010_Blender010_Blade001",
+      "name": "Blender010_Blade001",
+      "center": [
+        -0.016946997493505478,
+        0.04698000196367502,
+        -0.03920849971473217
+      ],
+      "size": [
+        0.11284399777650833,
+        0.13069200329482555,
+        0.05
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Blender010_Knob001",
+      "generated_path": "/root/Blender010_Blender010_Knob001",
+      "name": "Blender010_Knob001",
+      "center": [
+        -0.014930999837815762,
+        -0.09838450327515602,
+        -0.164512000977993
+      ],
+      "size": [
+        0.05190599896013737,
+        0.05058100074529648,
+        0.05
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Blender010_Lid001",
+      "generated_path": "/root/Blender010_Blender010_Lid001",
+      "name": "Blender010_Lid001",
+      "center": [
+        -0.03352050110697746,
+        0.0470070019364357,
+        0.2554749995470047
+      ],
+      "size": [
+        0.24097300320863724,
+        0.2361219972372055,
+        0.08075299859046936
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    }
+  ],
+  "joints_extracted": [
+    {
+      "original_path": "/root/Blender010/FixedJoint",
+      "generated_path": "/root/Joints/Blender010_FixedJoint",
+      "type_name": "PhysicsFixedJoint",
+      "body0": null,
+      "body1": "/root/Blender010_Blender010",
+      "axis": null,
+      "lower": null,
+      "upper": null
+    },
+    {
+      "original_path": "/root/Blender010_Button001/Button001_joint",
+      "generated_path": "/root/Joints/Blender010_Button001_Button001_joint",
+      "type_name": "PhysicsPrismaticJoint",
+      "body0": "/root/Blender010_Blender010",
+      "body1": "/root/Blender010_Blender010_Button001",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 0.003000000026077032
+    },
+    {
+      "original_path": "/root/Blender010_Button002/Button002_joint",
+      "generated_path": "/root/Joints/Blender010_Button002_Button002_joint",
+      "type_name": "PhysicsPrismaticJoint",
+      "body0": "/root/Blender010_Blender010",
+      "body1": "/root/Blender010_Blender010_Button002",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 0.003000000026077032
+    },
+    {
+      "original_path": "/root/Blender010_Jug001/Jug001_joint",
+      "generated_path": "/root/Joints/Blender010_Jug001_Jug001_joint",
+      "type_name": "PhysicsPrismaticJoint",
+      "body0": "/root/Blender010_Blender010",
+      "body1": "/root/Blender010_Blender010_Jug001",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 0.05000000074505806
+    },
+    {
+      "original_path": "/root/Blender010_Blade001/Blade001_joint",
+      "generated_path": "/root/Joints/Blender010_Blade001_Blade001_joint",
+      "type_name": "PhysicsRevoluteJoint",
+      "body0": "/root/Blender010_Blender010_Jug001",
+      "body1": "/root/Blender010_Blender010_Blade001",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 20626.48046875
+    },
+    {
+      "original_path": "/root/Blender010_Knob001/Knob001_joint",
+      "generated_path": "/root/Joints/Blender010_Knob001_Knob001_joint",
+      "type_name": "PhysicsRevoluteJoint",
+      "body0": "/root/Blender010_Blender010",
+      "body1": "/root/Blender010_Blender010_Knob001",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 240.0
+    },
+    {
+      "original_path": "/root/Blender010_Lid001/Lid001_joint",
+      "generated_path": "/root/Joints/Blender010_Lid001_Lid001_joint",
+      "type_name": "PhysicsPrismaticJoint",
+      "body0": "/root/Blender010_Blender010",
+      "body1": "/root/Blender010_Blender010_Lid001",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 0.07999999821186066
+    }
+  ],
+  "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_physx_omni_structural_proxy.usda",
+  "generated_usda_rel": "Blender010/Blender010_physx_omni_structural_proxy.usda",
+  "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\original_usd_excerpt.usda.txt",
+  "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_bbox_projection.png",
+  "projection_rel": "Blender010/Blender010_bbox_projection.png",
+  "projection_kind": "bbox_projection_fallback",
+  "render_attempt": {
+    "status": "failed",
+    "returncode": 1,
+    "command": [
+      "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+      "--disableGpu",
+      "--imageWidth",
+      "512",
+      "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd",
+      "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_usdrecord.png"
+    ],
+    "elapsed_sec": 4.82,
+    "stdout_tail": "",
+    "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_usdrecord.png` failed. (See above for error)\n",
+    "image": null
+  },
+  "physx_omni_attempt": {
+    "status": "not_run_missing_model_weights",
+    "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+    "intended_commands": [
+      "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+      "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+    ]
+  },
+  "comparison": {
+    "count_rows": [
+      {
+        "metric": "prim",
+        "original": 94,
+        "generated": 50,
+        "delta": -44,
+        "ratio": 0.532
+      },
+      {
+        "metric": "mesh",
+        "original": 8,
+        "generated": 7,
+        "delta": -1,
+        "ratio": 0.875
+      },
+      {
+        "metric": "material",
+        "original": 9,
+        "generated": 2,
+        "delta": -7,
+        "ratio": 0.222
+      },
+      {
+        "metric": "collision",
+        "original": 36,
+        "generated": 7,
+        "delta": -29,
+        "ratio": 0.194
+      },
+      {
+        "metric": "rigid_body",
+        "original": 7,
+        "generated": 7,
+        "delta": 0,
+        "ratio": 1.0
+      },
+      {
+        "metric": "mass_api",
+        "original": 7,
+        "generated": 7,
+        "delta": 0,
+        "ratio": 1.0
+      },
+      {
+        "metric": "joint",
+        "original": 7,
+        "generated": 7,
+        "delta": 0,
+        "ratio": 1.0
+      }
+    ],
+    "joint_rows": [
+      {
+        "type": "PhysicsFixedJoint",
+        "original": 1,
+        "generated": 1,
+        "delta": 0
+      },
+      {
+        "type": "PhysicsPrismaticJoint",
+        "original": 4,
+        "generated": 4,
+        "delta": 0
+      },
+      {
+        "type": "PhysicsRevoluteJoint",
+        "original": 2,
+        "generated": 2,
+        "delta": 0
+      }
+    ]
+  }
+}

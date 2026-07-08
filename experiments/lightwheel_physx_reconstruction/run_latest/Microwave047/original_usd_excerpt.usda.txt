@@ -1,0 +1,181 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (0.8419030792910864, -1.5090333977735941, 0.8453647637258791)
+                double3 target = (0.09479169492579775, 0.04659151938046335, 0.061942195305777936)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Microwave047.usd"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            bool "rtx:raytracing:fractionalCutoutOpacity" = 1
+        }
+    }
+    defaultPrim = "root"
+    doc = """Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd
+"""
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    apiSchemas = ["PhysicsArticulationRootAPI"]
+)
+{
+    double3 xformOp:rotateZYX = (0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+
+    def Scope "Looks"
+    {
+        def Material "material_Body001_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_BC001.png@ (
+                    colorSpace = "sRGB"
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_N001.png@ (
+                    colorSpace = "raw"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_door_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_door_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_door_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_door_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_BC001.png@ (
+                    colorSpace = "sRGB"
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_N001.png@ (
+                    colorSpace = "raw"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_door_Clear_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_door_Clear_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_door_Clear_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_door_Clear_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.4409222, 0.4409178, 0.4409178)
+                asset inputs:diffuse_texture = @@
+                bool inputs:enable_opacity = 1
+                float inputs:opacity_constant = 0.089999996
+                float inputs:specular_level = 0.31034485
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_Disc001_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_Disc001_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_Disc001_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_Disc001_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_BC001.png@ (
+                    colorSpace = "sRGB"
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_N001.png@ (
+                    colorSpace = "raw"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Microwave047/texture/T_Microwave047_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.31034485
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+    }
+
+    def Xform "Microwave047" (
+        apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsMassAPI", "PhysicsFilteredPairsAPI"]
+    )
+    {
+        float physics:density = 1000
+        float physics:mass = 10
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+# ... 截断：完整 stage 导出共 768 行，本实验只嵌入前 180 行。

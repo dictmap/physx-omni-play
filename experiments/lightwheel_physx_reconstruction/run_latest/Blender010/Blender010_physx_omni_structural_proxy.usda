@@ -1,0 +1,381 @@
+#usda 1.0
+(
+    defaultPrim = "root"
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    prepend apiSchemas = ["PhysicsArticulationRootAPI"]
+    assetInfo = {
+        string name = "Blender010_physx_omni_structural_proxy"
+        string reconstruction_mode = "usd_structural_proxy_not_vlm_decoder_output"
+        string source_lightwheel_usd = "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd"
+    }
+    kind = "component"
+)
+{
+    def PhysicsScene "PhysicsScene"
+    {
+    }
+
+    def Scope "Looks"
+    {
+        def Material "ProxyBodyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material "CollisionProxyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope "Joints"
+    {
+        def PhysicsFixedJoint "Blender010_FixedJoint"
+        {
+            rel physics:body1 = </root/Blender010_Blender010>
+        }
+
+        def PhysicsPrismaticJoint "Blender010_Button001_Button001_joint"
+        {
+            rel physics:body0 = </root/Blender010_Blender010>
+            rel physics:body1 = </root/Blender010_Blender010_Button001>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.003
+        }
+
+        def PhysicsPrismaticJoint "Blender010_Button002_Button002_joint"
+        {
+            rel physics:body0 = </root/Blender010_Blender010>
+            rel physics:body1 = </root/Blender010_Blender010_Button002>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.003
+        }
+
+        def PhysicsPrismaticJoint "Blender010_Jug001_Jug001_joint"
+        {
+            rel physics:body0 = </root/Blender010_Blender010>
+            rel physics:body1 = </root/Blender010_Blender010_Jug001>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.05
+        }
+
+        def PhysicsRevoluteJoint "Blender010_Blade001_Blade001_joint"
+        {
+            rel physics:body0 = </root/Blender010_Blender010_Jug001>
+            rel physics:body1 = </root/Blender010_Blender010_Blade001>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 20626.48
+        }
+
+        def PhysicsRevoluteJoint "Blender010_Knob001_Knob001_joint"
+        {
+            rel physics:body0 = </root/Blender010_Blender010>
+            rel physics:body1 = </root/Blender010_Blender010_Knob001>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 240
+        }
+
+        def PhysicsPrismaticJoint "Blender010_Lid001_Lid001_joint"
+        {
+            rel physics:body0 = </root/Blender010_Blender010>
+            rel physics:body1 = </root/Blender010_Blender010_Lid001>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.08
+        }
+    }
+
+    def Xform "Blender010_Blender010" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1526
+        double3 xformOp:translate = (-0.01672549918293953, -0.007311001420021057, -0.2014715000987053)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Blender010_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.1281555, -0.157757, -0.09438), (0.1281555, -0.157757, -0.09438), (0.1281555, 0.157757, -0.09438), (-0.1281555, 0.157757, -0.09438), (-0.1281555, -0.157757, 0.09438), (0.1281555, -0.157757, 0.09438), (0.1281555, 0.157757, 0.09438), (-0.1281555, 0.157757, 0.09438)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Blender010_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.256311, 0.315514, 0.18876)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Blender010_Blender010_Button001" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (0.057515500113368034, -0.11539699882268906, -0.1786924973130226)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Blender010_Button001_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Blender010_Button001_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Blender010_Blender010_Button002" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.08866849914193153, -0.11540499702095985, -0.17864900082349777)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Blender010_Button002_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Blender010_Button002_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Blender010_Blender010_Jug001" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.2334
+        double3 xformOp:translate = (0.00471150130033493, 0.04698999598622322, 0.0639830008149147)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Blender010_Jug001_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.14929551, -0.108447, -0.18022251), (0.14929551, -0.108447, -0.18022251), (0.14929551, 0.108447, -0.18022251), (-0.14929551, 0.108447, -0.18022251), (-0.14929551, -0.108447, 0.18022251), (0.14929551, -0.108447, 0.18022251), (0.14929551, 0.108447, 0.18022251), (-0.14929551, 0.108447, 0.18022251)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Blender010_Jug001_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.29859102, 0.216894, 0.36044502)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Blender010_Blender010_Blade001" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.016946997493505478, 0.04698000196367502, -0.03920849971473217)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Blender010_Blade001_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.056422, -0.065346, -0.025), (0.056422, -0.065346, -0.025), (0.056422, 0.065346, -0.025), (-0.056422, 0.065346, -0.025), (-0.056422, -0.065346, 0.025), (0.056422, -0.065346, 0.025), (0.056422, 0.065346, 0.025), (-0.056422, 0.065346, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Blender010_Blade001_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.112844, 0.130692, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Blender010_Blender010_Knob001" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.014930999837815762, -0.09838450327515602, -0.164512000977993)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Blender010_Knob001_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.025952999, -0.0252905, -0.025), (0.025952999, -0.0252905, -0.025), (0.025952999, 0.0252905, -0.025), (-0.025952999, 0.0252905, -0.025), (-0.025952999, -0.0252905, 0.025), (0.025952999, -0.0252905, 0.025), (0.025952999, 0.0252905, 0.025), (-0.025952999, 0.0252905, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Blender010_Knob001_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.051905997, 0.050581, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Blender010_Blender010_Lid001" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.03352050110697746, 0.0470070019364357, 0.2554749995470047)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Blender010_Lid001_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.1204865, -0.118061, -0.0403765), (0.1204865, -0.118061, -0.0403765), (0.1204865, 0.118061, -0.0403765), (-0.1204865, 0.118061, -0.0403765), (-0.1204865, -0.118061, 0.0403765), (0.1204865, -0.118061, 0.0403765), (0.1204865, 0.118061, 0.0403765), (-0.1204865, 0.118061, 0.0403765)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Blender010_Lid001_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.240973, 0.236122, 0.080753)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+}
+

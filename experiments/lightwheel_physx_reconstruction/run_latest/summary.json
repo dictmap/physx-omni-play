@@ -1,0 +1,1782 @@
+{
+  "generated_at": "2026-07-08T21:51:53+0800",
+  "lightwheel_root": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation",
+  "physx_omni_repo": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\code\\PhysX-Omni",
+  "physx_omni_model_dir": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\hf\\PhysX-Omni-model",
+  "physx_omni_model_file_count": 2,
+  "physx_omni_has_real_weight_file": false,
+  "assets": [
+    {
+      "asset_name": "Blender010",
+      "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd",
+      "source_sha256_short": "44757dc8e88d17cd",
+      "source_size_bytes": 2222570,
+      "original": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 94,
+          "type:Xform": 23,
+          "type:Scope": 2,
+          "type:Material": 9,
+          "material": 9,
+          "type:Shader": 8,
+          "rigid_body": 7,
+          "mass_api": 7,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 7,
+          "type:Mesh": 8,
+          "mesh": 8,
+          "type:Cube": 28,
+          "collision": 36,
+          "type:Cylinder": 9,
+          "type:PhysicsPrismaticJoint": 4,
+          "type:PhysicsRevoluteJoint": 2
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsPrismaticJoint": 4,
+          "PhysicsRevoluteJoint": 2
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 8,
+          "PhysicsRigidBodyAPI": 7,
+          "PhysicsMassAPI": 7,
+          "PhysicsFilteredPairsAPI": 7,
+          "MaterialBindingAPI": 44,
+          "PhysicsCollisionAPI": 36,
+          "PhysicsMeshCollisionAPI": 36,
+          "PhysicsDriveAPI:linear": 2,
+          "PhysicsDriveAPI:X": 4,
+          "PhysicsMaterialAPI": 1
+        },
+        "texture_ref_count": 29,
+        "texture_refs_sample": [
+          "./texture/T_Blender010_BC001.png",
+          "./texture/T_Blender010_N001.png",
+          "./texture/T_Blender010_ORM001.png",
+          "OmniGlass.mdl",
+          "OmniPBR.mdl"
+        ]
+      },
+      "generated": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 50,
+          "type:Xform": 8,
+          "type:PhysicsScene": 1,
+          "type:Scope": 16,
+          "type:Material": 2,
+          "material": 2,
+          "type:Shader": 2,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 7,
+          "type:PhysicsPrismaticJoint": 4,
+          "type:PhysicsRevoluteJoint": 2,
+          "rigid_body": 7,
+          "mass_api": 7,
+          "type:Mesh": 7,
+          "mesh": 7,
+          "type:Cube": 7,
+          "collision": 7
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsPrismaticJoint": 4,
+          "PhysicsRevoluteJoint": 2
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 2,
+          "PhysicsRigidBodyAPI": 7,
+          "PhysicsMassAPI": 7,
+          "MaterialBindingAPI": 14,
+          "PhysicsCollisionAPI": 7
+        },
+        "texture_ref_count": 0,
+        "texture_refs_sample": []
+      },
+      "bodies_extracted": [
+        {
+          "original_path": "/root/Blender010",
+          "generated_path": "/root/Blender010_Blender010",
+          "name": "Blender010",
+          "center": [
+            -0.01672549918293953,
+            -0.007311001420021057,
+            -0.2014715000987053
+          ],
+          "size": [
+            0.25631099194288254,
+            0.3155139982700348,
+            0.18875999748706818
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Blender010_Button001",
+          "generated_path": "/root/Blender010_Blender010_Button001",
+          "name": "Blender010_Button001",
+          "center": [
+            0.057515500113368034,
+            -0.11539699882268906,
+            -0.1786924973130226
+          ],
+          "size": [
+            0.05,
+            0.05,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Blender010_Button002",
+          "generated_path": "/root/Blender010_Blender010_Button002",
+          "name": "Blender010_Button002",
+          "center": [
+            -0.08866849914193153,
+            -0.11540499702095985,
+            -0.17864900082349777
+          ],
+          "size": [
+            0.05,
+            0.05,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Blender010_Jug001",
+          "generated_path": "/root/Blender010_Blender010_Jug001",
+          "name": "Blender010_Jug001",
+          "center": [
+            0.00471150130033493,
+            0.04698999598622322,
+            0.0639830008149147
+          ],
+          "size": [
+            0.2985910028219223,
+            0.2168939933180809,
+            0.3604450076818466
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Blender010_Blade001",
+          "generated_path": "/root/Blender010_Blender010_Blade001",
+          "name": "Blender010_Blade001",
+          "center": [
+            -0.016946997493505478,
+            0.04698000196367502,
+            -0.03920849971473217
+          ],
+          "size": [
+            0.11284399777650833,
+            0.13069200329482555,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Blender010_Knob001",
+          "generated_path": "/root/Blender010_Blender010_Knob001",
+          "name": "Blender010_Knob001",
+          "center": [
+            -0.014930999837815762,
+            -0.09838450327515602,
+            -0.164512000977993
+          ],
+          "size": [
+            0.05190599896013737,
+            0.05058100074529648,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Blender010_Lid001",
+          "generated_path": "/root/Blender010_Blender010_Lid001",
+          "name": "Blender010_Lid001",
+          "center": [
+            -0.03352050110697746,
+            0.0470070019364357,
+            0.2554749995470047
+          ],
+          "size": [
+            0.24097300320863724,
+            0.2361219972372055,
+            0.08075299859046936
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        }
+      ],
+      "joints_extracted": [
+        {
+          "original_path": "/root/Blender010/FixedJoint",
+          "generated_path": "/root/Joints/Blender010_FixedJoint",
+          "type_name": "PhysicsFixedJoint",
+          "body0": null,
+          "body1": "/root/Blender010_Blender010",
+          "axis": null,
+          "lower": null,
+          "upper": null
+        },
+        {
+          "original_path": "/root/Blender010_Button001/Button001_joint",
+          "generated_path": "/root/Joints/Blender010_Button001_Button001_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Blender010_Blender010",
+          "body1": "/root/Blender010_Blender010_Button001",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.003000000026077032
+        },
+        {
+          "original_path": "/root/Blender010_Button002/Button002_joint",
+          "generated_path": "/root/Joints/Blender010_Button002_Button002_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Blender010_Blender010",
+          "body1": "/root/Blender010_Blender010_Button002",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.003000000026077032
+        },
+        {
+          "original_path": "/root/Blender010_Jug001/Jug001_joint",
+          "generated_path": "/root/Joints/Blender010_Jug001_Jug001_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Blender010_Blender010",
+          "body1": "/root/Blender010_Blender010_Jug001",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.05000000074505806
+        },
+        {
+          "original_path": "/root/Blender010_Blade001/Blade001_joint",
+          "generated_path": "/root/Joints/Blender010_Blade001_Blade001_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Blender010_Blender010_Jug001",
+          "body1": "/root/Blender010_Blender010_Blade001",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 20626.48046875
+        },
+        {
+          "original_path": "/root/Blender010_Knob001/Knob001_joint",
+          "generated_path": "/root/Joints/Blender010_Knob001_Knob001_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Blender010_Blender010",
+          "body1": "/root/Blender010_Blender010_Knob001",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 240.0
+        },
+        {
+          "original_path": "/root/Blender010_Lid001/Lid001_joint",
+          "generated_path": "/root/Joints/Blender010_Lid001_Lid001_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Blender010_Blender010",
+          "body1": "/root/Blender010_Blender010_Lid001",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.07999999821186066
+        }
+      ],
+      "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_physx_omni_structural_proxy.usda",
+      "generated_usda_rel": "Blender010/Blender010_physx_omni_structural_proxy.usda",
+      "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\original_usd_excerpt.usda.txt",
+      "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_bbox_projection.png",
+      "projection_rel": "Blender010/Blender010_bbox_projection.png",
+      "projection_kind": "bbox_projection_fallback",
+      "render_attempt": {
+        "status": "failed",
+        "returncode": 1,
+        "command": [
+          "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+          "--disableGpu",
+          "--imageWidth",
+          "512",
+          "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd",
+          "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_usdrecord.png"
+        ],
+        "elapsed_sec": 4.82,
+        "stdout_tail": "",
+        "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Blender010\\Blender010_usdrecord.png` failed. (See above for error)\n",
+        "image": null
+      },
+      "physx_omni_attempt": {
+        "status": "not_run_missing_model_weights",
+        "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+        "intended_commands": [
+          "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+          "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+        ]
+      },
+      "comparison": {
+        "count_rows": [
+          {
+            "metric": "prim",
+            "original": 94,
+            "generated": 50,
+            "delta": -44,
+            "ratio": 0.532
+          },
+          {
+            "metric": "mesh",
+            "original": 8,
+            "generated": 7,
+            "delta": -1,
+            "ratio": 0.875
+          },
+          {
+            "metric": "material",
+            "original": 9,
+            "generated": 2,
+            "delta": -7,
+            "ratio": 0.222
+          },
+          {
+            "metric": "collision",
+            "original": 36,
+            "generated": 7,
+            "delta": -29,
+            "ratio": 0.194
+          },
+          {
+            "metric": "rigid_body",
+            "original": 7,
+            "generated": 7,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "mass_api",
+            "original": 7,
+            "generated": 7,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "joint",
+            "original": 7,
+            "generated": 7,
+            "delta": 0,
+            "ratio": 1.0
+          }
+        ],
+        "joint_rows": [
+          {
+            "type": "PhysicsFixedJoint",
+            "original": 1,
+            "generated": 1,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsPrismaticJoint",
+            "original": 4,
+            "generated": 4,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsRevoluteJoint",
+            "original": 2,
+            "generated": 2,
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "asset_name": "Dishwasher036",
+      "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Dishwasher036\\Dishwasher036.usd",
+      "source_sha256_short": "4e95542ed9b1ed8e",
+      "source_size_bytes": 974144,
+      "original": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 121,
+          "type:Xform": 19,
+          "type:Scope": 2,
+          "type:Material": 7,
+          "material": 7,
+          "type:Shader": 6,
+          "rigid_body": 6,
+          "mass_api": 6,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 6,
+          "type:Mesh": 6,
+          "mesh": 6,
+          "type:Cube": 75,
+          "collision": 75,
+          "type:PhysicsPrismaticJoint": 4,
+          "type:PhysicsRevoluteJoint": 1
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsPrismaticJoint": 4,
+          "PhysicsRevoluteJoint": 1
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 6,
+          "PhysicsRigidBodyAPI": 6,
+          "PhysicsMassAPI": 6,
+          "PhysicsFilteredPairsAPI": 6,
+          "MaterialBindingAPI": 81,
+          "PhysicsCollisionAPI": 75,
+          "PhysicsDriveAPI:X": 5,
+          "PhysicsDriveAPI:linear": 2,
+          "PhysicsMaterialAPI": 1
+        },
+        "texture_ref_count": 24,
+        "texture_refs_sample": [
+          "./texture/T_Dishwasher036_BC001.png",
+          "./texture/T_Dishwasher036_N001.png",
+          "./texture/T_Dishwasher036_ORM001.png",
+          "OmniPBR.mdl"
+        ]
+      },
+      "generated": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 44,
+          "type:Xform": 7,
+          "type:PhysicsScene": 1,
+          "type:Scope": 14,
+          "type:Material": 2,
+          "material": 2,
+          "type:Shader": 2,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 6,
+          "type:PhysicsPrismaticJoint": 4,
+          "type:PhysicsRevoluteJoint": 1,
+          "rigid_body": 6,
+          "mass_api": 6,
+          "type:Mesh": 6,
+          "mesh": 6,
+          "type:Cube": 6,
+          "collision": 6
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsPrismaticJoint": 4,
+          "PhysicsRevoluteJoint": 1
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 2,
+          "PhysicsRigidBodyAPI": 6,
+          "PhysicsMassAPI": 6,
+          "MaterialBindingAPI": 12,
+          "PhysicsCollisionAPI": 6
+        },
+        "texture_ref_count": 0,
+        "texture_refs_sample": []
+      },
+      "bodies_extracted": [
+        {
+          "original_path": "/root/Dishwasher036",
+          "generated_path": "/root/Dishwasher036_Dishwasher036",
+          "name": "Dishwasher036",
+          "center": [
+            0.0,
+            0.03118300437927246,
+            0.0
+          ],
+          "size": [
+            0.6374880075454712,
+            0.6043059825897217,
+            0.8092380166053772
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Dishwasher036_button_lock",
+          "generated_path": "/root/Dishwasher036_Dishwasher036_button_lock",
+          "name": "Dishwasher036_button_lock",
+          "center": [
+            -0.2100209966301918,
+            -0.2743444889783859,
+            0.33237549662590027
+          ],
+          "size": [
+            0.05,
+            0.05,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Dishwasher036_button_power",
+          "generated_path": "/root/Dishwasher036_Dishwasher036_button_power",
+          "name": "Dishwasher036_button_power",
+          "center": [
+            0.20922300219535828,
+            -0.2743444889783859,
+            0.33237549662590027
+          ],
+          "size": [
+            0.05,
+            0.05,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Dishwasher036_door",
+          "generated_path": "/root/Dishwasher036_Dishwasher036_door",
+          "name": "Dishwasher036_door",
+          "center": [
+            0.00013500452041625977,
+            -0.2977589964866638,
+            -0.04992648959159851
+          ],
+          "size": [
+            0.5844680070877075,
+            0.07115399837493896,
+            0.6214950084686279
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Dishwasher036_rack0",
+          "generated_path": "/root/Dishwasher036_Dishwasher036_rack0",
+          "name": "Dishwasher036_rack0",
+          "center": [
+            0.00148850679397583,
+            0.005912996828556061,
+            -0.17713599279522896
+          ],
+          "size": [
+            0.5192149877548218,
+            0.4032279998064041,
+            0.15055599063634872
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Dishwasher036_rack1",
+          "generated_path": "/root/Dishwasher036_Dishwasher036_rack1",
+          "name": "Dishwasher036_rack1",
+          "center": [
+            0.00148850679397583,
+            0.005912996828556061,
+            0.04921100102365017
+          ],
+          "size": [
+            0.5192149877548218,
+            0.4032279998064041,
+            0.15055600181221962
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        }
+      ],
+      "joints_extracted": [
+        {
+          "original_path": "/root/Dishwasher036/FixedJoint",
+          "generated_path": "/root/Joints/Dishwasher036_FixedJoint",
+          "type_name": "PhysicsFixedJoint",
+          "body0": null,
+          "body1": "/root/Dishwasher036_Dishwasher036",
+          "axis": null,
+          "lower": null,
+          "upper": null
+        },
+        {
+          "original_path": "/root/Dishwasher036_button_lock/button_lock_joint",
+          "generated_path": "/root/Joints/Dishwasher036_button_lock_button_lock_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Dishwasher036_Dishwasher036",
+          "body1": "/root/Dishwasher036_Dishwasher036_button_lock",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.004000000189989805
+        },
+        {
+          "original_path": "/root/Dishwasher036_button_power/button_power_joint",
+          "generated_path": "/root/Joints/Dishwasher036_button_power_button_power_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Dishwasher036_Dishwasher036",
+          "body1": "/root/Dishwasher036_Dishwasher036_button_power",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.004000000189989805
+        },
+        {
+          "original_path": "/root/Dishwasher036_door/door_joint",
+          "generated_path": "/root/Joints/Dishwasher036_door_door_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Dishwasher036_Dishwasher036",
+          "body1": "/root/Dishwasher036_Dishwasher036_door",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 30.0
+        },
+        {
+          "original_path": "/root/Dishwasher036_rack0/rack0_joint",
+          "generated_path": "/root/Joints/Dishwasher036_rack0_rack0_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Dishwasher036_Dishwasher036",
+          "body1": "/root/Dishwasher036_Dishwasher036_rack0",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.14399999380111694
+        },
+        {
+          "original_path": "/root/Dishwasher036_rack1/rack1_joint",
+          "generated_path": "/root/Joints/Dishwasher036_rack1_rack1_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Dishwasher036_Dishwasher036",
+          "body1": "/root/Dishwasher036_Dishwasher036_rack1",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.27399998903274536
+        }
+      ],
+      "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Dishwasher036\\Dishwasher036_physx_omni_structural_proxy.usda",
+      "generated_usda_rel": "Dishwasher036/Dishwasher036_physx_omni_structural_proxy.usda",
+      "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Dishwasher036\\original_usd_excerpt.usda.txt",
+      "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Dishwasher036\\Dishwasher036_bbox_projection.png",
+      "projection_rel": "Dishwasher036/Dishwasher036_bbox_projection.png",
+      "projection_kind": "bbox_projection_fallback",
+      "render_attempt": {
+        "status": "failed",
+        "returncode": 1,
+        "command": [
+          "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+          "--disableGpu",
+          "--imageWidth",
+          "512",
+          "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Dishwasher036\\Dishwasher036.usd",
+          "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Dishwasher036\\Dishwasher036_usdrecord.png"
+        ],
+        "elapsed_sec": 4.28,
+        "stdout_tail": "",
+        "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Dishwasher036\\Dishwasher036.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Dishwasher036\\Dishwasher036_usdrecord.png` failed. (See above for error)\n",
+        "image": null
+      },
+      "physx_omni_attempt": {
+        "status": "not_run_missing_model_weights",
+        "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+        "intended_commands": [
+          "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+          "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+        ]
+      },
+      "comparison": {
+        "count_rows": [
+          {
+            "metric": "prim",
+            "original": 121,
+            "generated": 44,
+            "delta": -77,
+            "ratio": 0.364
+          },
+          {
+            "metric": "mesh",
+            "original": 6,
+            "generated": 6,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "material",
+            "original": 7,
+            "generated": 2,
+            "delta": -5,
+            "ratio": 0.286
+          },
+          {
+            "metric": "collision",
+            "original": 75,
+            "generated": 6,
+            "delta": -69,
+            "ratio": 0.08
+          },
+          {
+            "metric": "rigid_body",
+            "original": 6,
+            "generated": 6,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "mass_api",
+            "original": 6,
+            "generated": 6,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "joint",
+            "original": 6,
+            "generated": 6,
+            "delta": 0,
+            "ratio": 1.0
+          }
+        ],
+        "joint_rows": [
+          {
+            "type": "PhysicsFixedJoint",
+            "original": 1,
+            "generated": 1,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsPrismaticJoint",
+            "original": 4,
+            "generated": 4,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsRevoluteJoint",
+            "original": 1,
+            "generated": 1,
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "asset_name": "Microwave047",
+      "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd",
+      "source_sha256_short": "b1fa01d23e55bc77",
+      "source_size_bytes": 1113160,
+      "original": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 52,
+          "type:Xform": 11,
+          "type:Scope": 2,
+          "type:Material": 5,
+          "material": 5,
+          "type:Shader": 4,
+          "rigid_body": 3,
+          "mass_api": 3,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 3,
+          "type:Mesh": 4,
+          "mesh": 4,
+          "type:Cylinder": 2,
+          "collision": 22,
+          "type:Cube": 21,
+          "type:PhysicsRevoluteJoint": 2
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsRevoluteJoint": 2
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 4,
+          "PhysicsRigidBodyAPI": 3,
+          "PhysicsMassAPI": 3,
+          "PhysicsFilteredPairsAPI": 3,
+          "MaterialBindingAPI": 26,
+          "PhysicsCollisionAPI": 22,
+          "PhysicsDriveAPI:X": 2,
+          "PhysicsMaterialAPI": 1
+        },
+        "texture_ref_count": 13,
+        "texture_refs_sample": [
+          "./texture/T_Microwave047_BC001.png",
+          "./texture/T_Microwave047_N001.png",
+          "./texture/T_Microwave047_ORM001.png",
+          "OmniPBR.mdl"
+        ]
+      },
+      "generated": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 26,
+          "type:Xform": 4,
+          "type:PhysicsScene": 1,
+          "type:Scope": 8,
+          "type:Material": 2,
+          "material": 2,
+          "type:Shader": 2,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 3,
+          "type:PhysicsRevoluteJoint": 2,
+          "rigid_body": 3,
+          "mass_api": 3,
+          "type:Mesh": 3,
+          "mesh": 3,
+          "type:Cube": 3,
+          "collision": 3
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsRevoluteJoint": 2
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 2,
+          "PhysicsRigidBodyAPI": 3,
+          "PhysicsMassAPI": 3,
+          "MaterialBindingAPI": 6,
+          "PhysicsCollisionAPI": 3
+        },
+        "texture_ref_count": 0,
+        "texture_refs_sample": []
+      },
+      "bodies_extracted": [
+        {
+          "original_path": "/root/Microwave047",
+          "generated_path": "/root/Microwave047_Microwave047",
+          "name": "Microwave047",
+          "center": [
+            2.199411392211914e-05,
+            0.018282994627952576,
+            -5.498528480529785e-06
+          ],
+          "size": [
+            0.5913800001144409,
+            0.42265400290489197,
+            0.3170900046825409
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Microwave047_door",
+          "generated_path": "/root/Microwave047_Microwave047_door",
+          "name": "Microwave047_door",
+          "center": [
+            -0.05620499700307846,
+            -0.193571999669075,
+            9.98377799987793e-07
+          ],
+          "size": [
+            0.47901399433612823,
+            0.0720759928226471,
+            0.317099004983902
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Microwave047_Disc001",
+          "generated_path": "/root/Microwave047_Microwave047_Disc001",
+          "name": "Microwave047_Disc001",
+          "center": [
+            -0.06338150054216385,
+            0.016181498765945435,
+            -0.12842949852347374
+          ],
+          "size": [
+            0.31328700482845306,
+            0.31328698992729187,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        }
+      ],
+      "joints_extracted": [
+        {
+          "original_path": "/root/Microwave047/FixedJoint",
+          "generated_path": "/root/Joints/Microwave047_FixedJoint",
+          "type_name": "PhysicsFixedJoint",
+          "body0": null,
+          "body1": "/root/Microwave047_Microwave047",
+          "axis": null,
+          "lower": null,
+          "upper": null
+        },
+        {
+          "original_path": "/root/Microwave047_door/microjoint",
+          "generated_path": "/root/Joints/Microwave047_door_microjoint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Microwave047_Microwave047",
+          "body1": "/root/Microwave047_Microwave047_door",
+          "axis": null,
+          "lower": -90.0,
+          "upper": 0.0
+        },
+        {
+          "original_path": "/root/Microwave047_Disc001/Disc001_joint",
+          "generated_path": "/root/Joints/Microwave047_Disc001_Disc001_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Microwave047_Microwave047",
+          "body1": "/root/Microwave047_Microwave047_Disc001",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 20626.48046875
+        }
+      ],
+      "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_physx_omni_structural_proxy.usda",
+      "generated_usda_rel": "Microwave047/Microwave047_physx_omni_structural_proxy.usda",
+      "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\original_usd_excerpt.usda.txt",
+      "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_bbox_projection.png",
+      "projection_rel": "Microwave047/Microwave047_bbox_projection.png",
+      "projection_kind": "bbox_projection_fallback",
+      "render_attempt": {
+        "status": "failed",
+        "returncode": 1,
+        "command": [
+          "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+          "--disableGpu",
+          "--imageWidth",
+          "512",
+          "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd",
+          "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_usdrecord.png"
+        ],
+        "elapsed_sec": 4.05,
+        "stdout_tail": "",
+        "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_usdrecord.png` failed. (See above for error)\n",
+        "image": null
+      },
+      "physx_omni_attempt": {
+        "status": "not_run_missing_model_weights",
+        "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+        "intended_commands": [
+          "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+          "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+        ]
+      },
+      "comparison": {
+        "count_rows": [
+          {
+            "metric": "prim",
+            "original": 52,
+            "generated": 26,
+            "delta": -26,
+            "ratio": 0.5
+          },
+          {
+            "metric": "mesh",
+            "original": 4,
+            "generated": 3,
+            "delta": -1,
+            "ratio": 0.75
+          },
+          {
+            "metric": "material",
+            "original": 5,
+            "generated": 2,
+            "delta": -3,
+            "ratio": 0.4
+          },
+          {
+            "metric": "collision",
+            "original": 22,
+            "generated": 3,
+            "delta": -19,
+            "ratio": 0.136
+          },
+          {
+            "metric": "rigid_body",
+            "original": 3,
+            "generated": 3,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "mass_api",
+            "original": 3,
+            "generated": 3,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "joint",
+            "original": 3,
+            "generated": 3,
+            "delta": 0,
+            "ratio": 1.0
+          }
+        ],
+        "joint_rows": [
+          {
+            "type": "PhysicsFixedJoint",
+            "original": 1,
+            "generated": 1,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsRevoluteJoint",
+            "original": 2,
+            "generated": 2,
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "asset_name": "Oven038",
+      "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Oven038\\Oven038.usd",
+      "source_sha256_short": "ac1a297b783bab6b",
+      "source_size_bytes": 1939226,
+      "original": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 85,
+          "type:Xform": 20,
+          "type:Scope": 2,
+          "type:Material": 8,
+          "material": 8,
+          "type:Shader": 7,
+          "rigid_body": 6,
+          "mass_api": 6,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 6,
+          "type:Mesh": 7,
+          "mesh": 7,
+          "type:Cube": 32,
+          "collision": 34,
+          "type:PhysicsRevoluteJoint": 3,
+          "type:Cylinder": 3,
+          "type:PhysicsPrismaticJoint": 2
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsRevoluteJoint": 3,
+          "PhysicsPrismaticJoint": 2
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 7,
+          "PhysicsRigidBodyAPI": 6,
+          "PhysicsMassAPI": 6,
+          "PhysicsFilteredPairsAPI": 6,
+          "MaterialBindingAPI": 41,
+          "PhysicsCollisionAPI": 34,
+          "PhysicsMeshCollisionAPI": 34,
+          "PhysicsDriveAPI:X": 5,
+          "PhysicsMaterialAPI": 1
+        },
+        "texture_ref_count": 19,
+        "texture_refs_sample": [
+          "./texture/T_Oven038_BC001.png",
+          "./texture/T_Oven038_ORM001.png",
+          "OmniGlass.mdl",
+          "OmniPBR.mdl"
+        ]
+      },
+      "generated": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 44,
+          "type:Xform": 7,
+          "type:PhysicsScene": 1,
+          "type:Scope": 14,
+          "type:Material": 2,
+          "material": 2,
+          "type:Shader": 2,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 6,
+          "type:PhysicsRevoluteJoint": 3,
+          "type:PhysicsPrismaticJoint": 2,
+          "rigid_body": 6,
+          "mass_api": 6,
+          "type:Mesh": 6,
+          "mesh": 6,
+          "type:Cube": 6,
+          "collision": 6
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsRevoluteJoint": 3,
+          "PhysicsPrismaticJoint": 2
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 2,
+          "PhysicsRigidBodyAPI": 6,
+          "PhysicsMassAPI": 6,
+          "MaterialBindingAPI": 12,
+          "PhysicsCollisionAPI": 6
+        },
+        "texture_ref_count": 0,
+        "texture_refs_sample": []
+      },
+      "bodies_extracted": [
+        {
+          "original_path": "/root/Oven038",
+          "generated_path": "/root/Oven038_Oven038",
+          "name": "Oven038",
+          "center": [
+            -9.998679161071777e-05,
+            0.019710004329681396,
+            0.0
+          ],
+          "size": [
+            0.6085219979286194,
+            0.4206700026988983,
+            0.5991320013999939
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Oven038_door",
+          "generated_path": "/root/Oven038_Oven038_door",
+          "name": "Oven038_door",
+          "center": [
+            0.0,
+            -0.1995595023036003,
+            0.014927498996257782
+          ],
+          "size": [
+            0.6103699803352356,
+            0.060971006751060486,
+            0.3241470009088516
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Oven038_knob_temp",
+          "generated_path": "/root/Oven038_Oven038_knob_temp",
+          "name": "Oven038_knob_temp",
+          "center": [
+            0.23417649418115616,
+            -0.19979850202798843,
+            0.23511099815368652
+          ],
+          "size": [
+            0.05761300027370453,
+            0.05,
+            0.05761599540710449
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Oven038_knob_time",
+          "generated_path": "/root/Oven038_Oven038_knob_time",
+          "name": "Oven038_knob_time",
+          "center": [
+            -0.23664599657058716,
+            -0.19979850202798843,
+            0.23511100560426712
+          ],
+          "size": [
+            0.05761599540710449,
+            0.05,
+            0.05761401355266571
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Oven038_rack0",
+          "generated_path": "/root/Oven038_Oven038_rack0",
+          "name": "Oven038_rack0",
+          "center": [
+            -0.0001989901065826416,
+            0.010073497891426086,
+            -0.02277499996125698
+          ],
+          "size": [
+            0.5229960083961487,
+            0.25383299589157104,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Oven038_rack1",
+          "generated_path": "/root/Oven038_Oven038_rack1",
+          "name": "Oven038_rack1",
+          "center": [
+            -0.00019949674606323242,
+            0.020662494003772736,
+            0.05219949968159199
+          ],
+          "size": [
+            0.5122150182723999,
+            0.3072270005941391,
+            0.05
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        }
+      ],
+      "joints_extracted": [
+        {
+          "original_path": "/root/Oven038/FixedJoint",
+          "generated_path": "/root/Joints/Oven038_FixedJoint",
+          "type_name": "PhysicsFixedJoint",
+          "body0": null,
+          "body1": "/root/Oven038_Oven038",
+          "axis": null,
+          "lower": null,
+          "upper": null
+        },
+        {
+          "original_path": "/root/Oven038_door/door_joint",
+          "generated_path": "/root/Joints/Oven038_door_door_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Oven038_Oven038",
+          "body1": "/root/Oven038_Oven038_door",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 65.89014434814453
+        },
+        {
+          "original_path": "/root/Oven038_knob_temp/knob_temp_joint",
+          "generated_path": "/root/Joints/Oven038_knob_temp_knob_temp_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Oven038_Oven038",
+          "body1": "/root/Oven038_Oven038_knob_temp",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 180.0
+        },
+        {
+          "original_path": "/root/Oven038_knob_time/knob_time_joint",
+          "generated_path": "/root/Joints/Oven038_knob_time_knob_time_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Oven038_Oven038",
+          "body1": "/root/Oven038_Oven038_knob_time",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 226.0
+        },
+        {
+          "original_path": "/root/Oven038_rack0/rack0_joint",
+          "generated_path": "/root/Joints/Oven038_rack0_rack0_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Oven038_Oven038",
+          "body1": "/root/Oven038_Oven038_rack0",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.20000000298023224
+        },
+        {
+          "original_path": "/root/Oven038_rack1/rack1_joint",
+          "generated_path": "/root/Joints/Oven038_rack1_rack1_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Oven038_Oven038",
+          "body1": "/root/Oven038_Oven038_rack1",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.20000000298023224
+        }
+      ],
+      "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Oven038\\Oven038_physx_omni_structural_proxy.usda",
+      "generated_usda_rel": "Oven038/Oven038_physx_omni_structural_proxy.usda",
+      "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Oven038\\original_usd_excerpt.usda.txt",
+      "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Oven038\\Oven038_bbox_projection.png",
+      "projection_rel": "Oven038/Oven038_bbox_projection.png",
+      "projection_kind": "bbox_projection_fallback",
+      "render_attempt": {
+        "status": "failed",
+        "returncode": 1,
+        "command": [
+          "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+          "--disableGpu",
+          "--imageWidth",
+          "512",
+          "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Oven038\\Oven038.usd",
+          "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Oven038\\Oven038_usdrecord.png"
+        ],
+        "elapsed_sec": 4.18,
+        "stdout_tail": "",
+        "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Oven038\\Oven038.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Oven038\\Oven038_usdrecord.png` failed. (See above for error)\n",
+        "image": null
+      },
+      "physx_omni_attempt": {
+        "status": "not_run_missing_model_weights",
+        "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+        "intended_commands": [
+          "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+          "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+        ]
+      },
+      "comparison": {
+        "count_rows": [
+          {
+            "metric": "prim",
+            "original": 85,
+            "generated": 44,
+            "delta": -41,
+            "ratio": 0.518
+          },
+          {
+            "metric": "mesh",
+            "original": 7,
+            "generated": 6,
+            "delta": -1,
+            "ratio": 0.857
+          },
+          {
+            "metric": "material",
+            "original": 8,
+            "generated": 2,
+            "delta": -6,
+            "ratio": 0.25
+          },
+          {
+            "metric": "collision",
+            "original": 34,
+            "generated": 6,
+            "delta": -28,
+            "ratio": 0.176
+          },
+          {
+            "metric": "rigid_body",
+            "original": 6,
+            "generated": 6,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "mass_api",
+            "original": 6,
+            "generated": 6,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "joint",
+            "original": 6,
+            "generated": 6,
+            "delta": 0,
+            "ratio": 1.0
+          }
+        ],
+        "joint_rows": [
+          {
+            "type": "PhysicsFixedJoint",
+            "original": 1,
+            "generated": 1,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsPrismaticJoint",
+            "original": 2,
+            "generated": 2,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsRevoluteJoint",
+            "original": 3,
+            "generated": 3,
+            "delta": 0
+          }
+        ]
+      }
+    },
+    {
+      "asset_name": "Refrigerator038",
+      "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd",
+      "source_sha256_short": "df7d8237578e5ac0",
+      "source_size_bytes": 1444082,
+      "original": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 103,
+          "type:Xform": 14,
+          "type:Scope": 2,
+          "type:Material": 7,
+          "material": 7,
+          "type:Shader": 6,
+          "rigid_body": 4,
+          "mass_api": 4,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 4,
+          "type:Mesh": 6,
+          "mesh": 6,
+          "type:Cube": 58,
+          "collision": 63,
+          "type:PhysicsPrismaticJoint": 2,
+          "type:Cylinder": 6,
+          "type:PhysicsRevoluteJoint": 1
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsPrismaticJoint": 2,
+          "PhysicsRevoluteJoint": 1
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 6,
+          "PhysicsRigidBodyAPI": 4,
+          "PhysicsMassAPI": 4,
+          "PhysicsFilteredPairsAPI": 4,
+          "MaterialBindingAPI": 69,
+          "PhysicsCollisionAPI": 63,
+          "PhysicsMeshCollisionAPI": 63,
+          "PhysicsDriveAPI:X": 3,
+          "PhysicsMaterialAPI": 1
+        },
+        "texture_ref_count": 14,
+        "texture_refs_sample": [
+          "./texture/T_Refrigerator038_BC001.png",
+          "./texture/T_Refrigerator038_ORM001.png",
+          "OmniGlass.mdl",
+          "OmniPBR.mdl"
+        ]
+      },
+      "generated": {
+        "default_prim": "/root",
+        "meters_per_unit": 1.0,
+        "up_axis": "Z",
+        "counts": {
+          "prim": 32,
+          "type:Xform": 5,
+          "type:PhysicsScene": 1,
+          "type:Scope": 10,
+          "type:Material": 2,
+          "material": 2,
+          "type:Shader": 2,
+          "type:PhysicsFixedJoint": 1,
+          "joint": 4,
+          "type:PhysicsPrismaticJoint": 2,
+          "type:PhysicsRevoluteJoint": 1,
+          "rigid_body": 4,
+          "mass_api": 4,
+          "type:Mesh": 4,
+          "mesh": 4,
+          "type:Cube": 4,
+          "collision": 4
+        },
+        "joint_types": {
+          "PhysicsFixedJoint": 1,
+          "PhysicsPrismaticJoint": 2,
+          "PhysicsRevoluteJoint": 1
+        },
+        "applied_schema_counts": {
+          "PhysicsArticulationRootAPI": 1,
+          "NodeDefAPI": 2,
+          "PhysicsRigidBodyAPI": 4,
+          "PhysicsMassAPI": 4,
+          "MaterialBindingAPI": 8,
+          "PhysicsCollisionAPI": 4
+        },
+        "texture_ref_count": 0,
+        "texture_refs_sample": []
+      },
+      "bodies_extracted": [
+        {
+          "original_path": "/root/Refrigerator038",
+          "generated_path": "/root/Refrigerator038_Refrigerator038",
+          "name": "Refrigerator038",
+          "center": [
+            0.0,
+            0.02955348789691925,
+            0.0
+          ],
+          "size": [
+            0.7216460108757019,
+            0.71595099568367,
+            1.5651259422302246
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Refrigerator038_freezer0",
+          "generated_path": "/root/Refrigerator038_Refrigerator038_freezer0",
+          "name": "Refrigerator038_freezer0",
+          "center": [
+            -0.0016334950923919678,
+            -0.09853298962116241,
+            -0.4131369963288307
+          ],
+          "size": [
+            0.718297004699707,
+            0.5779919922351837,
+            0.5523159950971603
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Refrigerator038_fridge_door",
+          "generated_path": "/root/Refrigerator038_Refrigerator038_fridge_door",
+          "name": "Refrigerator038_fridge_door",
+          "center": [
+            -0.001632004976272583,
+            -0.28059399127960205,
+            0.32514501363039017
+          ],
+          "size": [
+            0.718284010887146,
+            0.21386998891830444,
+            0.9126620143651962
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        },
+        {
+          "original_path": "/root/Refrigerator038_fridge_drawer0",
+          "generated_path": "/root/Refrigerator038_Refrigerator038_fridge_drawer0",
+          "name": "Refrigerator038_fridge_drawer0",
+          "center": [
+            -0.0010794997215270996,
+            0.07222399860620499,
+            -0.017408497631549835
+          ],
+          "size": [
+            0.5739030241966248,
+            0.5206220000982285,
+            0.173895001411438
+          ],
+          "schemas": [
+            "PhysicsRigidBodyAPI",
+            "PhysicsMassAPI",
+            "PhysicsFilteredPairsAPI"
+          ]
+        }
+      ],
+      "joints_extracted": [
+        {
+          "original_path": "/root/Refrigerator038/FixedJoint",
+          "generated_path": "/root/Joints/Refrigerator038_FixedJoint",
+          "type_name": "PhysicsFixedJoint",
+          "body0": null,
+          "body1": "/root/Refrigerator038_Refrigerator038",
+          "axis": null,
+          "lower": null,
+          "upper": null
+        },
+        {
+          "original_path": "/root/Refrigerator038_freezer0/freezer0_door_joint",
+          "generated_path": "/root/Joints/Refrigerator038_freezer0_freezer0_door_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Refrigerator038_Refrigerator038",
+          "body1": "/root/Refrigerator038_Refrigerator038_freezer0",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.4000000059604645
+        },
+        {
+          "original_path": "/root/Refrigerator038_fridge_door/fridge_door_joint",
+          "generated_path": "/root/Joints/Refrigerator038_fridge_door_fridge_door_joint",
+          "type_name": "PhysicsRevoluteJoint",
+          "body0": "/root/Refrigerator038_Refrigerator038",
+          "body1": "/root/Refrigerator038_Refrigerator038_fridge_door",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 90.0
+        },
+        {
+          "original_path": "/root/Refrigerator038_fridge_drawer0/fridge_drawer0_joint",
+          "generated_path": "/root/Joints/Refrigerator038_fridge_drawer0_fridge_drawer0_joint",
+          "type_name": "PhysicsPrismaticJoint",
+          "body0": "/root/Refrigerator038_Refrigerator038",
+          "body1": "/root/Refrigerator038_Refrigerator038_fridge_drawer0",
+          "axis": null,
+          "lower": 0.0,
+          "upper": 0.5
+        }
+      ],
+      "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_physx_omni_structural_proxy.usda",
+      "generated_usda_rel": "Refrigerator038/Refrigerator038_physx_omni_structural_proxy.usda",
+      "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\original_usd_excerpt.usda.txt",
+      "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_bbox_projection.png",
+      "projection_rel": "Refrigerator038/Refrigerator038_bbox_projection.png",
+      "projection_kind": "bbox_projection_fallback",
+      "render_attempt": {
+        "status": "failed",
+        "returncode": 1,
+        "command": [
+          "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+          "--disableGpu",
+          "--imageWidth",
+          "512",
+          "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd",
+          "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_usdrecord.png"
+        ],
+        "elapsed_sec": 5.38,
+        "stdout_tail": "",
+        "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_usdrecord.png` failed. (See above for error)\n",
+        "image": null
+      },
+      "physx_omni_attempt": {
+        "status": "not_run_missing_model_weights",
+        "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+        "intended_commands": [
+          "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+          "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+        ]
+      },
+      "comparison": {
+        "count_rows": [
+          {
+            "metric": "prim",
+            "original": 103,
+            "generated": 32,
+            "delta": -71,
+            "ratio": 0.311
+          },
+          {
+            "metric": "mesh",
+            "original": 6,
+            "generated": 4,
+            "delta": -2,
+            "ratio": 0.667
+          },
+          {
+            "metric": "material",
+            "original": 7,
+            "generated": 2,
+            "delta": -5,
+            "ratio": 0.286
+          },
+          {
+            "metric": "collision",
+            "original": 63,
+            "generated": 4,
+            "delta": -59,
+            "ratio": 0.063
+          },
+          {
+            "metric": "rigid_body",
+            "original": 4,
+            "generated": 4,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "mass_api",
+            "original": 4,
+            "generated": 4,
+            "delta": 0,
+            "ratio": 1.0
+          },
+          {
+            "metric": "joint",
+            "original": 4,
+            "generated": 4,
+            "delta": 0,
+            "ratio": 1.0
+          }
+        ],
+        "joint_rows": [
+          {
+            "type": "PhysicsFixedJoint",
+            "original": 1,
+            "generated": 1,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsPrismaticJoint",
+            "original": 2,
+            "generated": 2,
+            "delta": 0
+          },
+          {
+            "type": "PhysicsRevoluteJoint",
+            "original": 1,
+            "generated": 1,
+            "delta": 0
+          }
+        ]
+      }
+    }
+  ],
+  "summary_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\summary.json",
+  "html_report": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\index.html"
+}

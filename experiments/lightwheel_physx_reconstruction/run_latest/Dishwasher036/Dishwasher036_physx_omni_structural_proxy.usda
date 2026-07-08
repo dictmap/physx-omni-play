@@ -1,0 +1,334 @@
+#usda 1.0
+(
+    defaultPrim = "root"
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    prepend apiSchemas = ["PhysicsArticulationRootAPI"]
+    assetInfo = {
+        string name = "Dishwasher036_physx_omni_structural_proxy"
+        string reconstruction_mode = "usd_structural_proxy_not_vlm_decoder_output"
+        string source_lightwheel_usd = "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Dishwasher036\\Dishwasher036.usd"
+    }
+    kind = "component"
+)
+{
+    def PhysicsScene "PhysicsScene"
+    {
+    }
+
+    def Scope "Looks"
+    {
+        def Material "ProxyBodyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material "CollisionProxyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope "Joints"
+    {
+        def PhysicsFixedJoint "Dishwasher036_FixedJoint"
+        {
+            rel physics:body1 = </root/Dishwasher036_Dishwasher036>
+        }
+
+        def PhysicsPrismaticJoint "Dishwasher036_button_lock_button_lock_joint"
+        {
+            rel physics:body0 = </root/Dishwasher036_Dishwasher036>
+            rel physics:body1 = </root/Dishwasher036_Dishwasher036_button_lock>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.004
+        }
+
+        def PhysicsPrismaticJoint "Dishwasher036_button_power_button_power_joint"
+        {
+            rel physics:body0 = </root/Dishwasher036_Dishwasher036>
+            rel physics:body1 = </root/Dishwasher036_Dishwasher036_button_power>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.004
+        }
+
+        def PhysicsRevoluteJoint "Dishwasher036_door_door_joint"
+        {
+            rel physics:body0 = </root/Dishwasher036_Dishwasher036>
+            rel physics:body1 = </root/Dishwasher036_Dishwasher036_door>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 30
+        }
+
+        def PhysicsPrismaticJoint "Dishwasher036_rack0_rack0_joint"
+        {
+            rel physics:body0 = </root/Dishwasher036_Dishwasher036>
+            rel physics:body1 = </root/Dishwasher036_Dishwasher036_rack0>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.144
+        }
+
+        def PhysicsPrismaticJoint "Dishwasher036_rack1_rack1_joint"
+        {
+            rel physics:body0 = </root/Dishwasher036_Dishwasher036>
+            rel physics:body1 = </root/Dishwasher036_Dishwasher036_rack1>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.274
+        }
+    }
+
+    def Xform "Dishwasher036_Dishwasher036" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 3.1175
+        double3 xformOp:translate = (0, 0.03118300437927246, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Dishwasher036_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.318744, -0.302153, -0.404619), (0.318744, -0.302153, -0.404619), (0.318744, 0.302153, -0.404619), (-0.318744, 0.302153, -0.404619), (-0.318744, -0.302153, 0.404619), (0.318744, -0.302153, 0.404619), (0.318744, 0.302153, 0.404619), (-0.318744, 0.302153, 0.404619)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Dishwasher036_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.637488, 0.604306, 0.809238)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Dishwasher036_Dishwasher036_button_lock" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.2100209966301918, -0.2743444889783859, 0.33237549662590027)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Dishwasher036_button_lock_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Dishwasher036_button_lock_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Dishwasher036_Dishwasher036_button_power" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (0.20922300219535828, -0.2743444889783859, 0.33237549662590027)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Dishwasher036_button_power_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.025, -0.025, -0.025), (0.025, -0.025, -0.025), (0.025, 0.025, -0.025), (-0.025, 0.025, -0.025), (-0.025, -0.025, 0.025), (0.025, -0.025, 0.025), (0.025, 0.025, 0.025), (-0.025, 0.025, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Dishwasher036_button_power_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.05, 0.05, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Dishwasher036_Dishwasher036_door" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.2585
+        double3 xformOp:translate = (0.00013500452041625977, -0.2977589964866638, -0.04992648959159851)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Dishwasher036_door_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.292234, -0.035577, -0.3107475), (0.292234, -0.035577, -0.3107475), (0.292234, 0.035577, -0.3107475), (-0.292234, 0.035577, -0.3107475), (-0.292234, -0.035577, 0.3107475), (0.292234, -0.035577, 0.3107475), (0.292234, 0.035577, 0.3107475), (-0.292234, 0.035577, 0.3107475)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Dishwasher036_door_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.584468, 0.071154, 0.621495)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Dishwasher036_Dishwasher036_rack0" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.3152
+        double3 xformOp:translate = (0.00148850679397583, 0.005912996828556061, -0.17713599279522896)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Dishwasher036_rack0_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.2596075, -0.20161399, -0.075278), (0.2596075, -0.20161399, -0.075278), (0.2596075, 0.20161399, -0.075278), (-0.2596075, 0.20161399, -0.075278), (-0.2596075, -0.20161399, 0.075278), (0.2596075, -0.20161399, 0.075278), (0.2596075, 0.20161399, 0.075278), (-0.2596075, 0.20161399, 0.075278)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Dishwasher036_rack0_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.519215, 0.40322798, 0.150556)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Dishwasher036_Dishwasher036_rack1" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.3152
+        double3 xformOp:translate = (0.00148850679397583, 0.005912996828556061, 0.04921100102365017)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Dishwasher036_rack1_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.2596075, -0.20161399, -0.075278), (0.2596075, -0.20161399, -0.075278), (0.2596075, 0.20161399, -0.075278), (-0.2596075, 0.20161399, -0.075278), (-0.2596075, -0.20161399, 0.075278), (0.2596075, -0.20161399, 0.075278), (0.2596075, 0.20161399, 0.075278), (-0.2596075, 0.20161399, 0.075278)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Dishwasher036_rack1_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.519215, 0.40322798, 0.150556)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+}
+

@@ -1,0 +1,240 @@
+#usda 1.0
+(
+    defaultPrim = "root"
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    prepend apiSchemas = ["PhysicsArticulationRootAPI"]
+    assetInfo = {
+        string name = "Refrigerator038_physx_omni_structural_proxy"
+        string reconstruction_mode = "usd_structural_proxy_not_vlm_decoder_output"
+        string source_lightwheel_usd = "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd"
+    }
+    kind = "component"
+)
+{
+    def PhysicsScene "PhysicsScene"
+    {
+    }
+
+    def Scope "Looks"
+    {
+        def Material "ProxyBodyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material "CollisionProxyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope "Joints"
+    {
+        def PhysicsFixedJoint "Refrigerator038_FixedJoint"
+        {
+            rel physics:body1 = </root/Refrigerator038_Refrigerator038>
+        }
+
+        def PhysicsPrismaticJoint "Refrigerator038_freezer0_freezer0_door_joint"
+        {
+            rel physics:body0 = </root/Refrigerator038_Refrigerator038>
+            rel physics:body1 = </root/Refrigerator038_Refrigerator038_freezer0>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.4
+        }
+
+        def PhysicsRevoluteJoint "Refrigerator038_fridge_door_fridge_door_joint"
+        {
+            rel physics:body0 = </root/Refrigerator038_Refrigerator038>
+            rel physics:body1 = </root/Refrigerator038_Refrigerator038_fridge_door>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 90
+        }
+
+        def PhysicsPrismaticJoint "Refrigerator038_fridge_drawer0_fridge_drawer0_joint"
+        {
+            rel physics:body0 = </root/Refrigerator038_Refrigerator038>
+            rel physics:body1 = </root/Refrigerator038_Refrigerator038_fridge_drawer0>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.5
+        }
+    }
+
+    def Xform "Refrigerator038_Refrigerator038" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 8.0864
+        double3 xformOp:translate = (0, 0.02955348789691925, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Refrigerator038_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.360823, -0.35797548, -0.782563), (0.360823, -0.35797548, -0.782563), (0.360823, 0.35797548, -0.782563), (-0.360823, 0.35797548, -0.782563), (-0.360823, -0.35797548, 0.782563), (0.360823, -0.35797548, 0.782563), (0.360823, 0.35797548, 0.782563), (-0.360823, 0.35797548, 0.782563)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Refrigerator038_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.721646, 0.71595097, 1.565126)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Refrigerator038_Refrigerator038_freezer0" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 2.293
+        double3 xformOp:translate = (-0.0016334950923919678, -0.09853298962116241, -0.4131369963288307)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Refrigerator038_freezer0_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.3591485, -0.28899598, -0.276158), (0.3591485, -0.28899598, -0.276158), (0.3591485, 0.28899598, -0.276158), (-0.3591485, 0.28899598, -0.276158), (-0.3591485, -0.28899598, 0.276158), (0.3591485, -0.28899598, 0.276158), (0.3591485, 0.28899598, 0.276158), (-0.3591485, 0.28899598, 0.276158)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Refrigerator038_freezer0_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.718297, 0.57799196, 0.552316)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Refrigerator038_Refrigerator038_fridge_door" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 1.402
+        double3 xformOp:translate = (-0.001632004976272583, -0.28059399127960205, 0.32514501363039017)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Refrigerator038_fridge_door_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.359142, -0.106934994, -0.456331), (0.359142, -0.106934994, -0.456331), (0.359142, 0.106934994, -0.456331), (-0.359142, 0.106934994, -0.456331), (-0.359142, -0.106934994, 0.456331), (0.359142, -0.106934994, 0.456331), (0.359142, 0.106934994, 0.456331), (-0.359142, 0.106934994, 0.456331)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Refrigerator038_fridge_door_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.718284, 0.21386999, 0.912662)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Refrigerator038_Refrigerator038_fridge_drawer0" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.5196
+        double3 xformOp:translate = (-0.0010794997215270996, 0.07222399860620499, -0.017408497631549835)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Refrigerator038_fridge_drawer0_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.2869515, -0.260311, -0.0869475), (0.2869515, -0.260311, -0.0869475), (0.2869515, 0.260311, -0.0869475), (-0.2869515, 0.260311, -0.0869475), (-0.2869515, -0.260311, 0.0869475), (0.2869515, -0.260311, 0.0869475), (0.2869515, 0.260311, 0.0869475), (-0.2869515, 0.260311, 0.0869475)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Refrigerator038_fridge_drawer0_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.573903, 0.520622, 0.173895)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+}
+

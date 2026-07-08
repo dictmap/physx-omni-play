@@ -1,0 +1,334 @@
+#usda 1.0
+(
+    defaultPrim = "root"
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    prepend apiSchemas = ["PhysicsArticulationRootAPI"]
+    assetInfo = {
+        string name = "Oven038_physx_omni_structural_proxy"
+        string reconstruction_mode = "usd_structural_proxy_not_vlm_decoder_output"
+        string source_lightwheel_usd = "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Oven038\\Oven038.usd"
+    }
+    kind = "component"
+)
+{
+    def PhysicsScene "PhysicsScene"
+    {
+    }
+
+    def Scope "Looks"
+    {
+        def Material "ProxyBodyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/ProxyBodyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.45, 0.62, 0.8)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+
+        def Material "CollisionProxyMaterial"
+        {
+            token outputs:surface.connect = </root/Looks/CollisionProxyMaterial/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.95, 0.72, 0.28)
+                float inputs:roughness = 0.65
+                token outputs:surface
+            }
+        }
+    }
+
+    def Scope "Joints"
+    {
+        def PhysicsFixedJoint "Oven038_FixedJoint"
+        {
+            rel physics:body1 = </root/Oven038_Oven038>
+        }
+
+        def PhysicsRevoluteJoint "Oven038_door_door_joint"
+        {
+            rel physics:body0 = </root/Oven038_Oven038>
+            rel physics:body1 = </root/Oven038_Oven038_door>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 65.890144
+        }
+
+        def PhysicsRevoluteJoint "Oven038_knob_temp_knob_temp_joint"
+        {
+            rel physics:body0 = </root/Oven038_Oven038>
+            rel physics:body1 = </root/Oven038_Oven038_knob_temp>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 180
+        }
+
+        def PhysicsRevoluteJoint "Oven038_knob_time_knob_time_joint"
+        {
+            rel physics:body0 = </root/Oven038_Oven038>
+            rel physics:body1 = </root/Oven038_Oven038_knob_time>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 226
+        }
+
+        def PhysicsPrismaticJoint "Oven038_rack0_rack0_joint"
+        {
+            rel physics:body0 = </root/Oven038_Oven038>
+            rel physics:body1 = </root/Oven038_Oven038_rack0>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.2
+        }
+
+        def PhysicsPrismaticJoint "Oven038_rack1_rack1_joint"
+        {
+            rel physics:body0 = </root/Oven038_Oven038>
+            rel physics:body1 = </root/Oven038_Oven038_rack1>
+            float physics:lowerLimit = 0
+            float physics:upperLimit = 0.2
+        }
+    }
+
+    def Xform "Oven038_Oven038" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 1.5337
+        double3 xformOp:translate = (-0.00009998679161071777, 0.019710004329681396, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Oven038_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.304261, -0.210335, -0.299566), (0.304261, -0.210335, -0.299566), (0.304261, 0.210335, -0.299566), (-0.304261, 0.210335, -0.299566), (-0.304261, -0.210335, 0.299566), (0.304261, -0.210335, 0.299566), (0.304261, 0.210335, 0.299566), (-0.304261, 0.210335, 0.299566)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Oven038_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.608522, 0.42067, 0.599132)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Oven038_Oven038_door" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1206
+        double3 xformOp:translate = (0, -0.1995595023036003, 0.014927498996257782)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Oven038_door_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.305185, -0.030485503, -0.1620735), (0.305185, -0.030485503, -0.1620735), (0.305185, 0.030485503, -0.1620735), (-0.305185, 0.030485503, -0.1620735), (-0.305185, -0.030485503, 0.1620735), (0.305185, -0.030485503, 0.1620735), (0.305185, 0.030485503, 0.1620735), (-0.305185, 0.030485503, 0.1620735)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Oven038_door_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.61037, 0.060971007, 0.324147)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Oven038_Oven038_knob_temp" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (0.23417649418115616, -0.19979850202798843, 0.23511099815368652)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Oven038_knob_temp_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.0288065, -0.025, -0.028807998), (0.0288065, -0.025, -0.028807998), (0.0288065, 0.025, -0.028807998), (-0.0288065, 0.025, -0.028807998), (-0.0288065, -0.025, 0.028807998), (0.0288065, -0.025, 0.028807998), (0.0288065, 0.025, 0.028807998), (-0.0288065, 0.025, 0.028807998)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Oven038_knob_temp_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.057613, 0.05, 0.057615995)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Oven038_Oven038_knob_time" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.23664599657058716, -0.19979850202798843, 0.23511100560426712)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Oven038_knob_time_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.028807998, -0.025, -0.028807007), (0.028807998, -0.025, -0.028807007), (0.028807998, 0.025, -0.028807007), (-0.028807998, 0.025, -0.028807007), (-0.028807998, -0.025, 0.028807007), (0.028807998, -0.025, 0.028807007), (0.028807998, 0.025, 0.028807007), (-0.028807998, 0.025, 0.028807007)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Oven038_knob_time_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.057615995, 0.05, 0.057614014)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Oven038_Oven038_rack0" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.0001989901065826416, 0.010073497891426086, -0.02277499996125698)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Oven038_rack0_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.261498, -0.1269165, -0.025), (0.261498, -0.1269165, -0.025), (0.261498, 0.1269165, -0.025), (-0.261498, 0.1269165, -0.025), (-0.261498, -0.1269165, 0.025), (0.261498, -0.1269165, 0.025), (0.261498, 0.1269165, 0.025), (-0.261498, 0.1269165, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Oven038_rack0_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.522996, 0.253833, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Oven038_Oven038_rack1" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        float physics:mass = 0.1
+        double3 xformOp:translate = (-0.00019949674606323242, 0.020662494003772736, 0.05219949968159199)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Scope "Visuals"
+        {
+            def Mesh "Oven038_rack1_bbox_mesh" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+                int[] faceVertexIndices = [0, 1, 2, 3, 4, 7, 6, 5, 0, 4, 5, 1, 1, 5, 6, 2, 2, 6, 7, 3, 3, 7, 4, 0]
+                rel material:binding = </root/Looks/ProxyBodyMaterial>
+                point3f[] points = [(-0.2561075, -0.15361351, -0.025), (0.2561075, -0.15361351, -0.025), (0.2561075, 0.15361351, -0.025), (-0.2561075, 0.15361351, -0.025), (-0.2561075, -0.15361351, 0.025), (0.2561075, -0.15361351, 0.025), (0.2561075, 0.15361351, 0.025), (-0.2561075, 0.15361351, 0.025)]
+                uniform token purpose = "render"
+                uniform token subdivisionScheme = "none"
+            }
+        }
+
+        def Scope "Collisions"
+        {
+            def Cube "Oven038_rack1_collision_proxy" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </root/Looks/CollisionProxyMaterial>
+                uniform token purpose = "proxy"
+                double size = 1
+                token visibility = "invisible"
+                float3 xformOp:scale = (0.512215, 0.30722702, 0.05)
+                uniform token[] xformOpOrder = ["xformOp:scale"]
+            }
+        }
+    }
+}
+

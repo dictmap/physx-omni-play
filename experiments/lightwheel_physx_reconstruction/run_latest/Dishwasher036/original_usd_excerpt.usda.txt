@@ -1,0 +1,181 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-0.9741017815098221, -1.1897300966040663, 1.081456992640718)
+                double3 target = (0.17907231442808635, -0.078659780676269, 0.15654227030250445)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Dishwasher036.usd"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "root"
+    doc = """Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Dishwasher036\\Dishwasher036.usd
+"""
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    apiSchemas = ["PhysicsArticulationRootAPI"]
+)
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def Scope "Looks"
+    {
+        def Material "material_Body001_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = "raw"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_button_lock_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_button_lock_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_button_lock_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_button_lock_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = "raw"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_button_power_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_button_power_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_button_power_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_button_power_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = "raw"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_door_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_door_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_door_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_door_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_BC001.png@
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_constant = 0.5
+                float inputs:metallic_texture_influence = 1
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_N001.png@ (
+                    colorSpace = "raw"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Dishwasher036/texture/T_Dishwasher036_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_rack0_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_rack0_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_rack0_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_rack0_material/Shader.outputs:out>
+
+            def Shader "Shader"
+# ... 截断：完整 stage 导出共 1844 行，本实验只嵌入前 180 行。

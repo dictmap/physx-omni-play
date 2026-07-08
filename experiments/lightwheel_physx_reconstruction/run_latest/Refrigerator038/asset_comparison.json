@@ -1,0 +1,320 @@
+{
+  "asset_name": "Refrigerator038",
+  "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd",
+  "source_sha256_short": "df7d8237578e5ac0",
+  "source_size_bytes": 1444082,
+  "original": {
+    "default_prim": "/root",
+    "meters_per_unit": 1.0,
+    "up_axis": "Z",
+    "counts": {
+      "prim": 103,
+      "type:Xform": 14,
+      "type:Scope": 2,
+      "type:Material": 7,
+      "material": 7,
+      "type:Shader": 6,
+      "rigid_body": 4,
+      "mass_api": 4,
+      "type:PhysicsFixedJoint": 1,
+      "joint": 4,
+      "type:Mesh": 6,
+      "mesh": 6,
+      "type:Cube": 58,
+      "collision": 63,
+      "type:PhysicsPrismaticJoint": 2,
+      "type:Cylinder": 6,
+      "type:PhysicsRevoluteJoint": 1
+    },
+    "joint_types": {
+      "PhysicsFixedJoint": 1,
+      "PhysicsPrismaticJoint": 2,
+      "PhysicsRevoluteJoint": 1
+    },
+    "applied_schema_counts": {
+      "PhysicsArticulationRootAPI": 1,
+      "NodeDefAPI": 6,
+      "PhysicsRigidBodyAPI": 4,
+      "PhysicsMassAPI": 4,
+      "PhysicsFilteredPairsAPI": 4,
+      "MaterialBindingAPI": 69,
+      "PhysicsCollisionAPI": 63,
+      "PhysicsMeshCollisionAPI": 63,
+      "PhysicsDriveAPI:X": 3,
+      "PhysicsMaterialAPI": 1
+    },
+    "texture_ref_count": 14,
+    "texture_refs_sample": [
+      "./texture/T_Refrigerator038_BC001.png",
+      "./texture/T_Refrigerator038_ORM001.png",
+      "OmniGlass.mdl",
+      "OmniPBR.mdl"
+    ]
+  },
+  "generated": {
+    "default_prim": "/root",
+    "meters_per_unit": 1.0,
+    "up_axis": "Z",
+    "counts": {
+      "prim": 32,
+      "type:Xform": 5,
+      "type:PhysicsScene": 1,
+      "type:Scope": 10,
+      "type:Material": 2,
+      "material": 2,
+      "type:Shader": 2,
+      "type:PhysicsFixedJoint": 1,
+      "joint": 4,
+      "type:PhysicsPrismaticJoint": 2,
+      "type:PhysicsRevoluteJoint": 1,
+      "rigid_body": 4,
+      "mass_api": 4,
+      "type:Mesh": 4,
+      "mesh": 4,
+      "type:Cube": 4,
+      "collision": 4
+    },
+    "joint_types": {
+      "PhysicsFixedJoint": 1,
+      "PhysicsPrismaticJoint": 2,
+      "PhysicsRevoluteJoint": 1
+    },
+    "applied_schema_counts": {
+      "PhysicsArticulationRootAPI": 1,
+      "NodeDefAPI": 2,
+      "PhysicsRigidBodyAPI": 4,
+      "PhysicsMassAPI": 4,
+      "MaterialBindingAPI": 8,
+      "PhysicsCollisionAPI": 4
+    },
+    "texture_ref_count": 0,
+    "texture_refs_sample": []
+  },
+  "bodies_extracted": [
+    {
+      "original_path": "/root/Refrigerator038",
+      "generated_path": "/root/Refrigerator038_Refrigerator038",
+      "name": "Refrigerator038",
+      "center": [
+        0.0,
+        0.02955348789691925,
+        0.0
+      ],
+      "size": [
+        0.7216460108757019,
+        0.71595099568367,
+        1.5651259422302246
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Refrigerator038_freezer0",
+      "generated_path": "/root/Refrigerator038_Refrigerator038_freezer0",
+      "name": "Refrigerator038_freezer0",
+      "center": [
+        -0.0016334950923919678,
+        -0.09853298962116241,
+        -0.4131369963288307
+      ],
+      "size": [
+        0.718297004699707,
+        0.5779919922351837,
+        0.5523159950971603
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Refrigerator038_fridge_door",
+      "generated_path": "/root/Refrigerator038_Refrigerator038_fridge_door",
+      "name": "Refrigerator038_fridge_door",
+      "center": [
+        -0.001632004976272583,
+        -0.28059399127960205,
+        0.32514501363039017
+      ],
+      "size": [
+        0.718284010887146,
+        0.21386998891830444,
+        0.9126620143651962
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Refrigerator038_fridge_drawer0",
+      "generated_path": "/root/Refrigerator038_Refrigerator038_fridge_drawer0",
+      "name": "Refrigerator038_fridge_drawer0",
+      "center": [
+        -0.0010794997215270996,
+        0.07222399860620499,
+        -0.017408497631549835
+      ],
+      "size": [
+        0.5739030241966248,
+        0.5206220000982285,
+        0.173895001411438
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    }
+  ],
+  "joints_extracted": [
+    {
+      "original_path": "/root/Refrigerator038/FixedJoint",
+      "generated_path": "/root/Joints/Refrigerator038_FixedJoint",
+      "type_name": "PhysicsFixedJoint",
+      "body0": null,
+      "body1": "/root/Refrigerator038_Refrigerator038",
+      "axis": null,
+      "lower": null,
+      "upper": null
+    },
+    {
+      "original_path": "/root/Refrigerator038_freezer0/freezer0_door_joint",
+      "generated_path": "/root/Joints/Refrigerator038_freezer0_freezer0_door_joint",
+      "type_name": "PhysicsPrismaticJoint",
+      "body0": "/root/Refrigerator038_Refrigerator038",
+      "body1": "/root/Refrigerator038_Refrigerator038_freezer0",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 0.4000000059604645
+    },
+    {
+      "original_path": "/root/Refrigerator038_fridge_door/fridge_door_joint",
+      "generated_path": "/root/Joints/Refrigerator038_fridge_door_fridge_door_joint",
+      "type_name": "PhysicsRevoluteJoint",
+      "body0": "/root/Refrigerator038_Refrigerator038",
+      "body1": "/root/Refrigerator038_Refrigerator038_fridge_door",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 90.0
+    },
+    {
+      "original_path": "/root/Refrigerator038_fridge_drawer0/fridge_drawer0_joint",
+      "generated_path": "/root/Joints/Refrigerator038_fridge_drawer0_fridge_drawer0_joint",
+      "type_name": "PhysicsPrismaticJoint",
+      "body0": "/root/Refrigerator038_Refrigerator038",
+      "body1": "/root/Refrigerator038_Refrigerator038_fridge_drawer0",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 0.5
+    }
+  ],
+  "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_physx_omni_structural_proxy.usda",
+  "generated_usda_rel": "Refrigerator038/Refrigerator038_physx_omni_structural_proxy.usda",
+  "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\original_usd_excerpt.usda.txt",
+  "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_bbox_projection.png",
+  "projection_rel": "Refrigerator038/Refrigerator038_bbox_projection.png",
+  "projection_kind": "bbox_projection_fallback",
+  "render_attempt": {
+    "status": "failed",
+    "returncode": 1,
+    "command": [
+      "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+      "--disableGpu",
+      "--imageWidth",
+      "512",
+      "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd",
+      "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_usdrecord.png"
+    ],
+    "elapsed_sec": 5.38,
+    "stdout_tail": "",
+    "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Refrigerator038\\Refrigerator038_usdrecord.png` failed. (See above for error)\n",
+    "image": null
+  },
+  "physx_omni_attempt": {
+    "status": "not_run_missing_model_weights",
+    "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+    "intended_commands": [
+      "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+      "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+    ]
+  },
+  "comparison": {
+    "count_rows": [
+      {
+        "metric": "prim",
+        "original": 103,
+        "generated": 32,
+        "delta": -71,
+        "ratio": 0.311
+      },
+      {
+        "metric": "mesh",
+        "original": 6,
+        "generated": 4,
+        "delta": -2,
+        "ratio": 0.667
+      },
+      {
+        "metric": "material",
+        "original": 7,
+        "generated": 2,
+        "delta": -5,
+        "ratio": 0.286
+      },
+      {
+        "metric": "collision",
+        "original": 63,
+        "generated": 4,
+        "delta": -59,
+        "ratio": 0.063
+      },
+      {
+        "metric": "rigid_body",
+        "original": 4,
+        "generated": 4,
+        "delta": 0,
+        "ratio": 1.0
+      },
+      {
+        "metric": "mass_api",
+        "original": 4,
+        "generated": 4,
+        "delta": 0,
+        "ratio": 1.0
+      },
+      {
+        "metric": "joint",
+        "original": 4,
+        "generated": 4,
+        "delta": 0,
+        "ratio": 1.0
+      }
+    ],
+    "joint_rows": [
+      {
+        "type": "PhysicsFixedJoint",
+        "original": 1,
+        "generated": 1,
+        "delta": 0
+      },
+      {
+        "type": "PhysicsPrismaticJoint",
+        "original": 2,
+        "generated": 2,
+        "delta": 0
+      },
+      {
+        "type": "PhysicsRevoluteJoint",
+        "original": 1,
+        "generated": 1,
+        "delta": 0
+      }
+    ]
+  }
+}

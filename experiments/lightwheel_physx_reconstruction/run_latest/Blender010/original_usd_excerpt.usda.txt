@@ -1,0 +1,181 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-0.5077668423602755, -0.967445266602569, 0.3999099500504205)
+                double3 target = (0.04878970282745465, 0.056804859124867546, -0.02093829313769291)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary navmeshSettings = {
+            double agentHeight = 180
+            double agentRadius = 20
+            bool excludeRigidBodies = 1
+            int ver = 1
+            double voxelCeiling = 460
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Blender010.usd"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            bool "rtx:raytracing:fractionalCutoutOpacity" = 1
+            token "rtx:rendermode" = "PathTracing"
+        }
+    }
+    defaultPrim = "root"
+    doc = """Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Blender010\\Blender010.usd
+"""
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    apiSchemas = ["PhysicsArticulationRootAPI"]
+)
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def Scope "Looks"
+    {
+        def Material "material_Body001_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1) (
+                    customData = {
+                        float3 default = (0.2, 0.2, 0.2)
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Color"
+                    doc = """This is the albedo base color
+
+"""
+                    hidden = false
+                    renderType = "color"
+                )
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Blender010/texture/T_Blender010_BC001.png@ (
+                    colorSpace = "sRGB"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Albedo"
+                    displayName = "Albedo Map"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                bool inputs:enable_ORM_texture = 1 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Enable ORM Texture"
+                    doc = """The ORM texture will be used to extract the Occlusion, Roughness and Metallic textures from R,G,B channels
+
+"""
+                    hidden = false
+                )
+                bool inputs:flip_tangent_v = 0 (
+                    customData = {
+                        bool default = 1
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map Flip V Tangent"
+                    hidden = false
+                )
+                float inputs:metallic_constant = 0.5 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Amount"
+                    doc = """Metallic Material
+
+"""
+                    hidden = false
+                )
+                float inputs:metallic_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Metallic Map Influence"
+                    doc = """Blends between the constant value and the lookup of the metallic texture
+
+"""
+                    hidden = false
+                )
+                asset inputs:normalmap_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Blender010/texture/T_Blender010_N001.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Normal"
+                    displayName = "Normal Map"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Blender010/texture/T_Blender010_ORM001.png@ (
+                    colorSpace = "raw"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "ORM Map"
+                    doc = """Texture that has Occlusion, Roughness and Metallic maps stored in their respective R, G and B channels
+
+"""
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:reflection_roughness_texture_influence = 1 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Reflectivity"
+                    displayName = "Roughness Map Influence"
+                    doc = """Blends between the constant value and the lookup of the roughness texture
+
+"""
+# ... 截断：完整 stage 导出共 2232 行，本实验只嵌入前 180 行。

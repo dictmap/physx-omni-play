@@ -1,0 +1,279 @@
+{
+  "asset_name": "Microwave047",
+  "original_usd": "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd",
+  "source_sha256_short": "b1fa01d23e55bc77",
+  "source_size_bytes": 1113160,
+  "original": {
+    "default_prim": "/root",
+    "meters_per_unit": 1.0,
+    "up_axis": "Z",
+    "counts": {
+      "prim": 52,
+      "type:Xform": 11,
+      "type:Scope": 2,
+      "type:Material": 5,
+      "material": 5,
+      "type:Shader": 4,
+      "rigid_body": 3,
+      "mass_api": 3,
+      "type:PhysicsFixedJoint": 1,
+      "joint": 3,
+      "type:Mesh": 4,
+      "mesh": 4,
+      "type:Cylinder": 2,
+      "collision": 22,
+      "type:Cube": 21,
+      "type:PhysicsRevoluteJoint": 2
+    },
+    "joint_types": {
+      "PhysicsFixedJoint": 1,
+      "PhysicsRevoluteJoint": 2
+    },
+    "applied_schema_counts": {
+      "PhysicsArticulationRootAPI": 1,
+      "NodeDefAPI": 4,
+      "PhysicsRigidBodyAPI": 3,
+      "PhysicsMassAPI": 3,
+      "PhysicsFilteredPairsAPI": 3,
+      "MaterialBindingAPI": 26,
+      "PhysicsCollisionAPI": 22,
+      "PhysicsDriveAPI:X": 2,
+      "PhysicsMaterialAPI": 1
+    },
+    "texture_ref_count": 13,
+    "texture_refs_sample": [
+      "./texture/T_Microwave047_BC001.png",
+      "./texture/T_Microwave047_N001.png",
+      "./texture/T_Microwave047_ORM001.png",
+      "OmniPBR.mdl"
+    ]
+  },
+  "generated": {
+    "default_prim": "/root",
+    "meters_per_unit": 1.0,
+    "up_axis": "Z",
+    "counts": {
+      "prim": 26,
+      "type:Xform": 4,
+      "type:PhysicsScene": 1,
+      "type:Scope": 8,
+      "type:Material": 2,
+      "material": 2,
+      "type:Shader": 2,
+      "type:PhysicsFixedJoint": 1,
+      "joint": 3,
+      "type:PhysicsRevoluteJoint": 2,
+      "rigid_body": 3,
+      "mass_api": 3,
+      "type:Mesh": 3,
+      "mesh": 3,
+      "type:Cube": 3,
+      "collision": 3
+    },
+    "joint_types": {
+      "PhysicsFixedJoint": 1,
+      "PhysicsRevoluteJoint": 2
+    },
+    "applied_schema_counts": {
+      "PhysicsArticulationRootAPI": 1,
+      "NodeDefAPI": 2,
+      "PhysicsRigidBodyAPI": 3,
+      "PhysicsMassAPI": 3,
+      "MaterialBindingAPI": 6,
+      "PhysicsCollisionAPI": 3
+    },
+    "texture_ref_count": 0,
+    "texture_refs_sample": []
+  },
+  "bodies_extracted": [
+    {
+      "original_path": "/root/Microwave047",
+      "generated_path": "/root/Microwave047_Microwave047",
+      "name": "Microwave047",
+      "center": [
+        2.199411392211914e-05,
+        0.018282994627952576,
+        -5.498528480529785e-06
+      ],
+      "size": [
+        0.5913800001144409,
+        0.42265400290489197,
+        0.3170900046825409
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Microwave047_door",
+      "generated_path": "/root/Microwave047_Microwave047_door",
+      "name": "Microwave047_door",
+      "center": [
+        -0.05620499700307846,
+        -0.193571999669075,
+        9.98377799987793e-07
+      ],
+      "size": [
+        0.47901399433612823,
+        0.0720759928226471,
+        0.317099004983902
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    },
+    {
+      "original_path": "/root/Microwave047_Disc001",
+      "generated_path": "/root/Microwave047_Microwave047_Disc001",
+      "name": "Microwave047_Disc001",
+      "center": [
+        -0.06338150054216385,
+        0.016181498765945435,
+        -0.12842949852347374
+      ],
+      "size": [
+        0.31328700482845306,
+        0.31328698992729187,
+        0.05
+      ],
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "PhysicsFilteredPairsAPI"
+      ]
+    }
+  ],
+  "joints_extracted": [
+    {
+      "original_path": "/root/Microwave047/FixedJoint",
+      "generated_path": "/root/Joints/Microwave047_FixedJoint",
+      "type_name": "PhysicsFixedJoint",
+      "body0": null,
+      "body1": "/root/Microwave047_Microwave047",
+      "axis": null,
+      "lower": null,
+      "upper": null
+    },
+    {
+      "original_path": "/root/Microwave047_door/microjoint",
+      "generated_path": "/root/Joints/Microwave047_door_microjoint",
+      "type_name": "PhysicsRevoluteJoint",
+      "body0": "/root/Microwave047_Microwave047",
+      "body1": "/root/Microwave047_Microwave047_door",
+      "axis": null,
+      "lower": -90.0,
+      "upper": 0.0
+    },
+    {
+      "original_path": "/root/Microwave047_Disc001/Disc001_joint",
+      "generated_path": "/root/Joints/Microwave047_Disc001_Disc001_joint",
+      "type_name": "PhysicsRevoluteJoint",
+      "body0": "/root/Microwave047_Microwave047",
+      "body1": "/root/Microwave047_Microwave047_Disc001",
+      "axis": null,
+      "lower": 0.0,
+      "upper": 20626.48046875
+    }
+  ],
+  "generated_usda": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_physx_omni_structural_proxy.usda",
+  "generated_usda_rel": "Microwave047/Microwave047_physx_omni_structural_proxy.usda",
+  "original_excerpt_path": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\original_usd_excerpt.usda.txt",
+  "projection": "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_bbox_projection.png",
+  "projection_rel": "Microwave047/Microwave047_bbox_projection.png",
+  "projection_kind": "bbox_projection_fallback",
+  "render_attempt": {
+    "status": "failed",
+    "returncode": 1,
+    "command": [
+      "C:\\Users\\robot\\anaconda3\\Scripts\\usdrecord.CMD",
+      "--disableGpu",
+      "--imageWidth",
+      "512",
+      "C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd",
+      "C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_usdrecord.png"
+    ],
+    "elapsed_sec": 4.05,
+    "stdout_tail": "",
+    "stderr_tail": "Traceback (most recent call last):\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\Library\\bin\\usdrecord\", line 9, in <module>\n\n    from pxr import Ar\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Ar\\__init__.py\", line 7, in <module>\n\n    from pxr import Tf\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 163, in <module>\n\n    PreparePythonModule()\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\site-packages\\pxr\\Tf\\__init__.py\", line 86, in PreparePythonModule\n\n    module = importlib.import_module(\n\n  File \"C:\\Users\\robot\\anaconda3\\envs\\openusd-tools\\lib\\importlib\\__init__.py\", line 126, in import_module\n\n    return _bootstrap._gcd_import(name[level:], package, level)\n\nImportError: DLL load failed while importing _tf: 找不到指定的程序。\n\n\nERROR conda.cli.main_run:execute(47): `conda run usdrecord --disableGpu --imageWidth 512 C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Microwave047\\Microwave047.usd C:\\Users\\robot\\Documents\\成长学习库\\physx-omni-assets\\experiments\\lightwheel_physx_reconstruction\\run_latest\\Microwave047\\Microwave047_usdrecord.png` failed. (See above for error)\n",
+    "image": null
+  },
+  "physx_omni_attempt": {
+    "status": "not_run_missing_model_weights",
+    "message": "本地 hf/PhysX-Omni-model 没有 safetensors/bin 权重文件，无法执行 1vlm_demo.py / 2infer_geo.py。",
+    "intended_commands": [
+      "python run_vlm_repro_one.py --repo code/PhysX-Omni --model-path hf/PhysX-Omni-model --image <condition_image> --output-root <run_dir> --mode 4bit",
+      "bash reproduce_quality.sh RUN_BASE=<vlm_output_root>"
+    ]
+  },
+  "comparison": {
+    "count_rows": [
+      {
+        "metric": "prim",
+        "original": 52,
+        "generated": 26,
+        "delta": -26,
+        "ratio": 0.5
+      },
+      {
+        "metric": "mesh",
+        "original": 4,
+        "generated": 3,
+        "delta": -1,
+        "ratio": 0.75
+      },
+      {
+        "metric": "material",
+        "original": 5,
+        "generated": 2,
+        "delta": -3,
+        "ratio": 0.4
+      },
+      {
+        "metric": "collision",
+        "original": 22,
+        "generated": 3,
+        "delta": -19,
+        "ratio": 0.136
+      },
+      {
+        "metric": "rigid_body",
+        "original": 3,
+        "generated": 3,
+        "delta": 0,
+        "ratio": 1.0
+      },
+      {
+        "metric": "mass_api",
+        "original": 3,
+        "generated": 3,
+        "delta": 0,
+        "ratio": 1.0
+      },
+      {
+        "metric": "joint",
+        "original": 3,
+        "generated": 3,
+        "delta": 0,
+        "ratio": 1.0
+      }
+    ],
+    "joint_rows": [
+      {
+        "type": "PhysicsFixedJoint",
+        "original": 1,
+        "generated": 1,
+        "delta": 0
+      },
+      {
+        "type": "PhysicsRevoluteJoint",
+        "original": 2,
+        "generated": 2,
+        "delta": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,181 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary MovieCaptureSettings = {
+            double animation_fps = 60
+            int bad_frame_size_threshold = 0
+            int batch_count = 1
+            string camera_name = "/OmniverseKit_Persp"
+            bool capture_application = 0
+            int capture_every_nth_frames = 20
+            bool capture_every_nth_frames_checked = 0
+            int capture_frame_end = 1000000
+            int capture_frame_start = 0
+            string capture_name = "Capture"
+            string capture_range = "Custom Range - Frames"
+            double capture_time_end = 10
+            double capture_time_start = 0
+            int early_quit_time_limit = 0
+            string exr_compression_method = "zips"
+            double fps = 60
+            bool generate_shader_cache = 0
+            bool hdr_for_exr_checked = 1
+            bool hdr_for_exr_visible = 0
+            int iray_pathtrace_spp = 1
+            int iray_subframes_per_frame = 32
+            int max_bad_frame_threshold = 3
+            string movie_type = "Sequence"
+            int mp4_encoding_bitrate = 16777216
+            int mp4_encoding_iframe_interval = 60
+            string mp4_encoding_preset = "PRESET_DEFAULT"
+            string mp4_encoding_profile = "H264_PROFILE_HIGH"
+            string mp4_encoding_rc_mode = "RC_VBR"
+            int mp4_encoding_rc_target_quality = 0
+            bool mp4_encoding_video_full_range_flag = 0
+            string output_format = ".png"
+            string output_path = "C:/Users/Administrator/Desktop/"
+            bool overwrite_existing_frame_checked = 0
+            bool pathtrace_mb_checked = 0
+            double pathtrace_mb_frame_shutter_close = 0.5
+            double pathtrace_mb_frame_shutter_open = 0
+            int pathtrace_mb_subframes = 64
+            int pathtrace_spp_per_iteration_mgpu = 10
+            int pathtrace_spp_per_subframe = 10
+            string queue_instance = "localhost Queue"
+            int realtime_settle_latency = 10
+            int realtime_wait_for_render_resolve = 10
+            string render_preset = "RaytracedLighting"
+            bool render_style = 1
+            bool renumber_negtive_frames_checked = 0
+            int resolution_aspect_ratio_selected = 0
+            string resolution_aspect_ratios = '["1.000:1", "16:9", "4:3"]'
+            int resolution_height = 2048
+            string resolution_type = "Custom"
+            bool resolution_w_h_linked = 0
+            int resolution_width = 2048
+            int run_n_frames_before_start = 20
+            bool run_n_frames_before_start_checked = 0
+            bool save_alpha_checked = 1
+            bool skip_upload_to_s3 = 0
+            int start_delay_seconds = 10
+            double sunstudy_end = 18
+            int sunstudy_movie_minutes = 1
+            int sunstudy_movie_seconds = 1
+            double sunstudy_start = 6
+            string task_comment = ""
+            int task_priority = 65535
+            string task_type = "create-render"
+            double texture_streaming_memory_budget = 0.6000000238418579
+            bool upload_to_s3 = 0
+        }
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (-0.5486838983294444, -2.1823854490614685, 0.6016850598684715)
+                double3 target = (0.14353265873607812, -0.16898327276696845, 0.024543161346620823)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./Refrigerator038.usd"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            int "rtx:externalFrameCounter" = 1
+            bool "rtx:raytracing:fractionalCutoutOpacity" = 1
+        }
+    }
+    defaultPrim = "root"
+    doc = """Generated from Composed Stage of root layer C:\\Users\\robot\\Documents\\workplace\\test\\Lightwheel_OpenSource\\Manipulation\\Refrigerator038\\Refrigerator038.usd
+"""
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "root" (
+    apiSchemas = ["PhysicsArticulationRootAPI"]
+)
+{
+    double3 xformOp:rotateZYX = (0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+
+    def Scope "Looks"
+    {
+        token visibility = "inherited"
+
+        def Material "material_Body001_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_Body001_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_BC001.png@ (
+                    colorSpace = "sRGB"
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "material_freezer0_material"
+        {
+            token outputs:mdl:displacement.connect = </root/Looks/material_freezer0_material/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </root/Looks/material_freezer0_material/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </root/Looks/material_freezer0_material/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (1, 1, 1)
+                asset inputs:diffuse_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_BC001.png@ (
+                    colorSpace = "sRGB"
+                )
+                bool inputs:enable_ORM_texture = 1
+                float inputs:metallic_texture_influence = 1
+                asset inputs:ORM_texture = @C:/Users/robot/Documents/workplace/test/Lightwheel_OpenSource/Manipulation/Refrigerator038/texture/T_Refrigerator038_ORM001.png@ (
+                    colorSpace = "raw"
+                )
+                float inputs:reflection_roughness_texture_influence = 1
+                float inputs:specular_level = 0.5
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+# ... 截断：完整 stage 导出共 1714 行，本实验只嵌入前 180 行。
