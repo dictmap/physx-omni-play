@@ -1,0 +1,75 @@
+{
+  "status": "success",
+  "repo": "/data/light/repro/physx_omni_2605_21572/code/PhysX-Omni",
+  "model_path": "/data/light/repro/physx_omni_2605_21572/hf/PhysX-Omni-model",
+  "processor_path": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "image": "/data/light/repro/physx_omni_2605_21572/lightwheel_inputs/Microwave047/Microwave047_textured_condition.png",
+  "output_dir": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047",
+  "mode": "bf16_offload",
+  "max_parts": 0,
+  "started_at": "2026-07-09T02:08:25+0800",
+  "detected_parts": 7,
+  "parts_to_run": 7,
+  "elapsed_sec": 480.94,
+  "total_voxels": 22236,
+  "parts": [
+    {
+      "part": 0,
+      "coord_text_chars": 6435,
+      "voxel_count": 11444,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_0.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_0.ply"
+    },
+    {
+      "part": 1,
+      "coord_text_chars": 8442,
+      "voxel_count": 10201,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_1.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_1.ply"
+    },
+    {
+      "part": 2,
+      "coord_text_chars": 980,
+      "voxel_count": 529,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_2.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_2.ply"
+    },
+    {
+      "part": 3,
+      "coord_text_chars": 719,
+      "voxel_count": 18,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_3.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_3.ply"
+    },
+    {
+      "part": 4,
+      "coord_text_chars": 729,
+      "voxel_count": 16,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_4.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_4.ply"
+    },
+    {
+      "part": 5,
+      "coord_text_chars": 716,
+      "voxel_count": 12,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_5.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_5.ply"
+    },
+    {
+      "part": 6,
+      "coord_text_chars": 716,
+      "voxel_count": 16,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_6.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_6.ply"
+    }
+  ],
+  "outputs": [
+    "cond_img.png",
+    "basic_info.txt",
+    "coord_*.txt",
+    "ind_*.npy",
+    "ind_*.ply",
+    "allind.npy",
+    "allind.ply"
+  ]
+}

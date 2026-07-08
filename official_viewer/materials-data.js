@@ -2,14 +2,14 @@ window.PHYSX_OMNI_LIBRARY = {
   "generatedAt": "2026-06-25",
   "assetRoot": ".",
   "counts": {
-    "documents": 92,
-    "markdown": 83,
+    "documents": 93,
+    "markdown": 84,
     "notebooks": 9
   },
   "groups": {
     "官方代码文档": 6,
     "官方代码 Bench": 6,
-    "项目入口与交付说明": 10,
+    "项目入口与交付说明": 11,
     "主线精读 Step 1-7": 15,
     "Step 10 技术实验回答": 4,
     "Step 8 概念逐项精讲": 30,
@@ -454,6 +454,34 @@ window.PHYSX_OMNI_LIBRARY = {
         }
       ],
       "excerpt": "![Teaser image](<images/teaser_top.png>) FlexiCubes is a high-quality isosurface representation specifically designed for gradient-based mesh optimization with respect to geometric, visual, or even physical objectives. For more details, please refer to our [paper](https://arxiv.org/abs/2308.05371) and [project page](https://research.nvidia.com/labs/toronto-ai/flexicubes/). * [Getting started](https://github.com/nv-tl"
+    },
+    {
+      "type": "markdown",
+      "group": "项目入口与交付说明",
+      "title": "Microwave047 4090 真实 PhysX-Omni 复现记录",
+      "relPath": "experiments/lightwheel_physx_reconstruction/run_latest/Microwave047/true_physx_omni_bf16/README.md",
+      "href": "../experiments/lightwheel_physx_reconstruction/run_latest/Microwave047/true_physx_omni_bf16/README.md",
+      "lines": 32,
+      "bytes": 1800,
+      "outline": [
+        {
+          "level": 1,
+          "text": "Microwave047 4090 真实 PhysX-Omni 复现记录"
+        },
+        {
+          "level": 2,
+          "text": "结论"
+        },
+        {
+          "level": 2,
+          "text": "关键文件"
+        },
+        {
+          "level": 2,
+          "text": "运行边界"
+        }
+      ],
+      "excerpt": "本目录是 `Microwave047` 的真实 PhysX-Omni 4090 输出，不是本地结构 proxy。 - 输入：`Microwave047_textured_condition.png`，由原始 Lightwheel USD 和原始 base-color atlas 渲染后上传到 4090。 - VLM 模式：`bf16_offload`。 - VLM 结果：识别为 `Microwave Oven`，生成 7 个 parts。 - RLE/voxel：总计 22236 voxels。 - 几何后处理：7 个 parts 均生成 `OBJ/GLB/material_0.png`。 - 物理结构后处理：生成 `basic.urdf` 和 `basic.xml`。 - `cond_img.png`：送入 PhysX-Omni VLM 的条件图。 - `basic_info.txt`：VLM 生成的部件、材料、物理属性和关节"
     },
     {
       "type": "markdown",

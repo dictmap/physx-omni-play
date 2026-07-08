@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="test">
+    <compiler angle="radian" autolimits="true" />
+    <option timestep="0.002" gravity="0 0 -9.81" wind="0 0 0" integrator="implicitfast" density="1.225" viscosity="1.8e-05" />
+    <visual>
+        <global realtime="1" />
+        <quality shadowsize="16384" numslices="28" offsamples="4" />
+        <headlight diffuse="2 2 2" specular="0.5 0.5 0.5" active="1" />
+        <rgba fog="0 1 0 1" haze="1 0 0 1" />
+    </visual>
+    <asset>
+        <mesh name="l_0_Frame" file="./objs/0/0.obj" scale="0.5 0.5 0.5" />
+        <texture type="2d" name="l_0_Frame_tex" file="./objs/0/material_0.png" />
+        <material name="l_0_Frame_img" texture="l_0_Frame_tex" />
+        <mesh name="l_1_Door" file="./objs/1/1.obj" scale="0.5 0.5 0.5" />
+        <texture type="2d" name="l_1_Door_tex" file="./objs/1/material_0.png" />
+        <material name="l_1_Door_img" texture="l_1_Door_tex" />
+        <mesh name="l_2_Side Controls" file="./objs/2/2.obj" scale="0.5 0.5 0.5" />
+        <texture type="2d" name="l_2_Side Controls_tex" file="./objs/2/material_0.png" />
+        <material name="l_2_Side Controls_img" texture="l_2_Side Controls_tex" />
+        <mesh name="l_3_Foot" file="./objs/3/3.obj" scale="0.5 0.5 0.5" />
+        <texture type="2d" name="l_3_Foot_tex" file="./objs/3/material_0.png" />
+        <material name="l_3_Foot_img" texture="l_3_Foot_tex" />
+        <mesh name="l_4_Foot" file="./objs/4/4.obj" scale="0.5 0.5 0.5" />
+        <texture type="2d" name="l_4_Foot_tex" file="./objs/4/material_0.png" />
+        <material name="l_4_Foot_img" texture="l_4_Foot_tex" />
+        <mesh name="l_5_Foot" file="./objs/5/5.obj" scale="0.5 0.5 0.5" />
+        <texture type="2d" name="l_5_Foot_tex" file="./objs/5/material_0.png" />
+        <material name="l_5_Foot_img" texture="l_5_Foot_tex" />
+        <mesh name="l_6_Foot" file="./objs/6/6.obj" scale="0.5 0.5 0.5" />
+        <texture type="2d" name="l_6_Foot_tex" file="./objs/6/material_0.png" />
+        <material name="l_6_Foot_img" texture="l_6_Foot_tex" />
+        <texture type="skybox" file="./desert.png" gridsize="3 4" gridlayout=".U..LFRB.D.." />
+        <texture name="plane" type="2d" builtin="checker" rgb1=".1 .1 .1" rgb2=".5 .5 .5" width="512" height="512" mark="cross" markrgb=".8 .8 .8" />
+        <material name="plane" reflectance="0.3" texture="plane" texrepeat="1 1" texuniform="true" />
+    </asset>
+    <default>
+        <geom solref=".5e-4" solimp="0.9 0.99 1e-4" fluidcoef="0.5 0.25 0.5 2.0 1.0" />
+        <default class="l_0_Frame">
+            <geom type="mesh" mesh="l_0_Frame" contype="1" conaffinity="1" density="7800.0" fluidshape="ellipsoid" />
+        </default>
+        <default class="l_1_Door">
+            <geom type="mesh" mesh="l_1_Door" contype="1" conaffinity="1" density="1500.0" fluidshape="ellipsoid" />
+        </default>
+        <default class="l_2_Side Controls">
+            <geom type="mesh" mesh="l_2_Side Controls" contype="1" conaffinity="1" density="1200.0" fluidshape="ellipsoid" />
+        </default>
+        <default class="l_3_Foot">
+            <geom type="mesh" mesh="l_3_Foot" contype="1" conaffinity="1" density="1100.0" fluidshape="ellipsoid" />
+        </default>
+        <default class="l_4_Foot">
+            <geom type="mesh" mesh="l_4_Foot" contype="1" conaffinity="1" density="1100.0" fluidshape="ellipsoid" />
+        </default>
+        <default class="l_5_Foot">
+            <geom type="mesh" mesh="l_5_Foot" contype="1" conaffinity="1" density="1100.0" fluidshape="ellipsoid" />
+        </default>
+        <default class="l_6_Foot">
+            <geom type="mesh" mesh="l_6_Foot" contype="1" conaffinity="1" density="1100.0" fluidshape="ellipsoid" />
+        </default>
+    </default>
+    <worldbody>
+        <geom name="floor" pos="0 0 0" size="0 0 .25" type="plane" material="plane" condim="6" />
+        <light directional="true" ambient=".3 .3 .3" pos="30 30 30" dir="0 -2 -1" diffuse=".5 .5 .5" specular=".5 .5 .5" />
+        <body name="base" pos="0 0 1" euler="0 0 0">
+            <freejoint />
+            <geom class="l_0_Frame" material="l_0_Frame_img" />
+            <geom class="l_2_Side Controls" material="l_2_Side Controls_img" />
+            <geom class="l_3_Foot" material="l_3_Foot_img" />
+            <geom class="l_4_Foot" material="l_4_Foot_img" />
+            <geom class="l_5_Foot" material="l_5_Foot_img" />
+            <geom class="l_6_Foot" material="l_6_Foot_img" />
+            <body name="grouppart_1" pos="0 0 0">
+                <joint type="hinge" name="pivot_1" axis="0.0 0.0 1.0" pos="-0.242421875 -0.15796875 -0.25" range="-3.141592653589793 0.0" damping="0.001" frictionloss="0.0" stiffness="0" />
+                <geom class="l_1_Door" material="l_1_Door_img" />
+            </body>
+        </body>
+    </worldbody>
+</mujoco>

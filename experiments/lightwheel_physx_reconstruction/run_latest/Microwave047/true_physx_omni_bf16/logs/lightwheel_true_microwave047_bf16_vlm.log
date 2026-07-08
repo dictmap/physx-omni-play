@@ -1,0 +1,81 @@
+/home/yjl/anaconda3/envs/3dgrut_nv/lib/python3.11/site-packages/numba/np/ufunc/parallel.py:373: NumbaWarning: The TBB threading layer requires TBB version 2021 update 6 or later i.e., TBB_INTERFACE_VERSION >= 12060. Found TBB_INTERFACE_VERSION = 12050. The TBB threading layer is disabled.
+  warnings.warn(problem)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:06,  2.25s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.19s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.14s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.59s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.81s/it]
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.50, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+/home/yjl/anaconda3/envs/3dgrut_nv/lib/python3.11/site-packages/transformers/generation/configuration_utils.py:628: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `1e-06` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+{
+  "status": "success",
+  "repo": "/data/light/repro/physx_omni_2605_21572/code/PhysX-Omni",
+  "model_path": "/data/light/repro/physx_omni_2605_21572/hf/PhysX-Omni-model",
+  "processor_path": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "image": "/data/light/repro/physx_omni_2605_21572/lightwheel_inputs/Microwave047/Microwave047_textured_condition.png",
+  "output_dir": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047",
+  "mode": "bf16_offload",
+  "max_parts": 0,
+  "started_at": "2026-07-09T02:08:25+0800",
+  "detected_parts": 7,
+  "parts_to_run": 7,
+  "elapsed_sec": 480.94,
+  "total_voxels": 22236,
+  "parts": [
+    {
+      "part": 0,
+      "coord_text_chars": 6435,
+      "voxel_count": 11444,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_0.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_0.ply"
+    },
+    {
+      "part": 1,
+      "coord_text_chars": 8442,
+      "voxel_count": 10201,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_1.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_1.ply"
+    },
+    {
+      "part": 2,
+      "coord_text_chars": 980,
+      "voxel_count": 529,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_2.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_2.ply"
+    },
+    {
+      "part": 3,
+      "coord_text_chars": 719,
+      "voxel_count": 18,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_3.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_3.ply"
+    },
+    {
+      "part": 4,
+      "coord_text_chars": 729,
+      "voxel_count": 16,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_4.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_4.ply"
+    },
+    {
+      "part": 5,
+      "coord_text_chars": 716,
+      "voxel_count": 12,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_5.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_5.ply"
+    },
+    {
+      "part": 6,
+      "coord_text_chars": 716,
+      "voxel_count": 16,
+      "npy": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_6.npy",
+      "ply": "/data/light/repro/physx_omni_2605_21572/repro_runs/lightwheel_true_microwave047_bf16/Microwave047/ind_6.ply"
+    }
+  ],
+  "outputs": [
+    "cond_img.png",
+    "basic_info.txt",
+    "coord_*.txt",
+    "ind_*.npy",
+    "ind_*.ply",
+    "allind.npy",
+    "allind.ply"
+  ]
+}

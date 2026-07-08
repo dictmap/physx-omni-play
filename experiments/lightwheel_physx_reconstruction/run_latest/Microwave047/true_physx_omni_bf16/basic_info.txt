@@ -1,0 +1,14 @@
+Name: Microwave Oven
+Category: Kitchen Appliance
+Dimension: 50*40*30
+Parts: 
+l_0: Frame| 2| Metal| 7.8 g/cm^3| 200.0| 0.3| The frame is the main body of the microwave oven, made of metal.
+l_1: Door| 1| Plastic and Glass| 1.5 g/cm^3| 36.0| 0.31| The door is made of plastic and glass and covers the front opening of the microwave.
+l_2: Side Controls| 5| Plastic| 1.2 g/cm^3| 2.5| 0.38| The side control panel is made of plastic and located on the front side.
+l_3: Foot| 7| Rubber| 1.1 g/cm^3| 0.02| 0.49| A rubber foot located at the bottom corner of the microwave.
+l_4: Foot| 8| Rubber| 1.1 g/cm^3| 0.02| 0.49| A rubber foot located at the bottom corner of the microwave.
+l_5: Foot| 9| Rubber| 1.1 g/cm^3| 0.02| 0.49| A rubber foot located at the bottom corner of the microwave.
+l_6: Foot| 10| Rubber| 1.1 g/cm^3| 0.02| 0.49| A rubber foot located at the bottom corner of the microwave.
+Group_info: 
+group_0: ['l_0', 'l_2', 'l_3', 'l_4', 'l_5', 'l_6']; Type: E; Param: N/A
+group_1: ['l_1']; Type: C relative to group_0; Param: direction: [0, 0, 1], axis position (in voxel grid): [0.97, 11.78, 0], revolute range (degree): [-180, 0]
