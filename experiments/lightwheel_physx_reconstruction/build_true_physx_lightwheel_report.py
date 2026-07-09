@@ -416,6 +416,13 @@ def build_report(run_dir: Path) -> Path:
         <h3>USD 单行完全一致率总表</h3>
         <p class="muted">same-line 是同一行号完全相同的最严格比例；proxy line coverage 是排除空行后，proxy 中有多少行能在原始 USDA 中找到完全相同文本。</p>
         {table(["asset", "original_lines", "proxy_lines", "same_position", "same_position_denominator", "same_position_rate", "nonempty_overlap", "original_nonempty_coverage", "proxy_nonempty_coverage"], line_compare_rows)}
+        <h3>为什么这个比例这么低</h3>
+        <div class="explain">
+          <p>这个指标衡量的是 <b>USD 文本身份</b>，不是几何质量、拓扑相似度或物理语义相似度。只要行号、缩进、属性顺序、prim 顺序、注释、metadata 有任何变化，该行就会被判为不一致。</p>
+          <p>当前比较对象是 <code>original_export.usda</code> 和本地 <code>structural_proxy.usda</code>。原始 Lightwheel USDA 是完整 composed stage，包含高密度 mesh、材质图、贴图引用、碰撞体、关节、Blender/Omniverse metadata；本地 proxy 是为了做 harness 对照而生成的简化结构文件，重点保留 body/joint 的粗结构，不保留原始 USD 的逐行文本。</p>
+          <p>以 <code>Microwave047</code> 为例：原始导出有 768 行，proxy 只有 193 行；同一行号完全相同的只有 3 行，主要是 <code>#usda 1.0</code>、开头括号和空行。原始里有贴图引用、更多 collision proxy 和材质绑定；proxy 则用少量简化 mesh/material 重新表达结构，所以逐行一致率接近 0 是预期结果。</p>
+          <p>真实 4090 PhysX-Omni 路径更不是 USD-to-USD 转换器：它从渲染图进入 VLM/RLE voxel，再输出 GLB/OBJ 和 URDF/MJCF。这个过程天然会丢失原始 USD 的行文本、prim 命名、属性顺序和作者层信息。因此后续更应该看几何覆盖、部件拓扑、关节类型、尺度、碰撞和动力学参数，而不是期待 USDA 文本逐行一致。</p>
+        </div>
       </section>
       {''.join(sections)}
     </main>
