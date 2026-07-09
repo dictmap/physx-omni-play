@@ -1,0 +1,286 @@
+{
+  "reading_guide": "Text-line identity is expected to be very low. The useful closeness question is layered: articulation graph, body scale, mesh detail, joint axes/limits, collision proxies, and physical parameters.",
+  "overall": [
+    {
+      "question": "是否还有提升空间",
+      "answer": "有。最大提升空间不是让 USDA 文本行相同，而是把原始 USD 的 body/joint prior、多视角渲染、bbox/scale 对齐、joint axis/limit 后处理和物理参数校准引入 PhysX-Omni 结果。"
+    },
+    {
+      "question": "是否接近",
+      "answer": "proxy 在 articulation graph 层接近，在 visual/collision/material 层不接近；4090 真输出在类别和门这个主功能上接近，在 turntable、joint axis/range、物理参数上不接近。"
+    }
+  ],
+  "assets": [
+    {
+      "asset": "Blender010",
+      "proxy_rows": [
+        {
+          "layer": "USD text identity",
+          "evidence": "0.27%",
+          "closeness": "very low",
+          "why different": "proxy is regenerated USDA, not a line-preserving export; order, metadata, names and formatting are different."
+        },
+        {
+          "layer": "articulation graph",
+          "evidence": "rigid bodies 7/7 = 100.0%; joints 7/7 = 100.0%",
+          "closeness": "high for proxy",
+          "why different": "the harness intentionally copies extracted rigid-body and joint topology into a simpler stage."
+        },
+        {
+          "layer": "joint type mix",
+          "evidence": "original: FixedJoint:1, PrismaticJoint:4, RevoluteJoint:2 | proxy: FixedJoint:1, PrismaticJoint:4, RevoluteJoint:2",
+          "closeness": "high for proxy",
+          "why different": "type counts are preserved, but axis metadata may be dropped by the proxy writer."
+        },
+        {
+          "layer": "mesh/body coverage",
+          "evidence": "7/8 = 87.5%",
+          "closeness": "medium",
+          "why different": "proxy keeps one coarse mesh per extracted body and drops decorative/detail meshes."
+        },
+        {
+          "layer": "collision detail",
+          "evidence": "7/36 = 19.4%",
+          "closeness": "low",
+          "why different": "original Lightwheel assets use many collision proxies; proxy collapses them to one coarse collision per body."
+        },
+        {
+          "layer": "material and texture",
+          "evidence": "materials 2/9 = 22.2%; texture refs 0/29 = 0.0%",
+          "closeness": "low",
+          "why different": "proxy uses two simple colors and does not preserve the original texture atlas or shader graph."
+        }
+      ],
+      "true_physx_omni_rows": [],
+      "true_physx_omni_issues": []
+    },
+    {
+      "asset": "Dishwasher036",
+      "proxy_rows": [
+        {
+          "layer": "USD text identity",
+          "evidence": "0.33%",
+          "closeness": "very low",
+          "why different": "proxy is regenerated USDA, not a line-preserving export; order, metadata, names and formatting are different."
+        },
+        {
+          "layer": "articulation graph",
+          "evidence": "rigid bodies 6/6 = 100.0%; joints 6/6 = 100.0%",
+          "closeness": "high for proxy",
+          "why different": "the harness intentionally copies extracted rigid-body and joint topology into a simpler stage."
+        },
+        {
+          "layer": "joint type mix",
+          "evidence": "original: FixedJoint:1, PrismaticJoint:4, RevoluteJoint:1 | proxy: FixedJoint:1, PrismaticJoint:4, RevoluteJoint:1",
+          "closeness": "high for proxy",
+          "why different": "type counts are preserved, but axis metadata may be dropped by the proxy writer."
+        },
+        {
+          "layer": "mesh/body coverage",
+          "evidence": "6/6 = 100.0%",
+          "closeness": "medium",
+          "why different": "proxy keeps one coarse mesh per extracted body and drops decorative/detail meshes."
+        },
+        {
+          "layer": "collision detail",
+          "evidence": "6/75 = 8.0%",
+          "closeness": "low",
+          "why different": "original Lightwheel assets use many collision proxies; proxy collapses them to one coarse collision per body."
+        },
+        {
+          "layer": "material and texture",
+          "evidence": "materials 2/7 = 28.6%; texture refs 0/24 = 0.0%",
+          "closeness": "low",
+          "why different": "proxy uses two simple colors and does not preserve the original texture atlas or shader graph."
+        }
+      ],
+      "true_physx_omni_rows": [],
+      "true_physx_omni_issues": []
+    },
+    {
+      "asset": "Microwave047",
+      "proxy_rows": [
+        {
+          "layer": "USD text identity",
+          "evidence": "0.39%",
+          "closeness": "very low",
+          "why different": "proxy is regenerated USDA, not a line-preserving export; order, metadata, names and formatting are different."
+        },
+        {
+          "layer": "articulation graph",
+          "evidence": "rigid bodies 3/3 = 100.0%; joints 3/3 = 100.0%",
+          "closeness": "high for proxy",
+          "why different": "the harness intentionally copies extracted rigid-body and joint topology into a simpler stage."
+        },
+        {
+          "layer": "joint type mix",
+          "evidence": "original: FixedJoint:1, RevoluteJoint:2 | proxy: FixedJoint:1, RevoluteJoint:2",
+          "closeness": "high for proxy",
+          "why different": "type counts are preserved, but axis metadata may be dropped by the proxy writer."
+        },
+        {
+          "layer": "mesh/body coverage",
+          "evidence": "3/4 = 75.0%",
+          "closeness": "medium",
+          "why different": "proxy keeps one coarse mesh per extracted body and drops decorative/detail meshes."
+        },
+        {
+          "layer": "collision detail",
+          "evidence": "3/22 = 13.6%",
+          "closeness": "low",
+          "why different": "original Lightwheel assets use many collision proxies; proxy collapses them to one coarse collision per body."
+        },
+        {
+          "layer": "material and texture",
+          "evidence": "materials 2/5 = 40.0%; texture refs 0/13 = 0.0%",
+          "closeness": "low",
+          "why different": "proxy uses two simple colors and does not preserve the original texture atlas or shader graph."
+        }
+      ],
+      "true_physx_omni_rows": [
+        {
+          "layer": "object category",
+          "evidence": "VLM object_name=\"Microwave Oven\" vs source asset \"Microwave047\"",
+          "closeness": "high",
+          "why different": "single rendered view gives enough cues to identify a microwave oven."
+        },
+        {
+          "layer": "part set",
+          "evidence": "original bodies: Microwave047, Microwave047_door, Microwave047_Disc001 | true parts: Frame, Door, Side Controls, Foot, Foot, Foot, Foot",
+          "closeness": "medium",
+          "why different": "Frame and Door are recovered; the original Disc/turntable is missed, while visual Side Controls and four Feet are added."
+        },
+        {
+          "layer": "joint topology",
+          "evidence": "original joints: PhysicsFixedJoint, PhysicsRevoluteJoint, PhysicsRevoluteJoint | true URDF: one revolute door joint plus fixed static parts",
+          "closeness": "medium-low",
+          "why different": "door articulation is recovered, but the turntable revolute joint is absent."
+        },
+        {
+          "layer": "joint axis/range",
+          "evidence": "original door axis X, range -90..0 deg; true URDF axis Z, range -pi..0 rad",
+          "closeness": "low",
+          "why different": "image-to-asset path infers a hinge concept but does not preserve the source USD coordinate frame or exact limits."
+        },
+        {
+          "layer": "physical parameters",
+          "evidence": "URDF mass and inertia are all 1.0; MJCF densities come from VLM material guesses.",
+          "closeness": "low",
+          "why different": "the run produces plausible defaults, not measured or source-transferred mass, inertia, friction and contact parameters."
+        }
+      ],
+      "true_physx_omni_issues": [
+        {
+          "missing_from_true": "Microwave047_Disc001 / turntable",
+          "impact": "loses one original revolute DOF and internal rotating part"
+        },
+        {
+          "extra_in_true": "Side Controls",
+          "impact": "visually plausible, but not an articulated body in the original USD"
+        },
+        {
+          "extra_in_true": "four Feet",
+          "impact": "visually plausible static details; increases part count but not functional articulation"
+        },
+        {
+          "mismatch": "door hinge axis/range",
+          "impact": "may look openable, but simulation motion will not match the original USD without post-correction"
+        }
+      ]
+    },
+    {
+      "asset": "Oven038",
+      "proxy_rows": [
+        {
+          "layer": "USD text identity",
+          "evidence": "0.68%",
+          "closeness": "very low",
+          "why different": "proxy is regenerated USDA, not a line-preserving export; order, metadata, names and formatting are different."
+        },
+        {
+          "layer": "articulation graph",
+          "evidence": "rigid bodies 6/6 = 100.0%; joints 6/6 = 100.0%",
+          "closeness": "high for proxy",
+          "why different": "the harness intentionally copies extracted rigid-body and joint topology into a simpler stage."
+        },
+        {
+          "layer": "joint type mix",
+          "evidence": "original: FixedJoint:1, PrismaticJoint:2, RevoluteJoint:3 | proxy: FixedJoint:1, PrismaticJoint:2, RevoluteJoint:3",
+          "closeness": "high for proxy",
+          "why different": "type counts are preserved, but axis metadata may be dropped by the proxy writer."
+        },
+        {
+          "layer": "mesh/body coverage",
+          "evidence": "6/7 = 85.7%",
+          "closeness": "medium",
+          "why different": "proxy keeps one coarse mesh per extracted body and drops decorative/detail meshes."
+        },
+        {
+          "layer": "collision detail",
+          "evidence": "6/34 = 17.6%",
+          "closeness": "low",
+          "why different": "original Lightwheel assets use many collision proxies; proxy collapses them to one coarse collision per body."
+        },
+        {
+          "layer": "material and texture",
+          "evidence": "materials 2/8 = 25.0%; texture refs 0/19 = 0.0%",
+          "closeness": "low",
+          "why different": "proxy uses two simple colors and does not preserve the original texture atlas or shader graph."
+        }
+      ],
+      "true_physx_omni_rows": [],
+      "true_physx_omni_issues": []
+    },
+    {
+      "asset": "Refrigerator038",
+      "proxy_rows": [
+        {
+          "layer": "USD text identity",
+          "evidence": "0.29%",
+          "closeness": "very low",
+          "why different": "proxy is regenerated USDA, not a line-preserving export; order, metadata, names and formatting are different."
+        },
+        {
+          "layer": "articulation graph",
+          "evidence": "rigid bodies 4/4 = 100.0%; joints 4/4 = 100.0%",
+          "closeness": "high for proxy",
+          "why different": "the harness intentionally copies extracted rigid-body and joint topology into a simpler stage."
+        },
+        {
+          "layer": "joint type mix",
+          "evidence": "original: FixedJoint:1, PrismaticJoint:2, RevoluteJoint:1 | proxy: FixedJoint:1, PrismaticJoint:2, RevoluteJoint:1",
+          "closeness": "high for proxy",
+          "why different": "type counts are preserved, but axis metadata may be dropped by the proxy writer."
+        },
+        {
+          "layer": "mesh/body coverage",
+          "evidence": "4/6 = 66.7%",
+          "closeness": "medium",
+          "why different": "proxy keeps one coarse mesh per extracted body and drops decorative/detail meshes."
+        },
+        {
+          "layer": "collision detail",
+          "evidence": "4/63 = 6.3%",
+          "closeness": "low",
+          "why different": "original Lightwheel assets use many collision proxies; proxy collapses them to one coarse collision per body."
+        },
+        {
+          "layer": "material and texture",
+          "evidence": "materials 2/7 = 28.6%; texture refs 0/14 = 0.0%",
+          "closeness": "low",
+          "why different": "proxy uses two simple colors and does not preserve the original texture atlas or shader graph."
+        }
+      ],
+      "true_physx_omni_rows": [],
+      "true_physx_omni_issues": []
+    }
+  ],
+  "improvement_plan": [
+    "Use the source USD body/joint list as constrained prompts or postprocess priors instead of letting VLM freely invent parts.",
+    "Render multi-view and open-state images from the source USD, especially front, side, top, and door-open views, to expose hidden turntable/interior parts.",
+    "Scale and align generated GLB parts against source body bounding boxes before exporting URDF/MJCF.",
+    "Transfer known joint axes, limits, parent/child links from source USD when a source asset exists; use VLM only for missing semantic labels.",
+    "Generate collision proxies with convex decomposition or primitive fitting rather than using visual meshes or one coarse cube per body.",
+    "Replace default URDF mass/inertia/friction with mesh-derived inertia plus material density, then validate in MuJoCo/Isaac/Genesis."
+  ]
+}

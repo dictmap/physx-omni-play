@@ -105,6 +105,169 @@ def line_compare_table(stats: dict[str, Any]) -> str:
     return table(["metric", "value"], rows)
 
 
+def ratio_text(generated: int | float, original: int | float) -> str:
+    if not original:
+        return "n/a"
+    return f"{generated}/{original} = {generated / original:.1%}"
+
+
+def metric_count(asset: dict[str, Any], side: str, metric: str) -> int:
+    return int(asset.get(side, {}).get("counts", {}).get(metric, 0))
+
+
+def joint_signature(asset: dict[str, Any], side: str) -> str:
+    values = asset.get(side, {}).get("joint_types", {})
+    if not values:
+        return "none"
+    return ", ".join(f"{name.replace('Physics', '')}:{count}" for name, count in sorted(values.items()))
+
+
+def proxy_closeness_rows(asset: dict[str, Any], line_stats: dict[str, Any]) -> list[dict[str, Any]]:
+    original_text = line_stats.get("same_position_rate", "n/a")
+    original_body = metric_count(asset, "original", "rigid_body")
+    generated_body = metric_count(asset, "generated", "rigid_body")
+    original_joint = metric_count(asset, "original", "joint")
+    generated_joint = metric_count(asset, "generated", "joint")
+    original_mesh = metric_count(asset, "original", "mesh")
+    generated_mesh = metric_count(asset, "generated", "mesh")
+    original_collision = metric_count(asset, "original", "collision")
+    generated_collision = metric_count(asset, "generated", "collision")
+    original_material = metric_count(asset, "original", "material")
+    generated_material = metric_count(asset, "generated", "material")
+    original_texture = int(asset.get("original", {}).get("texture_ref_count", 0))
+    generated_texture = int(asset.get("generated", {}).get("texture_ref_count", 0))
+
+    return [
+        {
+            "layer": "USD text identity",
+            "evidence": original_text,
+            "closeness": "very low",
+            "why different": "proxy is regenerated USDA, not a line-preserving export; order, metadata, names and formatting are different.",
+        },
+        {
+            "layer": "articulation graph",
+            "evidence": f"rigid bodies {ratio_text(generated_body, original_body)}; joints {ratio_text(generated_joint, original_joint)}",
+            "closeness": "high for proxy",
+            "why different": "the harness intentionally copies extracted rigid-body and joint topology into a simpler stage.",
+        },
+        {
+            "layer": "joint type mix",
+            "evidence": f"original: {joint_signature(asset, 'original')} | proxy: {joint_signature(asset, 'generated')}",
+            "closeness": "high for proxy",
+            "why different": "type counts are preserved, but axis metadata may be dropped by the proxy writer.",
+        },
+        {
+            "layer": "mesh/body coverage",
+            "evidence": ratio_text(generated_mesh, original_mesh),
+            "closeness": "medium",
+            "why different": "proxy keeps one coarse mesh per extracted body and drops decorative/detail meshes.",
+        },
+        {
+            "layer": "collision detail",
+            "evidence": ratio_text(generated_collision, original_collision),
+            "closeness": "low",
+            "why different": "original Lightwheel assets use many collision proxies; proxy collapses them to one coarse collision per body.",
+        },
+        {
+            "layer": "material and texture",
+            "evidence": f"materials {ratio_text(generated_material, original_material)}; texture refs {ratio_text(generated_texture, original_texture)}",
+            "closeness": "low",
+            "why different": "proxy uses two simple colors and does not preserve the original texture atlas or shader graph.",
+        },
+    ]
+
+
+def true_microwave_closeness(asset: dict[str, Any], true_run: dict[str, Any] | None) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if not true_run:
+        return [], []
+
+    basic_info = read_json(true_run["run_dir"] / "basic_info.json")
+    parts = basic_info.get("parts", [])
+    true_names = [str(part.get("name", "")) for part in parts]
+    original_bodies = [body.get("name", "") for body in asset.get("bodies_extracted", [])]
+    original_joints = [joint.get("type_name", "") for joint in asset.get("joints_extracted", [])]
+
+    rows = [
+        {
+            "layer": "object category",
+            "evidence": f'VLM object_name="{basic_info.get("object_name", "")}" vs source asset "Microwave047"',
+            "closeness": "high",
+            "why different": "single rendered view gives enough cues to identify a microwave oven.",
+        },
+        {
+            "layer": "part set",
+            "evidence": f"original bodies: {', '.join(original_bodies)} | true parts: {', '.join(true_names)}",
+            "closeness": "medium",
+            "why different": "Frame and Door are recovered; the original Disc/turntable is missed, while visual Side Controls and four Feet are added.",
+        },
+        {
+            "layer": "joint topology",
+            "evidence": f"original joints: {', '.join(original_joints)} | true URDF: one revolute door joint plus fixed static parts",
+            "closeness": "medium-low",
+            "why different": "door articulation is recovered, but the turntable revolute joint is absent.",
+        },
+        {
+            "layer": "joint axis/range",
+            "evidence": "original door axis X, range -90..0 deg; true URDF axis Z, range -pi..0 rad",
+            "closeness": "low",
+            "why different": "image-to-asset path infers a hinge concept but does not preserve the source USD coordinate frame or exact limits.",
+        },
+        {
+            "layer": "physical parameters",
+            "evidence": "URDF mass and inertia are all 1.0; MJCF densities come from VLM material guesses.",
+            "closeness": "low",
+            "why different": "the run produces plausible defaults, not measured or source-transferred mass, inertia, friction and contact parameters.",
+        },
+    ]
+
+    return rows, [
+        {"missing_from_true": "Microwave047_Disc001 / turntable", "impact": "loses one original revolute DOF and internal rotating part"},
+        {"extra_in_true": "Side Controls", "impact": "visually plausible, but not an articulated body in the original USD"},
+        {"extra_in_true": "four Feet", "impact": "visually plausible static details; increases part count but not functional articulation"},
+        {"mismatch": "door hinge axis/range", "impact": "may look openable, but simulation motion will not match the original USD without post-correction"},
+    ]
+
+
+def build_difference_analysis(run_dir: Path, assets: list[dict[str, Any]], line_compare_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    line_by_asset = {row["asset"]: row for row in line_compare_rows}
+    asset_rows = []
+    for asset in assets:
+        name = asset["asset_name"]
+        true_run = collect_true_run(run_dir / name)
+        true_rows, true_issues = true_microwave_closeness(asset, true_run)
+        asset_rows.append(
+            {
+                "asset": name,
+                "proxy_rows": proxy_closeness_rows(asset, line_by_asset.get(name, {})),
+                "true_physx_omni_rows": true_rows,
+                "true_physx_omni_issues": true_issues,
+            }
+        )
+
+    return {
+        "reading_guide": "Text-line identity is expected to be very low. The useful closeness question is layered: articulation graph, body scale, mesh detail, joint axes/limits, collision proxies, and physical parameters.",
+        "overall": [
+            {
+                "question": "是否还有提升空间",
+                "answer": "有。最大提升空间不是让 USDA 文本行相同，而是把原始 USD 的 body/joint prior、多视角渲染、bbox/scale 对齐、joint axis/limit 后处理和物理参数校准引入 PhysX-Omni 结果。",
+            },
+            {
+                "question": "是否接近",
+                "answer": "proxy 在 articulation graph 层接近，在 visual/collision/material 层不接近；4090 真输出在类别和门这个主功能上接近，在 turntable、joint axis/range、物理参数上不接近。",
+            },
+        ],
+        "assets": asset_rows,
+        "improvement_plan": [
+            "Use the source USD body/joint list as constrained prompts or postprocess priors instead of letting VLM freely invent parts.",
+            "Render multi-view and open-state images from the source USD, especially front, side, top, and door-open views, to expose hidden turntable/interior parts.",
+            "Scale and align generated GLB parts against source body bounding boxes before exporting URDF/MJCF.",
+            "Transfer known joint axes, limits, parent/child links from source USD when a source asset exists; use VLM only for missing semantic labels.",
+            "Generate collision proxies with convex decomposition or primitive fitting rather than using visual meshes or one coarse cube per body.",
+            "Replace default URDF mass/inertia/friction with mesh-derived inertia plus material density, then validate in MuJoCo/Isaac/Genesis.",
+        ],
+    }
+
+
 def table(headers: list[str], rows: list[dict[str, Any]]) -> str:
     head = "".join(f"<th>{html.escape(h)}</th>" for h in headers)
     body = []
@@ -364,6 +527,28 @@ def build_report(run_dir: Path) -> Path:
         encoding="utf-8",
     )
 
+    difference_analysis = build_difference_analysis(run_dir, assets, line_compare_rows)
+    (run_dir / "difference_closeness_analysis.json").write_text(
+        json.dumps(difference_analysis, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    microwave_analysis = next(
+        (row for row in difference_analysis["assets"] if row["asset"] == "Microwave047"),
+        {"proxy_rows": [], "true_physx_omni_rows": [], "true_physx_omni_issues": []},
+    )
+    proxy_detail_html = "\n".join(
+        f"""
+        <details>
+          <summary>{html.escape(row['asset'])} proxy 分层接近度</summary>
+          {table(["layer", "evidence", "closeness", "why different"], row["proxy_rows"])}
+        </details>
+        """
+        for row in difference_analysis["assets"]
+    )
+    improvement_html = "".join(
+        f"<li>{html.escape(item)}</li>" for item in difference_analysis["improvement_plan"]
+    )
+
     style = """
     :root { color-scheme: light; --bg:#f5f7fa; --panel:#fff; --ink:#16202a; --muted:#607082; --line:#d8e0e8; --accent:#1b668f; --ok:#0f766e; --warn:#9a6700; }
     * { box-sizing:border-box; }
@@ -423,6 +608,17 @@ def build_report(run_dir: Path) -> Path:
           <p>以 <code>Microwave047</code> 为例：原始导出有 768 行，proxy 只有 193 行；同一行号完全相同的只有 3 行，主要是 <code>#usda 1.0</code>、开头括号和空行。原始里有贴图引用、更多 collision proxy 和材质绑定；proxy 则用少量简化 mesh/material 重新表达结构，所以逐行一致率接近 0 是预期结果。</p>
           <p>真实 4090 PhysX-Omni 路径更不是 USD-to-USD 转换器：它从渲染图进入 VLM/RLE voxel，再输出 GLB/OBJ 和 URDF/MJCF。这个过程天然会丢失原始 USD 的行文本、prim 命名、属性顺序和作者层信息。因此后续更应该看几何覆盖、部件拓扑、关节类型、尺度、碰撞和动力学参数，而不是期待 USDA 文本逐行一致。</p>
         </div>
+        <h3>差异分解：为什么不一样，是否接近</h3>
+        {table(["question", "answer"], difference_analysis["overall"])}
+        <h4>Microwave047 的真实 4090 PhysX-Omni 接近度</h4>
+        {table(["layer", "evidence", "closeness", "why different"], microwave_analysis["true_physx_omni_rows"])}
+        <h4>Microwave047 的关键不一致点</h4>
+        {table(["missing_from_true", "extra_in_true", "mismatch", "impact"], microwave_analysis["true_physx_omni_issues"])}
+        <h4>Proxy 与原始 USD 的分层接近度</h4>
+        {proxy_detail_html}
+        <h4>提升空间</h4>
+        <ol>{improvement_html}</ol>
+        <p><a href="difference_closeness_analysis.json">打开差异与接近度 JSON</a></p>
       </section>
       {''.join(sections)}
     </main>
