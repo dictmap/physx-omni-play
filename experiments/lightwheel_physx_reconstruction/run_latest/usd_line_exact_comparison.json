@@ -1,0 +1,80 @@
+{
+  "definition": {
+    "same_position_rate": "same line number exact text match / max(original_lines, proxy_lines)",
+    "multiset_overlap": "exact text line overlap with duplicate counts, ignoring order",
+    "nonempty_overlap": "same as multiset_overlap after dropping blank/whitespace-only lines",
+    "scope": "original exported USDA vs local structural proxy USDA, not the true 4090 PhysX-Omni GLB/URDF output"
+  },
+  "assets": [
+    {
+      "asset": "Blender010",
+      "original_lines": 2232,
+      "proxy_lines": 381,
+      "same_position": 6,
+      "same_position_denominator": 2232,
+      "same_position_rate": "0.27%",
+      "multiset_overlap": 185,
+      "original_multiset_coverage": "8.29%",
+      "proxy_multiset_coverage": "48.56%",
+      "nonempty_overlap": 151,
+      "original_nonempty_coverage": "7.20%",
+      "proxy_nonempty_coverage": "43.52%"
+    },
+    {
+      "asset": "Dishwasher036",
+      "original_lines": 1844,
+      "proxy_lines": 334,
+      "same_position": 6,
+      "same_position_denominator": 1844,
+      "same_position_rate": "0.33%",
+      "multiset_overlap": 160,
+      "original_multiset_coverage": "8.68%",
+      "proxy_multiset_coverage": "47.90%",
+      "nonempty_overlap": 130,
+      "original_nonempty_coverage": "7.51%",
+      "proxy_nonempty_coverage": "42.76%"
+    },
+    {
+      "asset": "Microwave047",
+      "original_lines": 768,
+      "proxy_lines": 193,
+      "same_position": 3,
+      "same_position_denominator": 768,
+      "same_position_rate": "0.39%",
+      "multiset_overlap": 96,
+      "original_multiset_coverage": "12.50%",
+      "proxy_multiset_coverage": "49.74%",
+      "nonempty_overlap": 78,
+      "original_nonempty_coverage": "10.82%",
+      "proxy_nonempty_coverage": "44.57%"
+    },
+    {
+      "asset": "Oven038",
+      "original_lines": 1327,
+      "proxy_lines": 334,
+      "same_position": 9,
+      "same_position_denominator": 1327,
+      "same_position_rate": "0.68%",
+      "multiset_overlap": 163,
+      "original_multiset_coverage": "12.28%",
+      "proxy_multiset_coverage": "48.80%",
+      "nonempty_overlap": 133,
+      "original_nonempty_coverage": "10.66%",
+      "proxy_nonempty_coverage": "43.75%"
+    },
+    {
+      "asset": "Refrigerator038",
+      "original_lines": 1714,
+      "proxy_lines": 240,
+      "same_position": 5,
+      "same_position_denominator": 1714,
+      "same_position_rate": "0.29%",
+      "multiset_overlap": 120,
+      "original_multiset_coverage": "7.00%",
+      "proxy_multiset_coverage": "50.00%",
+      "nonempty_overlap": 98,
+      "original_nonempty_coverage": "6.07%",
+      "proxy_nonempty_coverage": "44.95%"
+    }
+  ]
+}

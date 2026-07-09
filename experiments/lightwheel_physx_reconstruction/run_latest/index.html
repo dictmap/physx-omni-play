@@ -45,7 +45,10 @@
       <section class="summary">
         <h2>当前结论</h2>
         <p class="notice">Microwave047 已在 4090 上跑通真实 PhysX-Omni：VLM 识别为 Microwave Oven，生成 7 parts、22236 voxels，并完成 7 个 GLB/OBJ、URDF 和 MJCF 后处理。</p>
-        <table><thead><tr><th>asset</th><th>Lightwheel meshes</th><th>Lightwheel joints</th><th>proxy meshes</th><th>true status</th><th>true parts</th><th>true voxels</th></tr></thead><tbody><tr><td>Blender010</td><td>8</td><td>7</td><td>7</td><td>not_run</td><td></td><td></td></tr><tr><td>Dishwasher036</td><td>6</td><td>6</td><td>6</td><td>not_run</td><td></td><td></td></tr><tr><td>Microwave047</td><td>4</td><td>3</td><td>3</td><td>success</td><td>7</td><td>22236</td></tr><tr><td>Oven038</td><td>7</td><td>6</td><td>6</td><td>not_run</td><td></td><td></td></tr><tr><td>Refrigerator038</td><td>6</td><td>4</td><td>4</td><td>not_run</td><td></td><td></td></tr></tbody></table>
+        <table><thead><tr><th>asset</th><th>Lightwheel meshes</th><th>Lightwheel joints</th><th>proxy meshes</th><th>true status</th><th>true parts</th><th>true voxels</th><th>USD same-line</th><th>proxy line coverage</th></tr></thead><tbody><tr><td>Blender010</td><td>8</td><td>7</td><td>7</td><td>not_run</td><td></td><td></td><td>0.27%</td><td>43.52%</td></tr><tr><td>Dishwasher036</td><td>6</td><td>6</td><td>6</td><td>not_run</td><td></td><td></td><td>0.33%</td><td>42.76%</td></tr><tr><td>Microwave047</td><td>4</td><td>3</td><td>3</td><td>success</td><td>7</td><td>22236</td><td>0.39%</td><td>44.57%</td></tr><tr><td>Oven038</td><td>7</td><td>6</td><td>6</td><td>not_run</td><td></td><td></td><td>0.68%</td><td>43.75%</td></tr><tr><td>Refrigerator038</td><td>6</td><td>4</td><td>4</td><td>not_run</td><td></td><td></td><td>0.29%</td><td>44.95%</td></tr></tbody></table>
+        <h3>USD 单行完全一致率总表</h3>
+        <p class="muted">same-line 是同一行号完全相同的最严格比例；proxy line coverage 是排除空行后，proxy 中有多少行能在原始 USDA 中找到完全相同文本。</p>
+        <table><thead><tr><th>asset</th><th>original_lines</th><th>proxy_lines</th><th>same_position</th><th>same_position_denominator</th><th>same_position_rate</th><th>nonempty_overlap</th><th>original_nonempty_coverage</th><th>proxy_nonempty_coverage</th></tr></thead><tbody><tr><td>Blender010</td><td>2232</td><td>381</td><td>6</td><td>2232</td><td>0.27%</td><td>151</td><td>7.20%</td><td>43.52%</td></tr><tr><td>Dishwasher036</td><td>1844</td><td>334</td><td>6</td><td>1844</td><td>0.33%</td><td>130</td><td>7.51%</td><td>42.76%</td></tr><tr><td>Microwave047</td><td>768</td><td>193</td><td>3</td><td>768</td><td>0.39%</td><td>78</td><td>10.82%</td><td>44.57%</td></tr><tr><td>Oven038</td><td>1327</td><td>334</td><td>9</td><td>1327</td><td>0.68%</td><td>133</td><td>10.66%</td><td>43.75%</td></tr><tr><td>Refrigerator038</td><td>1714</td><td>240</td><td>5</td><td>1714</td><td>0.29%</td><td>98</td><td>6.07%</td><td>44.95%</td></tr></tbody></table>
       </section>
       
             <section class="asset">
@@ -71,6 +74,9 @@
         
               <details>
                 <summary>原始 USD 与结构 proxy 对比</summary>
+                <h4>单行完全一样的一致率</h4>
+                <p class="muted">比较对象是原始 Lightwheel stage 导出的 USDA 与本地 structural proxy USDA。最严格口径是“同一行号、整行文本完全相同 / 两边最大行数”；这不是语义相似度，也不是 4090 真实 PhysX-Omni GLB/URDF 输出的一致率。</p>
+                <table><thead><tr><th>metric</th><th>value</th></tr></thead><tbody><tr><td>同一行号完全相同</td><td>6 / 2232 = 0.27%</td></tr><tr><td>忽略顺序的完全相同行 overlap</td><td>185 lines；占原始 8.29%，占 proxy 48.56%</td></tr><tr><td>排除空行后的 overlap</td><td>151 lines；占原始非空 7.20%，占 proxy 非空 43.52%</td></tr><tr><td>行数</td><td>原始 2232 lines；proxy 381 lines</td></tr></tbody></table>
                 <div class="code-split">
                   <article>
                     <h4>原始 Lightwheel USDA 导出</h4>
@@ -1596,6 +1602,9 @@ def Xform &quot;root&quot; (
         
               <details>
                 <summary>原始 USD 与结构 proxy 对比</summary>
+                <h4>单行完全一样的一致率</h4>
+                <p class="muted">比较对象是原始 Lightwheel stage 导出的 USDA 与本地 structural proxy USDA。最严格口径是“同一行号、整行文本完全相同 / 两边最大行数”；这不是语义相似度，也不是 4090 真实 PhysX-Omni GLB/URDF 输出的一致率。</p>
+                <table><thead><tr><th>metric</th><th>value</th></tr></thead><tbody><tr><td>同一行号完全相同</td><td>6 / 1844 = 0.33%</td></tr><tr><td>忽略顺序的完全相同行 overlap</td><td>160 lines；占原始 8.68%，占 proxy 47.90%</td></tr><tr><td>排除空行后的 overlap</td><td>130 lines；占原始非空 7.51%，占 proxy 非空 42.76%</td></tr><tr><td>行数</td><td>原始 1844 lines；proxy 334 lines</td></tr></tbody></table>
                 <div class="code-split">
                   <article>
                     <h4>原始 Lightwheel USDA 导出</h4>
@@ -2523,6 +2532,9 @@ group_1: [&#x27;l_1&#x27;]; Type: C relative to group_0; Param: direction: [0, 0
     
               <details>
                 <summary>原始 USD 与结构 proxy 对比</summary>
+                <h4>单行完全一样的一致率</h4>
+                <p class="muted">比较对象是原始 Lightwheel stage 导出的 USDA 与本地 structural proxy USDA。最严格口径是“同一行号、整行文本完全相同 / 两边最大行数”；这不是语义相似度，也不是 4090 真实 PhysX-Omni GLB/URDF 输出的一致率。</p>
+                <table><thead><tr><th>metric</th><th>value</th></tr></thead><tbody><tr><td>同一行号完全相同</td><td>3 / 768 = 0.39%</td></tr><tr><td>忽略顺序的完全相同行 overlap</td><td>96 lines；占原始 12.50%，占 proxy 49.74%</td></tr><tr><td>排除空行后的 overlap</td><td>78 lines；占原始非空 10.82%，占 proxy 非空 44.57%</td></tr><tr><td>行数</td><td>原始 768 lines；proxy 193 lines</td></tr></tbody></table>
                 <div class="code-split">
                   <article>
                     <h4>原始 Lightwheel USDA 导出</h4>
@@ -2958,6 +2970,9 @@ def Xform &quot;root&quot; (
         
               <details>
                 <summary>原始 USD 与结构 proxy 对比</summary>
+                <h4>单行完全一样的一致率</h4>
+                <p class="muted">比较对象是原始 Lightwheel stage 导出的 USDA 与本地 structural proxy USDA。最严格口径是“同一行号、整行文本完全相同 / 两边最大行数”；这不是语义相似度，也不是 4090 真实 PhysX-Omni GLB/URDF 输出的一致率。</p>
+                <table><thead><tr><th>metric</th><th>value</th></tr></thead><tbody><tr><td>同一行号完全相同</td><td>9 / 1327 = 0.68%</td></tr><tr><td>忽略顺序的完全相同行 overlap</td><td>163 lines；占原始 12.28%，占 proxy 48.80%</td></tr><tr><td>排除空行后的 overlap</td><td>133 lines；占原始非空 10.66%，占 proxy 非空 43.75%</td></tr><tr><td>行数</td><td>原始 1327 lines；proxy 334 lines</td></tr></tbody></table>
                 <div class="code-split">
                   <article>
                     <h4>原始 Lightwheel USDA 导出</h4>
@@ -3608,6 +3623,9 @@ def Xform &quot;root&quot; (
         
               <details>
                 <summary>原始 USD 与结构 proxy 对比</summary>
+                <h4>单行完全一样的一致率</h4>
+                <p class="muted">比较对象是原始 Lightwheel stage 导出的 USDA 与本地 structural proxy USDA。最严格口径是“同一行号、整行文本完全相同 / 两边最大行数”；这不是语义相似度，也不是 4090 真实 PhysX-Omni GLB/URDF 输出的一致率。</p>
+                <table><thead><tr><th>metric</th><th>value</th></tr></thead><tbody><tr><td>同一行号完全相同</td><td>5 / 1714 = 0.29%</td></tr><tr><td>忽略顺序的完全相同行 overlap</td><td>120 lines；占原始 7.00%，占 proxy 50.00%</td></tr><tr><td>排除空行后的 overlap</td><td>98 lines；占原始非空 6.07%，占 proxy 非空 44.95%</td></tr><tr><td>行数</td><td>原始 1714 lines；proxy 240 lines</td></tr></tbody></table>
                 <div class="code-split">
                   <article>
                     <h4>原始 Lightwheel USDA 导出</h4>

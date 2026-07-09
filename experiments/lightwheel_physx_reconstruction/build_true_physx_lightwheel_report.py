@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import html
 import json
 from pathlib import Path
@@ -35,6 +36,73 @@ def file_size(path: Path) -> str:
             return f"{value:.1f} {unit}" if unit != "B" else f"{int(value)} B"
         value /= 1024
     return f"{size} B"
+
+
+def pct(value: int | float, total: int | float) -> str:
+    if not total:
+        return "n/a"
+    return f"{(float(value) / float(total) * 100):.2f}%"
+
+
+def compare_usda_lines(original_usda: Path, proxy_usda: Path) -> dict[str, Any]:
+    if not original_usda.is_file() or not proxy_usda.is_file():
+        return {"available": False}
+
+    original_lines = original_usda.read_text(encoding="utf-8", errors="replace").splitlines()
+    proxy_lines = proxy_usda.read_text(encoding="utf-8", errors="replace").splitlines()
+    max_lines = max(len(original_lines), len(proxy_lines))
+    min_lines = min(len(original_lines), len(proxy_lines))
+    same_position = sum(1 for i in range(min_lines) if original_lines[i] == proxy_lines[i])
+
+    original_counter = Counter(original_lines)
+    proxy_counter = Counter(proxy_lines)
+    multiset_overlap = sum((original_counter & proxy_counter).values())
+
+    original_nonempty = [line for line in original_lines if line.strip()]
+    proxy_nonempty = [line for line in proxy_lines if line.strip()]
+    nonempty_overlap = sum((Counter(original_nonempty) & Counter(proxy_nonempty)).values())
+
+    return {
+        "available": True,
+        "original_lines": len(original_lines),
+        "proxy_lines": len(proxy_lines),
+        "same_position": same_position,
+        "same_position_denominator": max_lines,
+        "same_position_rate": pct(same_position, max_lines),
+        "multiset_overlap": multiset_overlap,
+        "original_multiset_coverage": pct(multiset_overlap, len(original_lines)),
+        "proxy_multiset_coverage": pct(multiset_overlap, len(proxy_lines)),
+        "original_nonempty_lines": len(original_nonempty),
+        "proxy_nonempty_lines": len(proxy_nonempty),
+        "nonempty_overlap": nonempty_overlap,
+        "original_nonempty_coverage": pct(nonempty_overlap, len(original_nonempty)),
+        "proxy_nonempty_coverage": pct(nonempty_overlap, len(proxy_nonempty)),
+    }
+
+
+def line_compare_table(stats: dict[str, Any]) -> str:
+    if not stats.get("available"):
+        return "<p class=\"muted\">没有可比较的 USDA 文本文件。</p>"
+
+    rows = [
+        {
+            "metric": "同一行号完全相同",
+            "value": f"{stats['same_position']} / {stats['same_position_denominator']} = {stats['same_position_rate']}",
+        },
+        {
+            "metric": "忽略顺序的完全相同行 overlap",
+            "value": f"{stats['multiset_overlap']} lines；占原始 {stats['original_multiset_coverage']}，占 proxy {stats['proxy_multiset_coverage']}",
+        },
+        {
+            "metric": "排除空行后的 overlap",
+            "value": f"{stats['nonempty_overlap']} lines；占原始非空 {stats['original_nonempty_coverage']}，占 proxy 非空 {stats['proxy_nonempty_coverage']}",
+        },
+        {
+            "metric": "行数",
+            "value": f"原始 {stats['original_lines']} lines；proxy {stats['proxy_lines']} lines",
+        },
+    ]
+    return table(["metric", "value"], rows)
 
 
 def table(headers: list[str], rows: list[dict[str, Any]]) -> str:
@@ -199,6 +267,7 @@ def build_report(run_dir: Path) -> Path:
     summary = read_json(run_dir / "summary.json")
     assets = summary.get("assets", [])
     overview = []
+    line_compare_rows = []
     sections = []
     for asset in assets:
         name = asset["asset_name"]
@@ -206,7 +275,25 @@ def build_report(run_dir: Path) -> Path:
         true_run = collect_true_run(asset_dir)
         original_usda = asset_dir / f"{name}_original_export.usda"
         proxy_usda = asset_dir / f"{name}_physx_omni_structural_proxy.usda"
+        line_stats = compare_usda_lines(original_usda, proxy_usda)
         projection = Path(asset.get("projection_rel", f"{name}/{name}_bbox_projection.png"))
+        if line_stats.get("available"):
+            line_compare_rows.append(
+                {
+                    "asset": name,
+                    "original_lines": line_stats["original_lines"],
+                    "proxy_lines": line_stats["proxy_lines"],
+                    "same_position": line_stats["same_position"],
+                    "same_position_denominator": line_stats["same_position_denominator"],
+                    "same_position_rate": line_stats["same_position_rate"],
+                    "multiset_overlap": line_stats["multiset_overlap"],
+                    "original_multiset_coverage": line_stats["original_multiset_coverage"],
+                    "proxy_multiset_coverage": line_stats["proxy_multiset_coverage"],
+                    "nonempty_overlap": line_stats["nonempty_overlap"],
+                    "original_nonempty_coverage": line_stats["original_nonempty_coverage"],
+                    "proxy_nonempty_coverage": line_stats["proxy_nonempty_coverage"],
+                }
+            )
         overview.append(
             {
                 "asset": name,
@@ -216,6 +303,8 @@ def build_report(run_dir: Path) -> Path:
                 "true status": true_run["repro"].get("status") if true_run else "not_run",
                 "true parts": true_run["repro"].get("detected_parts") if true_run else "",
                 "true voxels": true_run["repro"].get("total_voxels") if true_run else "",
+                "USD same-line": line_stats.get("same_position_rate", ""),
+                "proxy line coverage": line_stats.get("proxy_nonempty_coverage", ""),
             }
         )
         sections.append(
@@ -238,6 +327,9 @@ def build_report(run_dir: Path) -> Path:
               {true_run_section(name, asset_dir, run_dir)}
               <details>
                 <summary>原始 USD 与结构 proxy 对比</summary>
+                <h4>单行完全一样的一致率</h4>
+                <p class="muted">比较对象是原始 Lightwheel stage 导出的 USDA 与本地 structural proxy USDA。最严格口径是“同一行号、整行文本完全相同 / 两边最大行数”；这不是语义相似度，也不是 4090 真实 PhysX-Omni GLB/URDF 输出的一致率。</p>
+                {line_compare_table(line_stats)}
                 <div class="code-split">
                   <article>
                     <h4>原始 Lightwheel USDA 导出</h4>
@@ -254,6 +346,23 @@ def build_report(run_dir: Path) -> Path:
             </section>
             """
         )
+
+    (run_dir / "usd_line_exact_comparison.json").write_text(
+        json.dumps(
+            {
+                "definition": {
+                    "same_position_rate": "same line number exact text match / max(original_lines, proxy_lines)",
+                    "multiset_overlap": "exact text line overlap with duplicate counts, ignoring order",
+                    "nonempty_overlap": "same as multiset_overlap after dropping blank/whitespace-only lines",
+                    "scope": "original exported USDA vs local structural proxy USDA, not the true 4090 PhysX-Omni GLB/URDF output",
+                },
+                "assets": line_compare_rows,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
 
     style = """
     :root { color-scheme: light; --bg:#f5f7fa; --panel:#fff; --ink:#16202a; --muted:#607082; --line:#d8e0e8; --accent:#1b668f; --ok:#0f766e; --warn:#9a6700; }
@@ -303,7 +412,10 @@ def build_report(run_dir: Path) -> Path:
       <section class="summary">
         <h2>当前结论</h2>
         <p class="notice">Microwave047 已在 4090 上跑通真实 PhysX-Omni：VLM 识别为 Microwave Oven，生成 7 parts、22236 voxels，并完成 7 个 GLB/OBJ、URDF 和 MJCF 后处理。</p>
-        {table(["asset", "Lightwheel meshes", "Lightwheel joints", "proxy meshes", "true status", "true parts", "true voxels"], overview)}
+        {table(["asset", "Lightwheel meshes", "Lightwheel joints", "proxy meshes", "true status", "true parts", "true voxels", "USD same-line", "proxy line coverage"], overview)}
+        <h3>USD 单行完全一致率总表</h3>
+        <p class="muted">same-line 是同一行号完全相同的最严格比例；proxy line coverage 是排除空行后，proxy 中有多少行能在原始 USDA 中找到完全相同文本。</p>
+        {table(["asset", "original_lines", "proxy_lines", "same_position", "same_position_denominator", "same_position_rate", "nonempty_overlap", "original_nonempty_coverage", "proxy_nonempty_coverage"], line_compare_rows)}
       </section>
       {''.join(sections)}
     </main>
