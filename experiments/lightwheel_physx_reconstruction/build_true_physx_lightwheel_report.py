@@ -5,6 +5,7 @@ from collections import Counter
 import html
 import json
 from pathlib import Path
+import re
 from typing import Any
 
 
@@ -228,6 +229,78 @@ def true_microwave_closeness(asset: dict[str, Any], true_run: dict[str, Any] | N
     ]
 
 
+def parse_collision_prims(path: Path) -> list[dict[str, Any]]:
+    if not path.is_file():
+        return []
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    collisions = []
+    for i, line in enumerate(lines):
+        match = re.search(r'def\s+(Cube|Cylinder|Mesh)\s+"([^"]+)"', line)
+        if not match:
+            continue
+        window = "\n".join(lines[i : min(len(lines), i + 5)])
+        if "PhysicsCollisionAPI" not in window:
+            continue
+        collisions.append({"shape": match.group(1), "name": match.group(2), "line": i + 1})
+    return collisions
+
+
+def group_microwave_collision(name: str) -> str:
+    if "door" in name:
+        return "door"
+    if "Disc001" in name:
+        return "disc / turntable"
+    return "main body"
+
+
+def shape_counts(items: list[dict[str, Any]]) -> str:
+    counts = Counter(item["shape"] for item in items)
+    return ", ".join(f"{shape}:{count}" for shape, count in sorted(counts.items())) or "none"
+
+
+def microwave_collision_breakdown(run_dir: Path) -> list[dict[str, Any]]:
+    asset_dir = run_dir / "Microwave047"
+    original = parse_collision_prims(asset_dir / "Microwave047_original_export.usda")
+    proxy = parse_collision_prims(asset_dir / "Microwave047_physx_omni_structural_proxy.usda")
+    original_groups: dict[str, list[dict[str, Any]]] = {"main body": [], "door": [], "disc / turntable": []}
+    proxy_groups: dict[str, list[dict[str, Any]]] = {"main body": [], "door": [], "disc / turntable": []}
+    for item in original:
+        original_groups.setdefault(group_microwave_collision(item["name"]), []).append(item)
+    for item in proxy:
+        proxy_groups.setdefault(group_microwave_collision(item["name"]), []).append(item)
+
+    notes = {
+        "main body": (
+            "original uses a cylinder plus multiple thin cubes to approximate shell, side walls and panel surfaces; proxy uses one scaled cube bbox",
+            "stable but over-solid: it fills hollow/interior regions and cannot represent openings or thin walls",
+        ),
+        "door": (
+            "original uses many thin cubes around the door/window/frame; proxy uses one slab-like cube bbox",
+            "loses frame/window collision detail and can block contacts that should pass through glass/open regions",
+        ),
+        "disc / turntable": (
+            "original turntable collision is a cylinder; proxy keeps the body but changes it to one cube bbox",
+            "body-level coverage is retained, but circular contact shape becomes box-like",
+        ),
+    }
+
+    rows = []
+    for group in ["main body", "door", "disc / turntable"]:
+        original_items = original_groups.get(group, [])
+        proxy_items = proxy_groups.get(group, [])
+        difference, impact = notes[group]
+        rows.append(
+            {
+                "group": group,
+                "original primitives": f"{len(original_items)} ({shape_counts(original_items)})",
+                "proxy primitives": f"{len(proxy_items)} ({shape_counts(proxy_items)})",
+                "main difference": difference,
+                "simulation impact": impact,
+            }
+        )
+    return rows
+
+
 def build_difference_analysis(run_dir: Path, assets: list[dict[str, Any]], line_compare_rows: list[dict[str, Any]]) -> dict[str, Any]:
     line_by_asset = {row["asset"]: row for row in line_compare_rows}
     asset_rows = []
@@ -257,6 +330,7 @@ def build_difference_analysis(run_dir: Path, assets: list[dict[str, Any]], line_
             },
         ],
         "assets": asset_rows,
+        "microwave_collision_breakdown": microwave_collision_breakdown(run_dir),
         "improvement_plan": [
             "Use the source USD body/joint list as constrained prompts or postprocess priors instead of letting VLM freely invent parts.",
             "Render multi-view and open-state images from the source USD, especially front, side, top, and door-open views, to expose hidden turntable/interior parts.",
@@ -536,6 +610,7 @@ def build_report(run_dir: Path) -> Path:
         (row for row in difference_analysis["assets"] if row["asset"] == "Microwave047"),
         {"proxy_rows": [], "true_physx_omni_rows": [], "true_physx_omni_issues": []},
     )
+    microwave_collision_rows = difference_analysis.get("microwave_collision_breakdown", [])
     proxy_detail_html = "\n".join(
         f"""
         <details>
@@ -614,6 +689,9 @@ def build_report(run_dir: Path) -> Path:
         {table(["layer", "evidence", "closeness", "why different"], microwave_analysis["true_physx_omni_rows"])}
         <h4>Microwave047 的关键不一致点</h4>
         {table(["missing_from_true", "extra_in_true", "mismatch", "impact"], microwave_analysis["true_physx_omni_issues"])}
+        <h4>Microwave047 collision 为什么从 22 变成 3</h4>
+        <p class="muted">这里的 22 和 3 不是刚体数量，而是碰撞 primitive 数量。原始 USD 为每个刚体手工放了多块碰撞几何；proxy 为每个刚体只放一个 bbox collision proxy，所以 body-level 覆盖仍是 3/3，但 primitive 级细节大幅减少。</p>
+        {table(["group", "original primitives", "proxy primitives", "main difference", "simulation impact"], microwave_collision_rows)}
         <h4>Proxy 与原始 USD 的分层接近度</h4>
         {proxy_detail_html}
         <h4>提升空间</h4>

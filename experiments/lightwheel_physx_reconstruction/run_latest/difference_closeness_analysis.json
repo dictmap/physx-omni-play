@@ -275,6 +275,29 @@
       "true_physx_omni_issues": []
     }
   ],
+  "microwave_collision_breakdown": [
+    {
+      "group": "main body",
+      "original primitives": "9 (Cube:8, Cylinder:1)",
+      "proxy primitives": "1 (Cube:1)",
+      "main difference": "original uses a cylinder plus multiple thin cubes to approximate shell, side walls and panel surfaces; proxy uses one scaled cube bbox",
+      "simulation impact": "stable but over-solid: it fills hollow/interior regions and cannot represent openings or thin walls"
+    },
+    {
+      "group": "door",
+      "original primitives": "12 (Cube:12)",
+      "proxy primitives": "1 (Cube:1)",
+      "main difference": "original uses many thin cubes around the door/window/frame; proxy uses one slab-like cube bbox",
+      "simulation impact": "loses frame/window collision detail and can block contacts that should pass through glass/open regions"
+    },
+    {
+      "group": "disc / turntable",
+      "original primitives": "1 (Cylinder:1)",
+      "proxy primitives": "1 (Cube:1)",
+      "main difference": "original turntable collision is a cylinder; proxy keeps the body but changes it to one cube bbox",
+      "simulation impact": "body-level coverage is retained, but circular contact shape becomes box-like"
+    }
+  ],
   "improvement_plan": [
     "Use the source USD body/joint list as constrained prompts or postprocess priors instead of letting VLM freely invent parts.",
     "Render multi-view and open-state images from the source USD, especially front, side, top, and door-open views, to expose hidden turntable/interior parts.",
