@@ -379,6 +379,7 @@ def collect_true_run(asset_dir: Path) -> dict[str, Any] | None:
         "turntable_contact_sheet": run_dir / "current_version_turntable_contact_sheet.png",
         "clean_turntable_video": run_dir / "current_version_clean_turntable.mp4",
         "clean_turntable_contact_sheet": run_dir / "current_version_clean_turntable_contact_sheet.png",
+        "door_pose_candidates": run_dir / "door_pose_candidates_sheet.png",
         "desert": run_dir / "desert.png",
         "vlm_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_vlm.log",
         "geo_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_geo_jsongen_dinofix.log",
@@ -432,6 +433,7 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
     turntable_contact_sheet = true_run["turntable_contact_sheet"]
     clean_turntable_video = true_run["clean_turntable_video"]
     clean_turntable_contact_sheet = true_run["clean_turntable_contact_sheet"]
+    door_pose_candidates = true_run["door_pose_candidates"]
     desert = true_run["desert"]
     urdf = true_run["urdf"]
     mjcf = true_run["mjcf"]
@@ -497,9 +499,18 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
           <li>已经能稳定看出 microwave 形体、打开的门、右侧控制面板和四个脚垫。</li>
           <li>Textured 版的问题主要来自生成 GLB 的烘焙纹理：门板和控制面板有半透明重影，右侧和底部存在贴图拉伸/脏块。</li>
           <li>Clean 版更适合审阅几何和部件关系，但会牺牲控制面板文字、按钮等纹理细节。</li>
-          <li>这不是单纯调灯光能完全解决的问题；要真正改善，需要重跑/后处理纹理 UV、材质透明度、门面板分割和控制面板部件。</li>
+          <li>门口没有正常封闭不是单纯视频角度问题；候选关门姿态测试显示，现有 Door 几何和 hinge 关系无法直接旋转成一个可信的闭合微波炉门。</li>
+          <li>这不是单纯调灯光能完全解决的问题；要真正改善，需要重跑/后处理纹理 UV、材质透明度、门面板分割、门闭合姿态和控制面板部件。</li>
         </ul>
       </div>
+      {"".join([
+        f'''
+        <figure>
+          <img src="{html.escape(rel(door_pose_candidates, root))}" alt="{html.escape(asset_name)} door closure candidates" />
+          <figcaption>Door closure sanity check：尝试绕不同轴/不同门边旋转 Door 部件，没有一个候选能稳定形成正常闭合门。这说明当前 raw PhysX-Omni 结果在可开合门拓扑上不合格。</figcaption>
+        </figure>
+        '''
+      ]) if door_pose_candidates.is_file() else ""}
       <div class="media-grid two">
       {"".join([
         f'''
@@ -535,6 +546,7 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
         <a href="{html.escape(rel(desert, root))}">desert.png</a>
         {f'<a href="{html.escape(rel(clean_turntable_video, root))}">current_version_clean_turntable.mp4</a>' if clean_turntable_video.is_file() else ''}
         {f'<a href="{html.escape(rel(clean_turntable_contact_sheet, root))}">current_version_clean_turntable_contact_sheet.png</a>' if clean_turntable_contact_sheet.is_file() else ''}
+        {f'<a href="{html.escape(rel(door_pose_candidates, root))}">door_pose_candidates_sheet.png</a>' if door_pose_candidates.is_file() else ''}
         {f'<a href="{html.escape(rel(turntable_video, root))}">current_version_turntable.mp4</a>' if turntable_video.is_file() else ''}
         {f'<a href="{html.escape(rel(turntable_contact_sheet, root))}">current_version_turntable_contact_sheet.png</a>' if turntable_contact_sheet.is_file() else ''}
         <a href="{html.escape(rel(readme, root))}">README.md</a>

@@ -2332,9 +2332,16 @@ def Xform &quot;root&quot; (
           <li>已经能稳定看出 microwave 形体、打开的门、右侧控制面板和四个脚垫。</li>
           <li>Textured 版的问题主要来自生成 GLB 的烘焙纹理：门板和控制面板有半透明重影，右侧和底部存在贴图拉伸/脏块。</li>
           <li>Clean 版更适合审阅几何和部件关系，但会牺牲控制面板文字、按钮等纹理细节。</li>
-          <li>这不是单纯调灯光能完全解决的问题；要真正改善，需要重跑/后处理纹理 UV、材质透明度、门面板分割和控制面板部件。</li>
+          <li>门口没有正常封闭不是单纯视频角度问题；候选关门姿态测试显示，现有 Door 几何和 hinge 关系无法直接旋转成一个可信的闭合微波炉门。</li>
+          <li>这不是单纯调灯光能完全解决的问题；要真正改善，需要重跑/后处理纹理 UV、材质透明度、门面板分割、门闭合姿态和控制面板部件。</li>
         </ul>
       </div>
+      
+        <figure>
+          <img src="Microwave047/true_physx_omni_bf16/door_pose_candidates_sheet.png" alt="Microwave047 door closure candidates" />
+          <figcaption>Door closure sanity check：尝试绕不同轴/不同门边旋转 Door 部件，没有一个候选能稳定形成正常闭合门。这说明当前 raw PhysX-Omni 结果在可开合门拓扑上不合格。</figcaption>
+        </figure>
+        
       <div class="media-grid two">
       
         <figure>
@@ -2379,6 +2386,7 @@ group_1: [&#x27;l_1&#x27;]; Type: C relative to group_0; Param: direction: [0, 0
         <a href="Microwave047/true_physx_omni_bf16/desert.png">desert.png</a>
         <a href="Microwave047/true_physx_omni_bf16/current_version_clean_turntable.mp4">current_version_clean_turntable.mp4</a>
         <a href="Microwave047/true_physx_omni_bf16/current_version_clean_turntable_contact_sheet.png">current_version_clean_turntable_contact_sheet.png</a>
+        <a href="Microwave047/true_physx_omni_bf16/door_pose_candidates_sheet.png">door_pose_candidates_sheet.png</a>
         <a href="Microwave047/true_physx_omni_bf16/current_version_turntable.mp4">current_version_turntable.mp4</a>
         <a href="Microwave047/true_physx_omni_bf16/current_version_turntable_contact_sheet.png">current_version_turntable_contact_sheet.png</a>
         <a href="Microwave047/true_physx_omni_bf16/README.md">README.md</a>
