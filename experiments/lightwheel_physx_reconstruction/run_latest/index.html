@@ -23,6 +23,8 @@
     .media-grid.three { grid-template-columns:repeat(3, minmax(0, 1fr)); }
     figure { margin:0; }
     img { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; }
+    video { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; display:block; }
+    .video-panel { margin:14px 0; }
     figcaption, .muted { color:var(--muted); font-size:13px; margin-top:6px; }
     table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
     th, td { text-align:left; border-bottom:1px solid var(--line); padding:8px; vertical-align:top; }
@@ -2304,6 +2306,14 @@ def Xform &quot;root&quot; (
           <figcaption>7 个真实 GLB 输出合并渲染预览</figcaption>
         </figure>
       </div>
+      
+        <figure class="video-panel">
+          <video controls preload="metadata" poster="Microwave047/true_physx_omni_bf16/true_physx_omni_mesh_preview.png">
+            <source src="Microwave047/true_physx_omni_bf16/current_version_turntable.mp4" type="video/mp4" />
+          </video>
+          <figcaption>当前版本旋转视频：Blender 4.5 后台渲染 7 个真实 PhysX-Omni GLB，720p / 24fps / 3s。</figcaption>
+        </figure>
+        
       <h4>运行指标</h4>
       <table><thead><tr><th>metric</th><th>value</th></tr></thead><tbody><tr><td>status</td><td>success</td></tr><tr><td>mode</td><td>bf16_offload</td></tr><tr><td>detected_parts</td><td>7</td></tr><tr><td>parts_to_run</td><td>7</td></tr><tr><td>total_voxels</td><td>22236</td></tr><tr><td>elapsed_sec</td><td>480.94</td></tr><tr><td>GLB parts</td><td>7</td></tr><tr><td>OBJ parts</td><td>7</td></tr><tr><td>texture parts</td><td>7</td></tr></tbody></table>
       <h4>VLM 拆解结果</h4>
@@ -2332,6 +2342,7 @@ group_1: [&#x27;l_1&#x27;]; Type: C relative to group_0; Param: direction: [0, 0
         <a href="Microwave047/true_physx_omni_bf16/logs/lightwheel_true_microwave047_bf16_vlm.log">VLM log</a>
         <a href="Microwave047/true_physx_omni_bf16/logs/lightwheel_true_microwave047_bf16_geo_jsongen_dinofix.log">geometry log</a>
         <a href="Microwave047/true_physx_omni_bf16/desert.png">desert.png</a>
+        <a href="Microwave047/true_physx_omni_bf16/current_version_turntable.mp4">current_version_turntable.mp4</a>
         <a href="Microwave047/true_physx_omni_bf16/README.md">README.md</a>
       </p>
       <div class="code-split">

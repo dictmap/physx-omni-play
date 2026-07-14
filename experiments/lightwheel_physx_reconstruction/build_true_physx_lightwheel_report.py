@@ -375,6 +375,7 @@ def collect_true_run(asset_dir: Path) -> dict[str, Any] | None:
         "condition_image": run_dir / "cond_img.png",
         "voxel_projection": run_dir / "voxel_projection.png",
         "mesh_preview": run_dir / "true_physx_omni_mesh_preview.png",
+        "turntable_video": run_dir / "current_version_turntable.mp4",
         "desert": run_dir / "desert.png",
         "vlm_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_vlm.log",
         "geo_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_geo_jsongen_dinofix.log",
@@ -424,6 +425,7 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
     condition = true_run["condition_image"]
     voxel = true_run["voxel_projection"]
     mesh_preview = true_run["mesh_preview"]
+    turntable_video = true_run["turntable_video"]
     desert = true_run["desert"]
     urdf = true_run["urdf"]
     mjcf = true_run["mjcf"]
@@ -461,6 +463,16 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
           <figcaption>7 个真实 GLB 输出合并渲染预览</figcaption>
         </figure>
       </div>
+      {"".join([
+        f'''
+        <figure class="video-panel">
+          <video controls preload="metadata" poster="{html.escape(rel(mesh_preview if mesh_preview.is_file() else condition, root))}">
+            <source src="{html.escape(rel(turntable_video, root))}" type="video/mp4" />
+          </video>
+          <figcaption>当前版本旋转视频：Blender 4.5 后台渲染 7 个真实 PhysX-Omni GLB，720p / 24fps / 3s。</figcaption>
+        </figure>
+        '''
+      ]) if turntable_video.is_file() else ""}
       <h4>运行指标</h4>
       {table(["metric", "value"], metrics)}
       <h4>VLM 拆解结果</h4>
@@ -476,6 +488,7 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
         <a href="{html.escape(rel(vlm_log, root))}">VLM log</a>
         <a href="{html.escape(rel(geo_log, root))}">geometry log</a>
         <a href="{html.escape(rel(desert, root))}">desert.png</a>
+        {f'<a href="{html.escape(rel(turntable_video, root))}">current_version_turntable.mp4</a>' if turntable_video.is_file() else ''}
         <a href="{html.escape(rel(readme, root))}">README.md</a>
       </p>
       <div class="code-split">
@@ -643,6 +656,8 @@ def build_report(run_dir: Path) -> Path:
     .media-grid.three { grid-template-columns:repeat(3, minmax(0, 1fr)); }
     figure { margin:0; }
     img { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; }
+    video { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; display:block; }
+    .video-panel { margin:14px 0; }
     figcaption, .muted { color:var(--muted); font-size:13px; margin-top:6px; }
     table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
     th, td { text-align:left; border-bottom:1px solid var(--line); padding:8px; vertical-align:top; }
