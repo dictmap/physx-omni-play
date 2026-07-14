@@ -9,6 +9,16 @@ import bpy
 from mathutils import Vector
 
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def repo_path(path: str | Path) -> Path:
+    value = Path(path)
+    if value.is_absolute():
+        return value
+    return REPO_ROOT / value
+
+
 def clear_scene() -> None:
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete()
@@ -65,20 +75,26 @@ def look_at(obj: bpy.types.Object, target: Vector) -> None:
 
 def setup_camera_and_lights(objects: list[bpy.types.Object]) -> None:
     mins, maxs = bounds(objects)
-    extent = max(maxs.x - mins.x, maxs.y - mins.y, maxs.z - mins.z)
+    size = maxs - mins
+    diagonal = max(size.length, 1.0)
 
     bpy.ops.object.light_add(type="AREA", location=(0.0, -3.2, 4.0))
     key = bpy.context.object
     key.name = "large_softbox"
-    key.data.energy = 550
-    key.data.size = 4.5
+    key.data.energy = 650
+    key.data.size = 5.0
 
-    bpy.ops.object.camera_add(location=(1.65, -2.15, 0.95))
+    bpy.ops.object.light_add(type="POINT", location=(-2.2, 2.4, 1.8))
+    fill = bpy.context.object
+    fill.name = "soft_fill"
+    fill.data.energy = 55
+
+    bpy.ops.object.camera_add(location=(1.85, -2.45, 1.05))
     camera = bpy.context.object
     look_at(camera, Vector((0, 0, 0)))
     camera.data.lens = 45
     camera.data.type = "ORTHO"
-    camera.data.ortho_scale = max(1.3, extent * 1.35)
+    camera.data.ortho_scale = diagonal * 1.35
     bpy.context.scene.camera = camera
 
     bpy.context.scene.world = bpy.context.scene.world or bpy.data.worlds.new("World")
@@ -147,7 +163,14 @@ def setup_render(output: Path, frame_count: int, fps: int, frame_dir: Path | Non
         scene.render.ffmpeg.ffmpeg_preset = "GOOD"
 
 
-def render_video(glb_root: Path, output: Path, frame_count: int, fps: int, frame_dir: Path | None = None) -> None:
+def render_video(
+    glb_root: Path,
+    output: Path,
+    frame_count: int,
+    fps: int,
+    frame_dir: Path | None = None,
+    save_blend: bool = False,
+) -> None:
     clear_scene()
     objects = import_glbs(glb_root)
     if not mesh_objects(objects):
@@ -157,7 +180,8 @@ def render_video(glb_root: Path, output: Path, frame_count: int, fps: int, frame
     setup_camera_and_lights(objects)
     animate(root, frame_count)
     setup_render(output, frame_count, fps, frame_dir)
-    bpy.ops.wm.save_as_mainfile(filepath=str(output.with_suffix(".blend")))
+    if save_blend:
+        bpy.ops.wm.save_as_mainfile(filepath=str(output.with_suffix(".blend")))
     bpy.ops.render.render(animation=True)
 
 
@@ -168,14 +192,16 @@ def main() -> None:
     parser.add_argument("--frames", type=int, default=72)
     parser.add_argument("--fps", type=int, default=24)
     parser.add_argument("--frame-dir")
+    parser.add_argument("--save-blend", action="store_true")
     argv = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else sys.argv[1:]
     args = parser.parse_args(argv)
     render_video(
-        Path(args.glb_root),
-        Path(args.output),
+        repo_path(args.glb_root),
+        repo_path(args.output),
         args.frames,
         args.fps,
-        Path(args.frame_dir) if args.frame_dir else None,
+        repo_path(args.frame_dir) if args.frame_dir else None,
+        args.save_blend,
     )
 
 

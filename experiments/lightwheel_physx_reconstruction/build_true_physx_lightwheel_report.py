@@ -376,6 +376,7 @@ def collect_true_run(asset_dir: Path) -> dict[str, Any] | None:
         "voxel_projection": run_dir / "voxel_projection.png",
         "mesh_preview": run_dir / "true_physx_omni_mesh_preview.png",
         "turntable_video": run_dir / "current_version_turntable.mp4",
+        "turntable_contact_sheet": run_dir / "current_version_turntable_contact_sheet.png",
         "desert": run_dir / "desert.png",
         "vlm_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_vlm.log",
         "geo_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_geo_jsongen_dinofix.log",
@@ -426,6 +427,7 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
     voxel = true_run["voxel_projection"]
     mesh_preview = true_run["mesh_preview"]
     turntable_video = true_run["turntable_video"]
+    turntable_contact_sheet = true_run["turntable_contact_sheet"]
     desert = true_run["desert"]
     urdf = true_run["urdf"]
     mjcf = true_run["mjcf"]
@@ -469,10 +471,18 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
           <video controls preload="metadata" poster="{html.escape(rel(mesh_preview if mesh_preview.is_file() else condition, root))}">
             <source src="{html.escape(rel(turntable_video, root))}" type="video/mp4" />
           </video>
-          <figcaption>当前版本旋转视频：Blender 4.5 后台渲染 7 个真实 PhysX-Omni GLB，720p / 24fps / 3s。</figcaption>
+          <figcaption>当前版本旋转视频：Blender 4.5 后台渲染 7 个真实 PhysX-Omni GLB，720p / 24fps / 4s；已扩大取景边距，避免旧版顶部裁切。</figcaption>
         </figure>
         '''
       ]) if turntable_video.is_file() else ""}
+      {"".join([
+        f'''
+        <figure>
+          <img src="{html.escape(rel(turntable_contact_sheet, root))}" alt="{html.escape(asset_name)} turntable contact sheet" />
+          <figcaption>视频抽帧 QA：用于快速检查旋转一圈时是否裁切、偏移或遮挡。</figcaption>
+        </figure>
+        '''
+      ]) if turntable_contact_sheet.is_file() else ""}
       <h4>运行指标</h4>
       {table(["metric", "value"], metrics)}
       <h4>VLM 拆解结果</h4>
@@ -489,6 +499,7 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
         <a href="{html.escape(rel(geo_log, root))}">geometry log</a>
         <a href="{html.escape(rel(desert, root))}">desert.png</a>
         {f'<a href="{html.escape(rel(turntable_video, root))}">current_version_turntable.mp4</a>' if turntable_video.is_file() else ''}
+        {f'<a href="{html.escape(rel(turntable_contact_sheet, root))}">current_version_turntable_contact_sheet.png</a>' if turntable_contact_sheet.is_file() else ''}
         <a href="{html.escape(rel(readme, root))}">README.md</a>
       </p>
       <div class="code-split">
