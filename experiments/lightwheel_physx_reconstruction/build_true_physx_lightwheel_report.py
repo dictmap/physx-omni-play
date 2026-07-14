@@ -377,6 +377,8 @@ def collect_true_run(asset_dir: Path) -> dict[str, Any] | None:
         "mesh_preview": run_dir / "true_physx_omni_mesh_preview.png",
         "turntable_video": run_dir / "current_version_turntable.mp4",
         "turntable_contact_sheet": run_dir / "current_version_turntable_contact_sheet.png",
+        "clean_turntable_video": run_dir / "current_version_clean_turntable.mp4",
+        "clean_turntable_contact_sheet": run_dir / "current_version_clean_turntable_contact_sheet.png",
         "desert": run_dir / "desert.png",
         "vlm_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_vlm.log",
         "geo_log": run_dir / "logs" / "lightwheel_true_microwave047_bf16_geo_jsongen_dinofix.log",
@@ -428,6 +430,8 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
     mesh_preview = true_run["mesh_preview"]
     turntable_video = true_run["turntable_video"]
     turntable_contact_sheet = true_run["turntable_contact_sheet"]
+    clean_turntable_video = true_run["clean_turntable_video"]
+    clean_turntable_contact_sheet = true_run["clean_turntable_contact_sheet"]
     desert = true_run["desert"]
     urdf = true_run["urdf"]
     mjcf = true_run["mjcf"]
@@ -465,24 +469,55 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
           <figcaption>7 个真实 GLB 输出合并渲染预览</figcaption>
         </figure>
       </div>
+      <div class="video-grid">
+      {"".join([
+        f'''
+        <figure class="video-panel">
+          <video controls preload="metadata" poster="{html.escape(rel(mesh_preview if mesh_preview.is_file() else condition, root))}">
+            <source src="{html.escape(rel(clean_turntable_video, root))}" type="video/mp4" />
+          </video>
+          <figcaption>Clean 审阅版：弱化烘焙贴图，突出几何轮廓、门结构和部件分割，720p / 24fps / 4s。</figcaption>
+        </figure>
+        '''
+      ]) if clean_turntable_video.is_file() else ""}
       {"".join([
         f'''
         <figure class="video-panel">
           <video controls preload="metadata" poster="{html.escape(rel(mesh_preview if mesh_preview.is_file() else condition, root))}">
             <source src="{html.escape(rel(turntable_video, root))}" type="video/mp4" />
           </video>
-          <figcaption>当前版本旋转视频：Blender 4.5 后台渲染 7 个真实 PhysX-Omni GLB，720p / 24fps / 4s；已扩大取景边距，避免旧版顶部裁切。</figcaption>
+          <figcaption>Textured 原始贴图版：保留 PhysX-Omni GLB 自带纹理，可观察贴图拉伸、重影和材质伪影。</figcaption>
         </figure>
         '''
       ]) if turntable_video.is_file() else ""}
+      </div>
+      <div class="diagnosis">
+        <h4>当前视觉效果诊断</h4>
+        <ul>
+          <li>已经能稳定看出 microwave 形体、打开的门、右侧控制面板和四个脚垫。</li>
+          <li>Textured 版的问题主要来自生成 GLB 的烘焙纹理：门板和控制面板有半透明重影，右侧和底部存在贴图拉伸/脏块。</li>
+          <li>Clean 版更适合审阅几何和部件关系，但会牺牲控制面板文字、按钮等纹理细节。</li>
+          <li>这不是单纯调灯光能完全解决的问题；要真正改善，需要重跑/后处理纹理 UV、材质透明度、门面板分割和控制面板部件。</li>
+        </ul>
+      </div>
+      <div class="media-grid two">
       {"".join([
         f'''
         <figure>
-          <img src="{html.escape(rel(turntable_contact_sheet, root))}" alt="{html.escape(asset_name)} turntable contact sheet" />
-          <figcaption>视频抽帧 QA：用于快速检查旋转一圈时是否裁切、偏移或遮挡。</figcaption>
+          <img src="{html.escape(rel(clean_turntable_contact_sheet, root))}" alt="{html.escape(asset_name)} clean turntable contact sheet" />
+          <figcaption>Clean 审阅版抽帧 QA。</figcaption>
+        </figure>
+        '''
+      ]) if clean_turntable_contact_sheet.is_file() else ""}
+      {"".join([
+        f'''
+        <figure>
+          <img src="{html.escape(rel(turntable_contact_sheet, root))}" alt="{html.escape(asset_name)} textured turntable contact sheet" />
+          <figcaption>Textured 原始贴图版抽帧 QA。</figcaption>
         </figure>
         '''
       ]) if turntable_contact_sheet.is_file() else ""}
+      </div>
       <h4>运行指标</h4>
       {table(["metric", "value"], metrics)}
       <h4>VLM 拆解结果</h4>
@@ -498,6 +533,8 @@ def true_run_section(asset_name: str, asset_dir: Path, root: Path) -> str:
         <a href="{html.escape(rel(vlm_log, root))}">VLM log</a>
         <a href="{html.escape(rel(geo_log, root))}">geometry log</a>
         <a href="{html.escape(rel(desert, root))}">desert.png</a>
+        {f'<a href="{html.escape(rel(clean_turntable_video, root))}">current_version_clean_turntable.mp4</a>' if clean_turntable_video.is_file() else ''}
+        {f'<a href="{html.escape(rel(clean_turntable_contact_sheet, root))}">current_version_clean_turntable_contact_sheet.png</a>' if clean_turntable_contact_sheet.is_file() else ''}
         {f'<a href="{html.escape(rel(turntable_video, root))}">current_version_turntable.mp4</a>' if turntable_video.is_file() else ''}
         {f'<a href="{html.escape(rel(turntable_contact_sheet, root))}">current_version_turntable_contact_sheet.png</a>' if turntable_contact_sheet.is_file() else ''}
         <a href="{html.escape(rel(readme, root))}">README.md</a>
@@ -668,7 +705,9 @@ def build_report(run_dir: Path) -> Path:
     figure { margin:0; }
     img { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; }
     video { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; display:block; }
+    .video-grid { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:14px; margin:14px 0; }
     .video-panel { margin:14px 0; }
+    .diagnosis { border-left:4px solid #9a6700; background:#fffbeb; padding:10px 12px; margin:12px 0; color:#4d3700; }
     figcaption, .muted { color:var(--muted); font-size:13px; margin-top:6px; }
     table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
     th, td { text-align:left; border-bottom:1px solid var(--line); padding:8px; vertical-align:top; }
@@ -679,7 +718,7 @@ def build_report(run_dir: Path) -> Path:
     .code-split { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:14px; }
     details { margin-top:14px; }
     summary { cursor:pointer; font-weight:700; }
-    @media (max-width: 980px) { .media-grid.two, .media-grid.three, .code-split { grid-template-columns:1fr; } }
+    @media (max-width: 980px) { .media-grid.two, .media-grid.three, .code-split, .video-grid { grid-template-columns:1fr; } }
     """
     html_text = f"""<!doctype html>
 <html lang="zh-CN">

@@ -101,7 +101,31 @@ def setup_camera_and_lights(objects: list[bpy.types.Object]) -> None:
     bpy.context.scene.world.color = (0.92, 0.94, 0.96)
 
 
-def setup_materials(objects: list[bpy.types.Object]) -> None:
+def material_for_part(part_idx: int, clean: bool) -> bpy.types.Material:
+    if clean:
+        colors = [
+            (0.74, 0.76, 0.75, 1.0),
+            (0.55, 0.68, 0.72, 0.62),
+            (0.18, 0.22, 0.27, 1.0),
+            (0.06, 0.06, 0.06, 1.0),
+            (0.06, 0.06, 0.06, 1.0),
+            (0.06, 0.06, 0.06, 1.0),
+            (0.06, 0.06, 0.06, 1.0),
+        ]
+        mat = bpy.data.materials.new(f"clean_part_{part_idx}")
+        mat.diffuse_color = colors[part_idx % len(colors)]
+        mat.use_nodes = True
+        bsdf = mat.node_tree.nodes.get("Principled BSDF")
+        if bsdf:
+            bsdf.inputs["Base Color"].default_value = colors[part_idx % len(colors)]
+            bsdf.inputs["Roughness"].default_value = 0.64
+            bsdf.inputs["Metallic"].default_value = 0.0
+            if part_idx == 1:
+                bsdf.inputs["Alpha"].default_value = 0.56
+                mat.blend_method = "BLEND"
+                mat.use_screen_refraction = True
+        return mat
+
     palette = [
         (0.72, 0.76, 0.80, 1.0),
         (0.18, 0.24, 0.32, 1.0),
@@ -111,17 +135,23 @@ def setup_materials(objects: list[bpy.types.Object]) -> None:
         (0.10, 0.10, 0.10, 1.0),
         (0.10, 0.10, 0.10, 1.0),
     ]
+    mat = bpy.data.materials.new(f"part_{part_idx}_fallback")
+    mat.diffuse_color = palette[part_idx % len(palette)]
+    return mat
+
+
+def setup_materials(objects: list[bpy.types.Object], clean_materials: bool = False) -> None:
     for obj in mesh_objects(objects):
-        if obj.data.materials:
-            continue
         part_idx = 0
         if obj.name.startswith("part_"):
             try:
                 part_idx = int(obj.name.split("_")[1])
             except (IndexError, ValueError):
                 part_idx = 0
-        mat = bpy.data.materials.new(f"part_{part_idx}_fallback")
-        mat.diffuse_color = palette[part_idx % len(palette)]
+        if obj.data.materials and not clean_materials:
+            continue
+        obj.data.materials.clear()
+        mat = material_for_part(part_idx, clean_materials)
         obj.data.materials.append(mat)
 
 
@@ -170,13 +200,14 @@ def render_video(
     fps: int,
     frame_dir: Path | None = None,
     save_blend: bool = False,
+    clean_materials: bool = False,
 ) -> None:
     clear_scene()
     objects = import_glbs(glb_root)
     if not mesh_objects(objects):
         raise RuntimeError(f"No mesh objects imported from {glb_root}")
     root = center_scene(objects)
-    setup_materials(objects)
+    setup_materials(objects, clean_materials)
     setup_camera_and_lights(objects)
     animate(root, frame_count)
     setup_render(output, frame_count, fps, frame_dir)
@@ -193,6 +224,7 @@ def main() -> None:
     parser.add_argument("--fps", type=int, default=24)
     parser.add_argument("--frame-dir")
     parser.add_argument("--save-blend", action="store_true")
+    parser.add_argument("--clean-materials", action="store_true")
     argv = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else sys.argv[1:]
     args = parser.parse_args(argv)
     render_video(
@@ -202,6 +234,7 @@ def main() -> None:
         args.fps,
         repo_path(args.frame_dir) if args.frame_dir else None,
         args.save_blend,
+        args.clean_materials,
     )
 
 

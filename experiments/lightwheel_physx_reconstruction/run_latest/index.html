@@ -24,7 +24,9 @@
     figure { margin:0; }
     img { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; }
     video { width:100%; border:1px solid var(--line); border-radius:6px; background:#101820; display:block; }
+    .video-grid { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:14px; margin:14px 0; }
     .video-panel { margin:14px 0; }
+    .diagnosis { border-left:4px solid #9a6700; background:#fffbeb; padding:10px 12px; margin:12px 0; color:#4d3700; }
     figcaption, .muted { color:var(--muted); font-size:13px; margin-top:6px; }
     table { width:100%; border-collapse:collapse; margin:8px 0 16px; font-size:14px; }
     th, td { text-align:left; border-bottom:1px solid var(--line); padding:8px; vertical-align:top; }
@@ -35,7 +37,7 @@
     .code-split { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:14px; }
     details { margin-top:14px; }
     summary { cursor:pointer; font-weight:700; }
-    @media (max-width: 980px) { .media-grid.two, .media-grid.three, .code-split { grid-template-columns:1fr; } }
+    @media (max-width: 980px) { .media-grid.two, .media-grid.three, .code-split, .video-grid { grid-template-columns:1fr; } }
     </style>
   </head>
   <body>
@@ -2306,20 +2308,47 @@ def Xform &quot;root&quot; (
           <figcaption>7 个真实 GLB 输出合并渲染预览</figcaption>
         </figure>
       </div>
+      <div class="video-grid">
+      
+        <figure class="video-panel">
+          <video controls preload="metadata" poster="Microwave047/true_physx_omni_bf16/true_physx_omni_mesh_preview.png">
+            <source src="Microwave047/true_physx_omni_bf16/current_version_clean_turntable.mp4" type="video/mp4" />
+          </video>
+          <figcaption>Clean 审阅版：弱化烘焙贴图，突出几何轮廓、门结构和部件分割，720p / 24fps / 4s。</figcaption>
+        </figure>
+        
       
         <figure class="video-panel">
           <video controls preload="metadata" poster="Microwave047/true_physx_omni_bf16/true_physx_omni_mesh_preview.png">
             <source src="Microwave047/true_physx_omni_bf16/current_version_turntable.mp4" type="video/mp4" />
           </video>
-          <figcaption>当前版本旋转视频：Blender 4.5 后台渲染 7 个真实 PhysX-Omni GLB，720p / 24fps / 4s；已扩大取景边距，避免旧版顶部裁切。</figcaption>
+          <figcaption>Textured 原始贴图版：保留 PhysX-Omni GLB 自带纹理，可观察贴图拉伸、重影和材质伪影。</figcaption>
+        </figure>
+        
+      </div>
+      <div class="diagnosis">
+        <h4>当前视觉效果诊断</h4>
+        <ul>
+          <li>已经能稳定看出 microwave 形体、打开的门、右侧控制面板和四个脚垫。</li>
+          <li>Textured 版的问题主要来自生成 GLB 的烘焙纹理：门板和控制面板有半透明重影，右侧和底部存在贴图拉伸/脏块。</li>
+          <li>Clean 版更适合审阅几何和部件关系，但会牺牲控制面板文字、按钮等纹理细节。</li>
+          <li>这不是单纯调灯光能完全解决的问题；要真正改善，需要重跑/后处理纹理 UV、材质透明度、门面板分割和控制面板部件。</li>
+        </ul>
+      </div>
+      <div class="media-grid two">
+      
+        <figure>
+          <img src="Microwave047/true_physx_omni_bf16/current_version_clean_turntable_contact_sheet.png" alt="Microwave047 clean turntable contact sheet" />
+          <figcaption>Clean 审阅版抽帧 QA。</figcaption>
         </figure>
         
       
         <figure>
-          <img src="Microwave047/true_physx_omni_bf16/current_version_turntable_contact_sheet.png" alt="Microwave047 turntable contact sheet" />
-          <figcaption>视频抽帧 QA：用于快速检查旋转一圈时是否裁切、偏移或遮挡。</figcaption>
+          <img src="Microwave047/true_physx_omni_bf16/current_version_turntable_contact_sheet.png" alt="Microwave047 textured turntable contact sheet" />
+          <figcaption>Textured 原始贴图版抽帧 QA。</figcaption>
         </figure>
         
+      </div>
       <h4>运行指标</h4>
       <table><thead><tr><th>metric</th><th>value</th></tr></thead><tbody><tr><td>status</td><td>success</td></tr><tr><td>mode</td><td>bf16_offload</td></tr><tr><td>detected_parts</td><td>7</td></tr><tr><td>parts_to_run</td><td>7</td></tr><tr><td>total_voxels</td><td>22236</td></tr><tr><td>elapsed_sec</td><td>480.94</td></tr><tr><td>GLB parts</td><td>7</td></tr><tr><td>OBJ parts</td><td>7</td></tr><tr><td>texture parts</td><td>7</td></tr></tbody></table>
       <h4>VLM 拆解结果</h4>
@@ -2348,6 +2377,8 @@ group_1: [&#x27;l_1&#x27;]; Type: C relative to group_0; Param: direction: [0, 0
         <a href="Microwave047/true_physx_omni_bf16/logs/lightwheel_true_microwave047_bf16_vlm.log">VLM log</a>
         <a href="Microwave047/true_physx_omni_bf16/logs/lightwheel_true_microwave047_bf16_geo_jsongen_dinofix.log">geometry log</a>
         <a href="Microwave047/true_physx_omni_bf16/desert.png">desert.png</a>
+        <a href="Microwave047/true_physx_omni_bf16/current_version_clean_turntable.mp4">current_version_clean_turntable.mp4</a>
+        <a href="Microwave047/true_physx_omni_bf16/current_version_clean_turntable_contact_sheet.png">current_version_clean_turntable_contact_sheet.png</a>
         <a href="Microwave047/true_physx_omni_bf16/current_version_turntable.mp4">current_version_turntable.mp4</a>
         <a href="Microwave047/true_physx_omni_bf16/current_version_turntable_contact_sheet.png">current_version_turntable_contact_sheet.png</a>
         <a href="Microwave047/true_physx_omni_bf16/README.md">README.md</a>
